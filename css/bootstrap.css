@@ -5671,7 +5671,6 @@ button.close {
   position: fixed;
 }
 
-/*noinspection CssInvalidElement*/
 @-ms-viewport {
   width: device-width;
 }

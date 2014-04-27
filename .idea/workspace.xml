@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="33469c24-7a96-412e-9d56-a358b96f40de" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/shopConnect.js" afterPath="$PROJECT_DIR$/js/shopConnect.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="WebShop.iws" />
@@ -343,7 +342,11 @@
       <created>1398623889255</created>
       <updated>1398623889255</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="initialize">
+      <created>1398623979270</created>
+      <updated>1398623979270</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TodoView" selected-index="2">

@@ -10,18 +10,23 @@ webshop.errorhandling = function () {
 	var isErrorFunctionLoad = function () {
 		return (window.onerror && typeof window.onerror === "function") ? true : false;
 	};
-	var errorFunction = function (a, b, c) {
+	var errorFunction = function (errorMsg, url, lineNumber) {
 		if (window.console) {
 			console.log("FEHLER!!!!");
 		} else {
 			alert('there is a error occured');
 		}
+		if (errorMsg.indexOf('Script error.') > -1) {
+			return;
+		}
+		return ;
 	};
+
 	var init = function () {
 		if (isErrorFunctionLoad()) {
 			errorFunction();
 		} else {
-			window.onerror = errorFunction();
+			window.onerror = errorFunction;
 		}
 	}
 
@@ -30,4 +35,5 @@ webshop.errorhandling = function () {
 
 (function () {
 	webshop.errorhandling();
+	//alert("Error loaded");
 }());

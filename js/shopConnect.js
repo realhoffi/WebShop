@@ -14,7 +14,7 @@ $(document).ready(function () {
 		if (e.keyCode === 13)
 			$("#startSearch").click();
 	});
-///add eventhandlers! just to test
+
 	var element = document.getElementById("retItems");
 	var element1 = document.getElementById("main");
 	var element2 = document.getElementById("main2");

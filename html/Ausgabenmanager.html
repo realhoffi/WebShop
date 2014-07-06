@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html ng-app="appAusgabenmanager">
+<head lang="de">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ausgabenmanager</title>
+    <link href="../css/bootstrap.css" type="text/css" rel="stylesheet">
+    <script src="../js/jquery-1.11.0.min.js" type="application/javascript"></script>
+    <script src="../js/bootstrap.js" type="application/javascript"></script>
+    <script src="../js/angular.js" type="application/javascript"></script>
+    <script src="../js/ui-bootstrap-tpls-0.11.0.js" type="application/javascript"></script>
+    <script type="text/javascript">
+        var user = function () {
+            var self = this;
+            self.Email = '';
+            self.Nachname = '';
+            self.Vorname = '';
+
+        };
+
+        var ucounter = 3;
+        var uid = '';
+        angular.module('appAusgabenmanager', ['ui.bootstrap']);
+
+        $(document).ready(function () {
+            isUserLoggedIn();
+            $("#startSearch").click(function () {
+                alert();
+                createUser();
+            });
+            $("#uploadFile").click(function () {
+                upload();
+            });
+        });
+        function upload() {
+            var fileContent = $("#fileInput")[0];
+            var file = fileContent.files[0];
+            var name = file.name;
+            var size = file.size;
+            var type = file.type;
+
+
+            var reader = new FileReader();
+
+            reader.onload = function (event) {
+                console.log(event.target);
+            };
+            console.log(file);
+            reader.readAsDataURL(file);
+
+            var xhr = new XMLHttpRequest();
+            xhr.upload.onprogress = function (e) {
+                var percent = ((100*e.loaded) / e.total);
+                // Render a pretty progress bar
+            };
+            xhr.onreadystatechange = function (e) {
+                if (e.target.readyState == 4) {
+                    // Handle file upload complete
+                    alert('ready');
+                }else if (e.target.readyState == 2){
+                    alert(e.target.status + " : " + e.target.statusText);
+                }
+            };
+            //  xhr.open('POST', 'http://localhost:54091/File/SaveFile?fid=' + name, true);
+            xhr.open('POST', 'http://info.fhoffma.net/services/File/SaveFile?fid=' + name, true);
+            xhr.setRequestHeader('X-FileName', name); // Pass the filename along
+            xhr.send(file);
+        }
+        function createUser() {
+            var b = new user();
+            b.Email = "flo@test.de";
+            b.Nachname = "NNAME";
+
+            b.Vorname = "FLORI";
+
+            var domain = "http://localhost:54091/";
+            //  var domain = "http://info.fhoffma.net/services/";
+            var aj = $.ajax({
+                url: domain + "users/Register",
+                type: "POST",
+                data: JSON.stringify(b),
+                contentType: 'application/json; charset=UTF-8',
+                dataType: 'json',
+                success: function (data, textStatus, jqXHR) {
+                    var c = data;
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert('fail');
+                }
+            });
+        }
+
+        function readCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+        function isUserLoggedIn() {
+            var uid = readCookie('info.fhoffma.net.uid');
+            if (!uid || uid.length == 0) {
+                signIn().done(function (e) {
+                    var b = JSON.stringify(e);
+
+                    uid = e;
+                    return true;
+                });
+            } else {
+                alert('geschafft');
+            }
+
+
+        }
+
+        function signIn() {
+            var m = '47cb0531-edab-4d7a-8705-60337b5e0155'
+            //var domain = "http://localhost:54091/";
+            var domain = "http://info.fhoffma.net/services/";
+            var aj = $.ajax({
+                url: domain + "users/SignIn?uid=Testadress@gmail.com",
+                type: "POST",
+                data: 'uid=Testadress@gmail.com',//'uid=' + m,
+                dataType: 'json',
+                success: function (data, textStatus, jqXHR) {
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert('fail');
+                }
+            });
+
+            return aj;
+        }
+    </script>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-header">
+                <h1 class="text-center">Mein Ausgabenmanager
+                </h1>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <!--<div class="row">-->
+            <!--<div class="col-md-12">-->
+            <!--<ul class=" panel panel-success list-unstyled">-->
+            <!--<li class="">-->
+            <!--<a class="list-group-item active" href="#">-->
+            <!--<span class="glyphicon glyphicon-user"></span><b><span> Zusammenfassung</span></b></span>-->
+            <!--</a>-->
+            <!--<ul class="list-unstyled ">-->
+            <!--<li><a class="list-group-item" href="#"><span>test11</span></a></li>-->
+            <!--</ul>-->
+            <!--</li>-->
+            <!--</ul>-->
+            <!--</div>-->
+            <!--</div>-->
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="panel panel-success">
+                        <a href="#" class="list-group-item active">
+                            <b> <span class="glyphicon glyphicon-user"></span> <span>Zusammenfassung</span></b>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <span class="glyphicon "></span> Meine monatlichenAusgaben
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <span class="glyphicon "></span> Meine monatlichenAusgaben
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <span class="glyphicon "></span> Kostenkalkulation
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-success">
+                        <a href="#" class="list-group-item active">
+                            <b> <span class="glyphicon glyphicon-user"></span> <span>Charts</span></b>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <span class="glyphicon "></span> Google
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-success">
+                        <a href="#" class="list-group-item active">
+                            <b> <span class="glyphicon glyphicon-star"></span> <span>Meine Favoriten</span></b>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <span class="glyphicon "></span> Favorit 1
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9" id="content">
+            <div class="row">
+                <div class="col-md-9">
+                    <input class="form-control" id="searchQuery" autofocus>
+                </div>
+                <div class="col-md-3">
+                    <input type="button" value="Suchen" class="btn" id="startSearch">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-9">
+                    <input type="file" id="fileInput">
+                </div>
+                <div class="col-md-3">
+                    <input type="button" value="Upload" class="btn" id="uploadFile">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="panel-footer">
+            <div class="col-md-12 alert alert-info">Keine Fragen erlaubt.</div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

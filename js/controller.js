@@ -6,9 +6,7 @@ var webshop = webshop || {};
 webshop.controller = (function () {
 	function search(searchString, successCallback) {
 		var q = "'" + searchString + "'";
-		//var url = "https://www.googleapis.com/customsearch/v1?q=" + q;
 		var url = 'https://ajax.googleapis.com/ajax/services/feed/find?v=1.0&q=' + q;
-
 		$.ajax({
 			url: url,
 			success: function (data, a, b, c) {
@@ -25,5 +23,4 @@ webshop.controller = (function () {
 	return{
 		search: search
 	};
-
 })();

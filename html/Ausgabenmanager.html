@@ -9,6 +9,9 @@
     <script src="../js/bootstrap.js" type="application/javascript"></script>
     <script src="../js/angular.js" type="application/javascript"></script>
     <script src="../js/ui-bootstrap-tpls-0.11.0.js" type="application/javascript"></script>
+    <script src="../angular/app.js" type="application/javascript"></script>
+    <script src="../angular/controller.js" type="application/javascript"></script>
+    <script src="../angular/appHelper.js" type="application/javascript"></script>
     <script type="text/javascript">
         var user = function () {
             var self = this;
@@ -17,13 +20,9 @@
             self.Vorname = '';
 
         };
-
-        var ucounter = 3;
         var uid = '';
-        angular.module('appAusgabenmanager', ['ui.bootstrap']);
 
         $(document).ready(function () {
-            isUserLoggedIn();
             $("#startSearch").click(function () {
                 alert();
                 createUser();
@@ -50,14 +49,14 @@
 
             var xhr = new XMLHttpRequest();
             xhr.upload.onprogress = function (e) {
-                var percent = ((100*e.loaded) / e.total);
+                var percent = ((100 * e.loaded) / e.total);
                 // Render a pretty progress bar
             };
             xhr.onreadystatechange = function (e) {
                 if (e.target.readyState == 4) {
                     // Handle file upload complete
                     alert('ready');
-                }else if (e.target.readyState == 2){
+                } else if (e.target.readyState == 2) {
                     alert(e.target.status + " : " + e.target.statusText);
                 }
             };
@@ -73,8 +72,8 @@
 
             b.Vorname = "FLORI";
 
-            var domain = "http://localhost:54091/";
-            //  var domain = "http://info.fhoffma.net/services/";
+            //var domain = "http://localhost:54091/";
+            var domain = "http://info.fhoffma.net/services/";
             var aj = $.ajax({
                 url: domain + "users/Register",
                 type: "POST",
@@ -83,88 +82,29 @@
                 dataType: 'json',
                 success: function (data, textStatus, jqXHR) {
                     var c = data;
+                    alert(JSON.stringify(c));
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     alert('fail');
                 }
             });
-        }
-
-        function readCookie(name) {
-            var nameEQ = name + "=";
-            var ca = document.cookie.split(';');
-            for (var i = 0; i < ca.length; i++) {
-                var c = ca[i];
-                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-            }
-            return null;
-        }
-        function isUserLoggedIn() {
-            var uid = readCookie('info.fhoffma.net.uid');
-            if (!uid || uid.length == 0) {
-                signIn().done(function (e) {
-                    var b = JSON.stringify(e);
-
-                    uid = e;
-                    return true;
-                });
-            } else {
-                alert('geschafft');
-            }
-
-
-        }
-
-        function signIn() {
-            var m = '47cb0531-edab-4d7a-8705-60337b5e0155'
-            //var domain = "http://localhost:54091/";
-            var domain = "http://info.fhoffma.net/services/";
-            var aj = $.ajax({
-                url: domain + "users/SignIn?uid=Testadress@gmail.com",
-                type: "POST",
-                data: 'uid=Testadress@gmail.com',//'uid=' + m,
-                dataType: 'json',
-                success: function (data, textStatus, jqXHR) {
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    alert('fail');
-                }
-            });
-
-            return aj;
         }
     </script>
 </head>
 <body>
-<div class="container-fluid">
+<div class="container-fluid" ng-controller="ausgabenCtrl">
     <div class="row">
         <div class="col-md-12">
             <div class="page-header">
-                <h1 class="text-center">Mein Ausgabenmanager
+                <h1 class="text-center">Ausgabenmanager
                 </h1>
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-3">
-            <!--<div class="row">-->
-            <!--<div class="col-md-12">-->
-            <!--<ul class=" panel panel-success list-unstyled">-->
-            <!--<li class="">-->
-            <!--<a class="list-group-item active" href="#">-->
-            <!--<span class="glyphicon glyphicon-user"></span><b><span> Zusammenfassung</span></b></span>-->
-            <!--</a>-->
-            <!--<ul class="list-unstyled ">-->
-            <!--<li><a class="list-group-item" href="#"><span>test11</span></a></li>-->
-            <!--</ul>-->
-            <!--</li>-->
-            <!--</ul>-->
-            <!--</div>-->
-            <!--</div>-->
-            <div class="row">
+        <div class="col-md-2">
+        <div class="row">
                 <div class="col-md-12">
-
                     <div class="panel panel-success">
                         <a href="#" class="list-group-item active">
                             <b> <span class="glyphicon glyphicon-user"></span> <span>Zusammenfassung</span></b>
@@ -207,24 +147,30 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-9" id="content">
+        <div class="col-md-8" id="content">
             <div class="row">
-                <div class="col-md-9">
-                    <input class="form-control" id="searchQuery" autofocus>
-                </div>
-                <div class="col-md-3">
-                    <input type="button" value="Suchen" class="btn" id="startSearch">
-                </div>
+                <div class="col-md-6"> Search: <input class="form-control" ng-model="query"></div>
+                <div class="col-md-6"> Sort by:
+                    <select class="form-control" ng-model="orderProp">
+                        <option value="Beschreibung">Beschreibung</option>
+                        <option value="Name">Name</option>
+                    </select></div>
             </div>
             <div class="row">
-                <div class="col-md-9">
-                    <input type="file" id="fileInput">
-                </div>
-                <div class="col-md-3">
-                    <input type="button" value="Upload" class="btn" id="uploadFile">
-                </div>
+                <ul class="list-group list-unstyled">
+                    <li ng-repeat="ausgabe in Ausgaben | filter:query | orderBy: orderProp">
+                        <a class="list-group-item" href="#">
+                            <h4 class="list-group-item-heading list-group-item-info">{{ausgabe.Name}}
+                            </h4>
+
+                            <p class="list-group-item-text"> {{ausgabe.Beschreibung}} </p>
+                        </a>
+                    </li>
+                </ul>
             </div>
+
         </div>
+        <div class="col-md-2"></div>
     </div>
     <div class="row">
         <div class="panel-footer">

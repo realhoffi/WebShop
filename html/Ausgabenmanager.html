@@ -23,8 +23,7 @@
         var uid = '';
 
         $(document).ready(function () {
-            $("#startSearch").click(function () {
-                alert();
+            $(".btnGo").click(function () {
                 createUser();
             });
             $("#uploadFile").click(function () {
@@ -103,8 +102,8 @@
     </div>
     <div class="row">
         <div class="col-md-2">
-        <div class="row">
-                <div class="col-md-12">
+            <div class="row">
+            <div class="col-md-12">
                     <div class="panel panel-success">
                         <a href="#" class="list-group-item active">
                             <b> <span class="glyphicon glyphicon-user"></span> <span>Zusammenfassung</span></b>
@@ -149,34 +148,58 @@
         </div>
         <div class="col-md-8" id="content">
             <div class="row">
-                <div class="col-md-6"> Search: <input class="form-control" ng-model="query"></div>
-                <div class="col-md-6"> Sort by:
+                <div class="col-md-3"> Search: <input class="form-control" ng-model="query"></div>
+                <div class="col-md-3"> Sort by:
                     <select class="form-control" ng-model="orderProp">
                         <option value="Beschreibung">Beschreibung</option>
                         <option value="Name">Name</option>
-                    </select></div>
+                    </select>
+                </div>
+                <div class="col-md-3"> Ausgabenzeitraum:
+                    <select class="form-control" ng-model="Ausgabezeitraum"
+                            ng-options="araum.Name for araum in Ausgabenzeitraeume">
+                        <option value="">-- choose color --</option>
+                    </select>
+
+                </div>
             </div>
             <div class="row">
-                <ul class="list-group list-unstyled">
-                    <li ng-repeat="ausgabe in Ausgaben | filter:query | orderBy: orderProp">
-                        <a class="list-group-item" href="#">
-                            <h4 class="list-group-item-heading list-group-item-info">{{ausgabe.Name}}
+                <div class="panel-group" id="ausgabenAccordion"
+                     ng-repeat="ausgabe in Ausgaben | filter:query | orderBy: orderProp">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#ausgabenAccordion" href="#acc{{ausgabe.ID}}"
+                                   ng-click="toggleOpen(ausgabe, $event)">
+                                    {{ausgabe.Name}}
+                                </a>
                             </h4>
-
-                            <p class="list-group-item-text"> {{ausgabe.Beschreibung}} </p>
-                        </a>
-                    </li>
-                </ul>
+                        </div>
+                        <div id="acc{{ausgabe.ID}}" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                Beschreibung: {{ausgabe.Beschreibung}}
+                            </div>
+                            Beschreibung22: {{ausgabe.AusgabezeitraumObject}}
+                            Ausgabezeitraum: {{ausgabe.Ausgabezeitraum}}
+                            <select class="form-control"
+                                    ng-model="ausgabe.Ausgabezeitraum"
+                                    ng-change="updateAusgabe(ausgabe.Ausgabezeitraum,ausgabe)"
+                                    ng-options="choice.ID as choice.Name for choice in Ausgabenzeitraeume">
+                                <option value="">-- Ausgabezeitraum auswählen --</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-        </div>
-        <div class="col-md-2"></div>
-    </div>
-    <div class="row">
-        <div class="panel-footer">
-            <div class="col-md-12 alert alert-info">Keine Fragen erlaubt.</div>
         </div>
     </div>
+    <div class="col-md-2"></div>
+</div>
+<div class="row">
+    <div class="panel-footer">
+        <div class="col-md-12 alert alert-info">Keine Fragen erlaubt.</div>
+    </div>
+</div>
 </div>
 </body>
 </html>

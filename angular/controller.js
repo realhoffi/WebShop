@@ -4,10 +4,13 @@
 'use strict'
 
 var ausgabenmanager = angular.module('appAusgabenmanager', ['ui.bootstrap', 'ausgabenmanagerControllers', 'ausgabenmanagerServices']);
-
+ausgabenmanager.run(function ($rootScope) {
+	$rootScope.isUserLoggedIn = false;
+	$rootScope.userData = null;
+	$rootScope.rootDomain = 'http://info.fhoffma.net/services';
+});
 var ausgabenmanagerControllers = angular.module('ausgabenmanagerControllers', []);
 ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, $http, userService, $rootScope, $log) {
-		$scope.rootDomain = 'http://info.fhoffma.net/services';
 		$scope.Ausgaben = [];
 		$scope.Ausgabenzeitraeume = [];
 		$scope.orderProp = "Name";
@@ -50,8 +53,10 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 			});
 
 			modalInstance.result.then(function (user) {
-				if (user != null)
+				if (user != null) {
 					$rootScope.userData = user;
+					$rootScope.$apply();
+				}
 			}, function () {
 				$log.info('Modal dismissed at: ' + new Date());
 			});
@@ -88,7 +93,7 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 		});
 
 		function getAusgaben() {
-			$http.get($scope.rootDomain + '/ausgaben/getausgaben?uid=' + $rootScope.userData.UserId,
+			$http.get($rootScope.rootDomain + '/ausgaben/getausgaben?uid=' + $rootScope.userData.UserId,
 				{cache: false})
 				.success(function (data) {
 					$scope.Ausgaben = data;
@@ -99,7 +104,7 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 		}
 
 		function getAusgabenzeitraeume() {
-			$http.get($scope.rootDomain + '/Ausgabenzeitraum/GetAusgabenzeitraeume?uid=' + $rootScope.userData.UserId,
+			$http.get($rootScope.rootDomain + '/Ausgabenzeitraum/GetAusgabenzeitraeume?uid=' + $rootScope.userData.UserId,
 				{cache: false})
 				.success(function (data) {
 					$scope.Ausgabenzeitraeume = data;
@@ -139,11 +144,14 @@ ausgabenmanagerControllers.controller('ModalLogInController', function ($scope, 
 });
 
 var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
+	.factory('AusgabenService', ['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
+	}])
+	.factory('AusgabenzeitraumService', ['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
+	}])
 	.factory('userService', ['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
-		$rootScope.isUserLoggedIn = false;
-		$rootScope.userData = {};
+
 		var currentUserId = "";
-		var rootDomain = 'http://info.fhoffma.net/services';
+
 
 		var getUserId = function () {
 			return app.common.utils.readCookie('userid');
@@ -169,7 +177,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 		var logIn = function (uId) {
 			var deferred = $q.defer();
 
-			$http.post(rootDomain + "/users/SignIn",
+			$http.post($rootScope.rootDomain + "/users/SignIn",
 				{
 					UserId: uId
 				},
@@ -180,10 +188,12 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 				.success(function (data) {
 					$rootScope.userData = data;
 					$rootScope.isUserLoggedIn = true;
+
 					deferred.resolve($rootScope.userData);
 				})
 				.error(function (data, status, headers) {
 					$rootScope.isUserLoggedIn = false;
+
 					deferred.reject('Error: ' + JSON.stringify(status));
 				});
 			return  deferred.promise;

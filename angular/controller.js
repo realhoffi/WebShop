@@ -149,10 +149,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 	.factory('AusgabenzeitraumService', ['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
 	}])
 	.factory('userService', ['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
-
 		var currentUserId = "";
-
-
 		var getUserId = function () {
 			return app.common.utils.readCookie('userid');
 		}

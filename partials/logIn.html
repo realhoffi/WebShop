@@ -1,18 +1,26 @@
 <div class="modal-header">
-    <h2 class="modal-title text-center">LOGIN</h2>
+    <h2 class="modal-title text-center"><span> Sign in</span></h2>
 </div>
 <div class="modal-body">
-    <form class="form-horizontal" role="form">
-        <div class="form-group">
-            <div class="text-center form-horizontal"><h3><label>E-Mail oder UserId:</label>
-            </h3></div>
-            <div>
-                <input class="form-control" ng-model="item.name">
-            </div>
-        </div>
-    </form>
+    <div>
+        <div>
+            <h4><b><span>Please enter your E-Mail Adress or your UserId</span></b></h4></div>
+        </br>
+    </div>
+    <div>
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <h4 class="col-md-3"><span>UserId:</span>
+                </h4>
 
-    {{ item.name }}
+                <div class="col-md-8">
+                    <input class="form-control" ng-model="item.name">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary" ng-click="ok()">OK</button>

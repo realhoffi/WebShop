@@ -105,8 +105,11 @@
 <div class="container-fluid" ng-controller="ausgabenCtrl">
     <div class="row">
         <div class="col-md-12">
-            <div class="page-header">
-                <h1 class="text-center">Ausgabenmanager
+            <div class="page-header panel panel-primary">
+                <h1 class="text-center">
+                    <b> <span class="glyphicon glyphicon-tasks"></span>
+                        <span class="text-center"> Ausgabenmanager</span></b>
+
                 </h1>
             </div>
         </div>
@@ -116,8 +119,8 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-success">
-                    <a href="#" class="list-group-item active">
-                            <b> <span class="glyphicon glyphicon-user"></span> <span>Zusammenfassung</span></b>
+                        <a href="#" class="list-group-item active">
+                        <b> <span class="glyphicon glyphicon-user"></span> <span>Zusammenfassung</span></b>
                         </a>
                         <a href="#" class="list-group-item">
                             <span class="glyphicon "></span> Meine monatlichenAusgaben
@@ -180,6 +183,12 @@
                     <hr>
                 </div>
             </div>
+            <div class='row'>
+                <div class='span12'>
+                    {{ currentUser }}
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel-group col-md-offset-1 " id="ausgabenAccordion"
@@ -225,7 +234,6 @@
                                                 </select>
                                             </div>
                                         </div>
-
                                     </form>
                                 </div>
                             </div>
@@ -237,16 +245,15 @@
         <div class="col-md-2">
             <div class="row">
                 <div class="col-md-12">
-                    <button class="btn btn-primary" ng-click="OpenNeueAufgabe('lg')">Neue Ausgabe</button>
-                    <button class="btn btn-primary" ng-click="LogIn()">LogIn</button>
+                    <div class="panel panel-success">
+                        <button class="btn btn-primary btn-lg btn-block" ng-click="OpenNeueAufgabe('lg')">Neue Ausgabe
+                        </button>
+                        <button class="btn btn-primary btn-lg btn-block" ng-click="LogIn()">LogIn</button>
+                    </div>
                 </div>
             </div>
-
         </div>
-
     </div>
-
-
     <div class="row">
         <div class="panel-footer">
             <div class="col-md-12 alert alert-info">Keine Fragen erlaubt.</div>

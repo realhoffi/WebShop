@@ -8,7 +8,7 @@ var ausgabenmanager = angular.module('appAusgabenmanager', ['ui.bootstrap', 'aus
 var ausgabenmanagerControllers = angular.module('ausgabenmanagerControllers', []);
 ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, $http, $templateCache, userService) {
 	$scope.rootDomain = 'http://info.fhoffma.net/services';
-	$scope.userId = "";
+	$scope.currentUser = null;
 	$scope.Ausgaben = [];
 	$scope.Ausgabenzeitraeume = [];
 	$scope.orderProp = "Name";
@@ -40,17 +40,20 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 			size: size,
 			scope: $scope,
 			resolve: {
+				user: function () {
+					return "";
+				}
 			}
 		});
 
-		modalInstance.result.then(function (userId) {
-			if (userId != null) $scope.userId = userId;
+		modalInstance.result.then(function (user) {
+			if (user != null)
+				$scope.currentUser = user;
 		}, function () {
 			$log.info('Modal dismissed at: ' + new Date());
 		});
 	};
 
-	//LogIn();
 	$scope.updateAusgabe = function (a, b) {
 		for (var i = 0; i < $scope.Ausgabenzeitraeume.length; i++) {
 			if ($scope.Ausgabenzeitraeume[i].ID == a) {
@@ -59,24 +62,24 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 		}
 	}
 
-	$scope.$watch('userId', function () {
-		if ($scope.userId) {
+	$scope.$watch('currentUser', function () {
+		if ($scope.currentUser) {
 			getAusgaben();
 			getAusgabenzeitraeume();
 		}
 	});
 
 	var b = userService.login('Testadress@gmail.com');
-	b.then(function (uid) {
-		$scope.userId = uid;
+	b.then(function (user) {
+		$scope.currentUser = user;
 	}, function (reason) {
-		alert('Failed: ' + uid);
+		alert('Failed: ' + reason);
 	}, function (update) {
 		alert('Got notification: ' + update);
 	});
 
 	function getAusgaben() {
-		$http.get($scope.rootDomain + '/ausgaben/getausgaben?uid=' + $scope.userId,
+		$http.get($scope.rootDomain + '/ausgaben/getausgaben?uid=' + $scope.currentUser.UserId,
 			{cache: false})
 			.success(function (data) {
 				$scope.Ausgaben = data;
@@ -87,7 +90,7 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 	}
 
 	function getAusgabenzeitraeume() {
-		$http.get($scope.rootDomain + '/Ausgabenzeitraum/GetAusgabenzeitraeume?uid=' + $scope.userId,
+		$http.get($scope.rootDomain + '/Ausgabenzeitraum/GetAusgabenzeitraeume?uid=' + $scope.currentUser.UserId,
 			{cache: false})
 			.success(function (data) {
 				$scope.Ausgabenzeitraeume = data;
@@ -112,14 +115,12 @@ ausgabenmanagerControllers.controller('ModalNeueAufgabeController', function ($s
 		$modalInstance.dismiss('cancel');
 	};
 });
-ausgabenmanagerControllers.controller('ModalLogInController', function ($scope, $modalInstance, userService) {
-	$scope.userId;
+ausgabenmanagerControllers.controller('ModalLogInController', function ($scope, $modalInstance, userService, user) {
+	$scope.item = {};
 
 	$scope.ok = function () {
-		alert($scope.userId);
-		userService.login($scope.userId).then(function (uid) {
-			alert(':) ' + userService.isUserLoggedIn());
-			$modalInstance.close(uid);
+		userService.login($scope.item.name).then(function (loggedUser) {
+			$modalInstance.close(loggedUser);
 		}, function (error) {
 			alert('error');
 		}, function (n) {
@@ -144,24 +145,20 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 			if (c && c.length > 0) {
 				deferred.notify('Found Cookie: ' + c);
 				userId = c;
-				isLoggedIn = true;
-				deferred.resolve(userId);
 			}
 			deferred.notify('No Cookie found: ');
 			$http.post(rootDomain + "/users/SignIn",
-
 				{
 					UserId: uId
-				}
-				,
+				},
 				{
 					dataType: 'json',
 					contentType: "application/json; charset=utf-8"
 				})
 				.success(function (data) {
-					userId = data;
+					userData = data;
 					isLoggedIn = true;
-					deferred.resolve(userId);
+					deferred.resolve(userData);
 				})
 				.error(function (data, status, headers) {
 					isLoggedIn = false;

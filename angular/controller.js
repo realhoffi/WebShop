@@ -187,21 +187,20 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 		}
 		var getEmptyUser = function () {
 			return    {
-				"Created": null,
+				//"Created": null,
 				"Email": "",
 				"ID": 0,
-				"LastModified": null,
+				//"LastModified": null,
 				"Nachname": "",
-				"UserId": null,
+				"UserId": app.common.utils.guid.getEmptyGuid(),
 				"Vorname": ""}
 
 		}
 		var iRegister = function (user) {
 			var deferred = $q.defer();
 			$http.post($rootScope.rootDomain + "/users/Register",
-				{
-					user: user
-				},
+				user
+				,
 				{
 					dataType: 'json',
 					contentType: "application/json; charset=utf-8"

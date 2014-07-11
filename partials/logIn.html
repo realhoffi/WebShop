@@ -1,13 +1,18 @@
 <div class="modal-header">
-    <h2 class="modal-title text-center"><span> Sign in</span></h2>
+    <h2 class="modal-title text-center"><span> {{ selectedHeading() }} </span></h2>
+
 </div>
 <div class="modal-body">
-    <div>
+    <div ng-show="!isUserRegistered()">
         <div>
-            <h4><b><span>Please enter your E-Mail Address or your UserId</span></b></h4></div>
-        </br>
-    </div>
-    <div>
+            <h4><b>
+                <span>Please enter your E-Mail Address or your UserId</span></b></h4>
+
+            <p>
+                If you don't have any Account, click <a ng-click="register()">Register </a> to create
+                one.
+            </p>
+        </div>
         <form class="form-horizontal" role="form">
             <div class="form-group">
                 <h4 class="col-md-3"><span>UserId:</span>
@@ -15,14 +20,57 @@
 
                 <div class="col-md-8">
                     <input class="form-control" ng-model="item.name">
+
+                </div>
+            </div>
+        </form>
+    </div>
+    <div ng-show="isUserRegistered()">
+        <div>
+            <h4>
+                <b>
+                    <span>Please enter all of these Information to create a User-Account</span>
+                </b>
+            </h4>
+        </div>
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <h4 class="col-md-3"><span>Email:</span>
+                </h4>
+
+                <div class="col-md-8">
+                    <input class="form-control" ng-model="newUser.Email">
+                </div>
+            </div>
+            <div class="form-group">
+                <h4 class="col-md-3"><span>First-Name:</span>
+                </h4>
+
+                <div class="col-md-8">
+                    <input class="form-control" ng-model="newUser.Vorname">
+                </div>
+            </div>
+            <div class="form-group">
+                <h4 class="col-md-3"><span>Last-Name:</span>
+                </h4>
+
+                <div class="col-md-8">
+                    <input class="form-control" ng-model="newUser.Nachname">
                 </div>
             </div>
         </form>
     </div>
 </div>
-
-</div>
 <div class="modal-footer">
-    <button class="btn btn-primary" ng-click="ok()">OK</button>
-    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    <div class="btn-group-vertical btn-group-justified">
+        <div class="pull-left">
+            <a ng-click="register()">{{ getHeadingByStatus(!userClickedRegistered) }}</a>
+        </div>
+        <div class="pull-right">
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </div>
+
+
 </div>

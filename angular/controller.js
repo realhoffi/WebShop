@@ -10,7 +10,9 @@ ausgabenmanager.run(function ($rootScope) {
 	$rootScope.rootDomain = 'http://info.fhoffma.net/services';
 });
 var ausgabenmanagerControllers = angular.module('ausgabenmanagerControllers', []);
+
 ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, $http, userService, $rootScope, $log) {
+
 		$scope.Ausgaben = [];
 		$scope.Ausgabenzeitraeume = [];
 		$scope.orderProp = "Name";
@@ -47,6 +49,7 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 				scope: $scope,
 				resolve: {
 					user: function () {
+						$log.info('loginModal 1');
 						return "";
 					}
 				}
@@ -54,8 +57,10 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 
 			modalInstance.result.then(function (user) {
 				if (user != null) {
-					$rootScope.userData = user;
-					$rootScope.$apply();
+					$log.info('Received Data LogIn Modal 2: ' + user);
+					//	alert(JSON.stringify(user));
+					//$rootScope.userData = user;
+					//$rootScope.$apply();
 				}
 			}, function () {
 				$log.info('Modal dismissed at: ' + new Date());
@@ -70,23 +75,24 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 			}
 		}
 
-		//watch the rootScope User and check if he is logged in!
-		$rootScope.$watch('isUserLoggedIn', function (newValue, oldValue, scope) {
+		$rootScope.$watch('userData', function (newValue, oldValue, scope) {
+			$log.info('--WATCH--userData-- ' + new Date());
 			if (newValue && newValue !== oldValue) {
-				$log.info("New value detected: isUserLoggedIn: " + newValue)
+				$log.info("--WATCH--userData-- New value detected: userData: " + newValue)
 				getAusgaben();
 				getAusgabenzeitraeume();
 			} else {
-				$log.info("Old value detected: isUserLoggedIn: " + oldValue)
+				$log.info("--WATCH--userData-- Old value detected: userData: " + oldValue)
 			}
 		});
 
 		//StartUp Methode
 		$scope.$watch('$viewContentLoaded', function () {
+			$log.info('--WATCH--$viewContentLoaded-- ' + new Date());
 			userService.tryLogin().then(function (data) {
-				$log.info('User found in Cookie');
+				$log.info('--WATCH--$viewContentLoaded--: User found in Cookie: ' + JSON.stringify(data));
 			}, function (errorMsg) {
-				$log.info(errorMsg)
+				$log.info("--WATCH--$viewContentLoaded--ERROR: " + JSON.stringify(errorMsg))
 				$scope.loginModal();
 			});
 
@@ -128,19 +134,45 @@ ausgabenmanagerControllers.controller('ModalNeueAufgabeController', function ($s
 	};
 });
 ausgabenmanagerControllers.controller('ModalLogInController', function ($scope, $modalInstance, userService, user) {
-	$scope.item = {};
-
+	$scope.Heading = {Register: 'Register', Login: 'Sign in'};
+	$scope.selectedHeading = function () {
+		return  $scope.getHeadingByStatus($scope.userClickedRegistered);
+	}
+	$scope.getHeadingByStatus = function (b) {
+		return b ? $scope.Heading.Register : $scope.Heading.Login;
+	}
+	$scope.newUser = userService.getEmptyUser();
+	$scope.item = {name: ""};
+	$scope.userClickedRegistered = false;
 	$scope.ok = function () {
-		userService.login($scope.item.name).then(function (loggedUser) {
-			$modalInstance.close(loggedUser);
-		}, function (error) {
-			alert('Error: ' + JSON.stringify(error));
-		})
-
+		if ($scope.userClickedRegistered) {
+			userService.register($scope.newUser).then(
+				function (newuser) {
+					$modalInstance.close(newuser);
+				},
+				function (error) {
+					alert('Error: ' + JSON.stringify(error));
+				});
+		} else {
+			userService.login($scope.item.name).then(function (loggedUser) {
+				$modalInstance.close(loggedUser);
+			}, function (error) {
+				alert('Error: ' + JSON.stringify(error));
+			})
+		}
 	};
 	$scope.cancel = function () {
 		$modalInstance.dismiss('cancel');
 	};
+	$scope.isUserRegistered = function () {
+		return $scope.userClickedRegistered;
+	}
+	$scope.register = function () {
+		$scope.userClickedRegistered = !$scope.userClickedRegistered;
+		$scope.selectedHeading();
+	}
+
+
 });
 
 var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
@@ -152,6 +184,37 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 		var currentUserId = "";
 		var getUserId = function () {
 			return app.common.utils.readCookie('userid');
+		}
+		var getEmptyUser = function () {
+			return    {
+				"Created": null,
+				"Email": "",
+				"ID": 0,
+				"LastModified": null,
+				"Nachname": "",
+				"UserId": null,
+				"Vorname": ""}
+
+		}
+		var iRegister = function (user) {
+			var deferred = $q.defer();
+			$http.post($rootScope.rootDomain + "/users/Register",
+				{
+					user: user
+				},
+				{
+					dataType: 'json',
+					contentType: "application/json; charset=utf-8"
+				})
+				.success(function (data) {
+					$rootScope.userData = data;
+					deferred.resolve($rootScope.userData);
+				})
+				.error(function (data, status, headers) {
+					$rootScope.isUserLoggedIn = false;
+					deferred.reject('Error: ' + JSON.stringify(status));
+				});
+			return  deferred.promise;
 		}
 		var tryLoginByCookie = function () {
 			var deferred = $q.defer();
@@ -204,6 +267,12 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 			},
 			tryLogin: function () {
 				return tryLoginByCookie();
+			},
+			getEmptyUser: function () {
+				return getEmptyUser();
+			},
+			register: function (user) {
+				return iRegister(user);
 			}
 		};
 	}]);

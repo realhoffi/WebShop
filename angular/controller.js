@@ -11,7 +11,7 @@ ausgabenmanager.run(function ($rootScope) {
 });
 var ausgabenmanagerControllers = angular.module('ausgabenmanagerControllers', []);
 
-ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, $http, userService, $rootScope, $log) {
+ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, $http, $rootScope, $log, userService, AusgabenService, AusgabenzeitraumService) {
 
 		$scope.Ausgaben = [];
 		$scope.Ausgabenzeitraeume = [];
@@ -26,12 +26,12 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 		$scope.neueAufgabeModal = function (size) {
 			var modalInstance = $modal.open({
 				templateUrl: '../partials/newAusgabe.html',
-				controller: 'ModalNeueAufgabeController',
+				controller: 'ModalNeueAusgabeController',
 				size: size,
 				scope: $scope,
 				resolve: {
-					item: function () {
-						return {"Ausgabezeitraum": 0, "AusgabezeitraumObject": null, "Beschreibung": "", "Created": "", "ID": null, "LastModified": "", "Name": "", "UserId": "", "UserObject": null};
+					ausgabezeitraeume: function () {
+						return $scope.Ausgabenzeitraeume;
 					}
 				}
 			});
@@ -92,14 +92,33 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 			}
 		}
 
+		//Startup Methode
 		$rootScope.$watch('userData', function (newValue, oldValue, scope) {
 			$log.info('--WATCH--userData-- ' + new Date());
 			if (newValue && newValue != oldValue) {
 				$log.info("--WATCH--userData-- Discover new value userData: " + JSON.stringify(newValue));
 				if (!oldValue || (oldValue && newValue.UserId != oldValue.UserId)) {
 					$log.info("--WATCH--userData--Discover Updated userData");
-					getAusgaben();
-					getAusgabenzeitraeume();
+					AusgabenService.getAusgaben()
+						.then(function (data) {
+							if (data != null) {
+								$scope.Ausgaben = data;
+								$log.info('Received Data AusgabenService: ' + JSON.stringify(data));
+							}
+						}, function (error) {
+							$log.info("Error at getAusgaben() (" + new Date() + "): --> " + error);
+						});
+
+					AusgabenzeitraumService.getAusgabenzeitraeume()
+						.then(function (data) {
+							if (data != null) {
+								$scope.Ausgabenzeitraeume = data;
+								$log.info('Received Data AusgabenzeitraumService: ' + JSON.stringify(data));
+							}
+						}, function (error) {
+							$log.info("Error at getAusgabenzeitraeume() (" + new Date() + "): --> " + error);
+						});
+
 				} else {
 					$log.info("--WATCH--userData--NOT UPDATE NEEDED");
 				}
@@ -119,36 +138,23 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 			});
 
 		});
-
-		function getAusgaben() {
-			$http.get($rootScope.rootDomain + '/ausgaben/getausgaben?uid=' + $rootScope.userData.UserId,
-				{cache: false})
-				.success(function (data) {
-					$scope.Ausgaben = data;
-				})
-				.error(function (data, status, headers) {
-					alert('Fehler beim Datenabruf der Ausgaben... :(');
-				});
-		}
-
-		function getAusgabenzeitraeume() {
-			$http.get($rootScope.rootDomain + '/Ausgabenzeitraum/GetAusgabenzeitraeume?uid=' + $rootScope.userData.UserId,
-				{cache: false})
-				.success(function (data) {
-					$scope.Ausgabenzeitraeume = data;
-				})
-				.error(function (data, status, headers) {
-					alert('Fehler beim Datenabruf der getAusgabenzeitraeume... :(');
-				});
-
-		}
 	}
 );
-ausgabenmanagerControllers.controller('ModalNeueAufgabeController', function ($scope, $modalInstance, item) {
-	$scope.item = item;
-	$scope.ausgaben = $scope.$parent.Ausgabenzeitraeume;
-	$scope.ok = function () {
-		$modalInstance.close($scope.item);
+ausgabenmanagerControllers.controller('ModalNeueAusgabeController', function ($scope, $modalInstance, ausgabezeitraeume, AusgabenService) {
+	$scope.ausgabe = AusgabenService.getEmptyAusgabe();
+	$scope.ausgabezeitraum = ausgabezeitraeume;
+	$scope.ok = function ($event) {
+		app.common.utils.setButtonLoadingState($event.currentTarget);
+		AusgabenService.addNeueAusgabe($scope.ausgabe)
+			.then(function (data) {
+				app.common.utils.setButtonLoadingStateReset($event.currentTarget);
+				$modalInstance.close(data);
+			}, function (error) {
+				app.common.utils.setButtonLoadingStateReset($event.currentTarget);
+				alert('Error: ' + JSON.stringify(error));
+			}
+		);
+
 	};
 	$scope.cancel = function () {
 		$modalInstance.dismiss('cancel');
@@ -219,8 +225,82 @@ ausgabenmanagerControllers.controller('ModalUserController', function ($scope, $
 });
 var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 	.factory('AusgabenService', ['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
+		var getAusgaben = function () {
+			var deferred = $q.defer();
+			$http.get($rootScope.rootDomain + '/ausgaben/getausgaben?uid=' + $rootScope.userData.UserId,
+				{
+					cache: false
+				})
+				.success(function (data) {
+					deferred.resolve(data);
+				})
+				.error(function (data, status, headers) {
+					deferred.reject('Error: ' + JSON.stringify(data));
+					alert('Fehler beim Datenabruf der Ausgaben... :(');
+				});
+			return deferred.promise;
+		}
+		var addNewAusgabe = function (ausgabe) {
+			var deferred = $q.defer();
+			ausgabe.UserId = $rootScope.userData.UserId;
+			$http.post($rootScope.rootDomain + "/ausgaben/CreateAusgabe?uid=" + $rootScope.userData.UserId,
+				{
+					ausgabe: ausgabe
+				},
+				{
+					dataType: 'json',
+					contentType: "application/json; charset=utf-8"
+				})
+				.success(function (data) {
+					deferred.resolve(data);
+				})
+				.error(function (data, status, headers) {
+					deferred.reject('Error: ' + JSON.stringify(status));
+				});
+			return  deferred.promise;
+		}
+		var getEmptyAusgabe = function () {
+			return {
+				"Ausgabezeitraum": 0,
+				"Beschreibung": "",
+				"ID": 0,
+				"Name": "",
+				"UserId": app.common.utils.guid.getEmptyGuid()
+			};
+		}
+		return{
+			getAusgaben: function () {
+				return getAusgaben();
+			},
+			getEmptyAusgabe: function () {
+				return getEmptyAusgabe();
+			},
+			addNeueAusgabe: function (ausgabe) {
+				return addNewAusgabe(ausgabe);
+			}
+		};
 	}])
 	.factory('AusgabenzeitraumService', ['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
+		var getAusgabenzeitraeume = function () {
+			var deferred = $q.defer();
+			$http.get($rootScope.rootDomain + '/Ausgabenzeitraum/GetAusgabenzeitraeume?uid=' + $rootScope.userData.UserId,
+				{cache: false})
+				.success(function (data) {
+					deferred.resolve(data);
+				})
+				.error(function (data, status, headers) {
+					deferred.reject('Error: ' + JSON.stringify(data));
+					alert('Fehler beim Datenabruf der getAusgabenzeitraeume... :(');
+				});
+
+			return deferred.promise;
+		}
+
+		return{
+			getAusgabenzeitraeume: function () {
+				return getAusgabenzeitraeume();
+			}
+		}
 	}])
 	.factory('userService', ['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
 		var currentUserId = "";

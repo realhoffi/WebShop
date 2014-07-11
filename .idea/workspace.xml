@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="33469c24-7a96-412e-9d56-a358b96f40de" name="Default" comment="initialize">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/angular/controller.js" afterPath="$PROJECT_DIR$/angular/controller.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="WebShop.iws" />
@@ -38,8 +39,8 @@
       <file leaf-file-name="controller.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/angular/controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5081374" vertical-offset="161" max-vertical-offset="1734">
-              <caret line="153" column="32" selection-start-line="153" selection-start-column="32" selection-end-line="153" selection-end-column="32" />
+            <state vertical-scroll-proportion="0.53887886" vertical-offset="569" max-vertical-offset="1700">
+              <caret line="239" column="19" selection-start-line="239" selection-start-column="19" selection-end-line="239" selection-end-column="19" />
               <folding>
                 <element signature="e#612#4415#0" expanded="false" />
                 <element signature="e#733#778#0" expanded="false" />
@@ -53,14 +54,14 @@
                 <element signature="e#5274#6644#0" expanded="false" />
                 <element signature="e#5718#6357#0" expanded="false" />
                 <element signature="e#6755#7261#0" expanded="false" />
-                <element signature="e#8968#9556#0" expanded="false" />
-                <element signature="e#9647#12676#0" expanded="false" />
-                <element signature="e#9705#9759#0" expanded="false" />
-                <element signature="e#9793#10034#0" expanded="false" />
-                <element signature="e#10069#10555#0" expanded="false" />
-                <element signature="e#10591#11085#0" expanded="false" />
-                <element signature="e#11121#11157#0" expanded="false" />
-                <element signature="e#11195#11622#0" expanded="false" />
+                <element signature="e#8946#9534#0" expanded="false" />
+                <element signature="e#9625#12654#0" expanded="false" />
+                <element signature="e#9683#9737#0" expanded="false" />
+                <element signature="e#9771#10012#0" expanded="false" />
+                <element signature="e#10047#10533#0" expanded="false" />
+                <element signature="e#10569#11063#0" expanded="false" />
+                <element signature="e#11099#11135#0" expanded="false" />
+                <element signature="e#11173#11600#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -525,7 +526,11 @@
       <created>1405109623882</created>
       <updated>1405109623882</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="initialize">
+      <created>1405110570402</created>
+      <updated>1405110570402</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TodoView" selected-index="2">
@@ -975,8 +980,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/angular/controller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5081374" vertical-offset="161" max-vertical-offset="1734">
-          <caret line="153" column="32" selection-start-line="153" selection-start-column="32" selection-end-line="153" selection-end-column="32" />
+        <state vertical-scroll-proportion="0.53887886" vertical-offset="569" max-vertical-offset="1700">
+          <caret line="239" column="19" selection-start-line="239" selection-start-column="19" selection-end-line="239" selection-end-column="19" />
           <folding>
             <element signature="e#612#4415#0" expanded="false" />
             <element signature="e#733#778#0" expanded="false" />
@@ -990,14 +995,14 @@
             <element signature="e#5274#6644#0" expanded="false" />
             <element signature="e#5718#6357#0" expanded="false" />
             <element signature="e#6755#7261#0" expanded="false" />
-            <element signature="e#8968#9556#0" expanded="false" />
-            <element signature="e#9647#12676#0" expanded="false" />
-            <element signature="e#9705#9759#0" expanded="false" />
-            <element signature="e#9793#10034#0" expanded="false" />
-            <element signature="e#10069#10555#0" expanded="false" />
-            <element signature="e#10591#11085#0" expanded="false" />
-            <element signature="e#11121#11157#0" expanded="false" />
-            <element signature="e#11195#11622#0" expanded="false" />
+            <element signature="e#8946#9534#0" expanded="false" />
+            <element signature="e#9625#12654#0" expanded="false" />
+            <element signature="e#9683#9737#0" expanded="false" />
+            <element signature="e#9771#10012#0" expanded="false" />
+            <element signature="e#10047#10533#0" expanded="false" />
+            <element signature="e#10569#11063#0" expanded="false" />
+            <element signature="e#11099#11135#0" expanded="false" />
+            <element signature="e#11173#11600#0" expanded="false" />
           </folding>
         </state>
       </provider>

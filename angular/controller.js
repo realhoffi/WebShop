@@ -244,9 +244,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 			var deferred = $q.defer();
 			ausgabe.UserId = $rootScope.userData.UserId;
 			$http.post($rootScope.rootDomain + "/ausgaben/CreateAusgabe?uid=" + $rootScope.userData.UserId,
-				{
-					ausgabe: ausgabe
-				},
+				ausgabe,
 				{
 					dataType: 'json',
 					contentType: "application/json; charset=utf-8"

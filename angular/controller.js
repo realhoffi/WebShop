@@ -23,7 +23,7 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 		$scope.isUserLoggedIn = function () {
 			return userService.isUserLoggedIn();
 		}
-		$scope.neueAufgabeModal = function (size) {
+		$scope.neueAusgabeModal = function (size) {
 			var modalInstance = $modal.open({
 				templateUrl: '../partials/newAusgabe.html',
 				controller: 'ModalNeueAusgabeController',
@@ -84,14 +84,6 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 			$rootScope.isUserLoggedIn = false;
 			$rootScope.userData = null;
 		}
-		$scope.updateAusgabe = function (a, b) {
-			for (var i = 0; i < $scope.Ausgabenzeitraeume.length; i++) {
-				if ($scope.Ausgabenzeitraeume[i].ID == a) {
-					b.AusgabezeitraumObject = $scope.Ausgabenzeitraeume[i];
-				}
-			}
-		}
-
 		//Startup Methode
 		$rootScope.$watch('userData', function (newValue, oldValue, scope) {
 			$log.info('--WATCH--userData-- ' + new Date());
@@ -327,6 +319,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 				})
 				.success(function (data) {
 					$rootScope.userData = data;
+					$rootScope.isUserLoggedIn = true;
 					deferred.resolve($rootScope.userData);
 				})
 				.error(function (data, status, headers) {

@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="33469c24-7a96-412e-9d56-a358b96f40de" name="Default" comment="initialize">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/html/Ausgabenmanager.html" afterPath="$PROJECT_DIR$/html/Ausgabenmanager.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/angular/controller.js" afterPath="$PROJECT_DIR$/angular/controller.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="WebShop.iws" />
@@ -25,42 +27,43 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Ausgabenmanager.html" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Ausgabenmanager.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/html/Ausgabenmanager.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.576923" vertical-offset="3873" max-vertical-offset="5440">
-              <caret line="244" column="44" selection-start-line="244" selection-start-column="44" selection-end-line="244" selection-end-column="44" />
-              <folding />
+            <state vertical-scroll-proportion="0.19927536" vertical-offset="4378" max-vertical-offset="5287">
+              <caret line="290" column="27" selection-start-line="290" selection-start-column="27" selection-end-line="290" selection-end-column="27" />
+              <folding>
+                <element signature="tag#div#0;tag#div#0;tag#div#0;tag#body#0;tag#html#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="controller.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="controller.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/angular/controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.2766727" vertical-offset="0" max-vertical-offset="1700">
-              <caret line="9" column="37" selection-start-line="9" selection-start-column="37" selection-end-line="9" selection-end-column="37" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="496" max-vertical-offset="2210">
+              <caret line="39" column="33" selection-start-line="39" selection-start-column="33" selection-end-line="39" selection-end-column="33" />
               <folding>
-                <element signature="e#612#4415#0" expanded="false" />
                 <element signature="e#733#778#0" expanded="false" />
                 <element signature="e#817#862#0" expanded="false" />
                 <element signature="e#1430#1809#0" expanded="false" />
                 <element signature="e#1847#2335#0" expanded="false" />
                 <element signature="e#2366#2440#0" expanded="false" />
-                <element signature="e#2482#2671#0" expanded="false" />
-                <element signature="e#2762#3984#0" expanded="false" />
-                <element signature="e#4058#4410#0" expanded="false" />
-                <element signature="e#5274#6644#0" expanded="false" />
-                <element signature="e#5718#6357#0" expanded="false" />
-                <element signature="e#6755#7261#0" expanded="false" />
-                <element signature="e#8946#9534#0" expanded="false" />
-                <element signature="e#9625#12654#0" expanded="false" />
-                <element signature="e#9683#9737#0" expanded="false" />
-                <element signature="e#9771#10012#0" expanded="false" />
-                <element signature="e#10047#10533#0" expanded="false" />
-                <element signature="e#10569#11063#0" expanded="false" />
-                <element signature="e#11099#11135#0" expanded="false" />
-                <element signature="e#11173#11600#0" expanded="false" />
+                <element signature="e#2530#3752#0" expanded="false" />
+                <element signature="e#3826#4178#0" expanded="false" />
+                <element signature="e#4325#4930#0" expanded="false" />
+                <element signature="e#5588#5857#0" expanded="false" />
+                <element signature="e#6523#7029#0" expanded="false" />
+                <element signature="e#7200#8611#0" expanded="false" />
+                <element signature="e#8714#9302#0" expanded="false" />
+                <element signature="e#9451#9505#0" expanded="false" />
+                <element signature="e#9539#9780#0" expanded="false" />
+                <element signature="e#9815#10340#0" expanded="false" />
+                <element signature="e#10376#10870#0" expanded="false" />
+                <element signature="e#10906#10942#0" expanded="false" />
+                <element signature="e#10980#11407#0" expanded="false" />
+                <element signature="e#11437#11982#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -113,9 +116,9 @@
         <option value="$PROJECT_DIR$/partials/userdetails.html" />
         <option value="$PROJECT_DIR$/angular/appHelper.js" />
         <option value="$PROJECT_DIR$/partials/logIn.html" />
-        <option value="$PROJECT_DIR$/html/Ausgabenmanager.html" />
         <option value="$PROJECT_DIR$/partials/newAusgabe.html" />
         <option value="$PROJECT_DIR$/angular/controller.js" />
+        <option value="$PROJECT_DIR$/html/Ausgabenmanager.html" />
       </list>
     </option>
   </component>
@@ -541,7 +544,11 @@
       <created>1405111360863</created>
       <updated>1405111360863</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="initialize">
+      <created>1405111395208</created>
+      <updated>1405111395208</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TodoView" selected-index="2">
@@ -981,39 +988,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/html/Ausgabenmanager.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.576923" vertical-offset="3873" max-vertical-offset="5440">
-          <caret line="244" column="44" selection-start-line="244" selection-start-column="44" selection-end-line="244" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/angular/controller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2766727" vertical-offset="0" max-vertical-offset="1700">
-          <caret line="9" column="37" selection-start-line="9" selection-start-column="37" selection-end-line="9" selection-end-column="37" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="496" max-vertical-offset="2210">
+          <caret line="39" column="33" selection-start-line="39" selection-start-column="33" selection-end-line="39" selection-end-column="33" />
           <folding>
-            <element signature="e#612#4415#0" expanded="false" />
             <element signature="e#733#778#0" expanded="false" />
             <element signature="e#817#862#0" expanded="false" />
             <element signature="e#1430#1809#0" expanded="false" />
             <element signature="e#1847#2335#0" expanded="false" />
             <element signature="e#2366#2440#0" expanded="false" />
-            <element signature="e#2482#2671#0" expanded="false" />
-            <element signature="e#2762#3984#0" expanded="false" />
-            <element signature="e#4058#4410#0" expanded="false" />
-            <element signature="e#5274#6644#0" expanded="false" />
-            <element signature="e#5718#6357#0" expanded="false" />
-            <element signature="e#6755#7261#0" expanded="false" />
-            <element signature="e#8946#9534#0" expanded="false" />
-            <element signature="e#9625#12654#0" expanded="false" />
-            <element signature="e#9683#9737#0" expanded="false" />
-            <element signature="e#9771#10012#0" expanded="false" />
-            <element signature="e#10047#10533#0" expanded="false" />
-            <element signature="e#10569#11063#0" expanded="false" />
-            <element signature="e#11099#11135#0" expanded="false" />
-            <element signature="e#11173#11600#0" expanded="false" />
+            <element signature="e#2530#3752#0" expanded="false" />
+            <element signature="e#3826#4178#0" expanded="false" />
+            <element signature="e#4325#4930#0" expanded="false" />
+            <element signature="e#5588#5857#0" expanded="false" />
+            <element signature="e#6523#7029#0" expanded="false" />
+            <element signature="e#7200#8611#0" expanded="false" />
+            <element signature="e#8714#9302#0" expanded="false" />
+            <element signature="e#9451#9505#0" expanded="false" />
+            <element signature="e#9539#9780#0" expanded="false" />
+            <element signature="e#9815#10340#0" expanded="false" />
+            <element signature="e#10376#10870#0" expanded="false" />
+            <element signature="e#10906#10942#0" expanded="false" />
+            <element signature="e#10980#11407#0" expanded="false" />
+            <element signature="e#11437#11982#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/html/Ausgabenmanager.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.19927536" vertical-offset="4378" max-vertical-offset="5287">
+          <caret line="290" column="27" selection-start-line="290" selection-start-column="27" selection-end-line="290" selection-end-column="27" />
+          <folding>
+            <element signature="tag#div#0;tag#div#0;tag#div#0;tag#body#0;tag#html#0" expanded="false" />
           </folding>
         </state>
       </provider>

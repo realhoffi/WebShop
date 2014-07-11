@@ -1,6 +1,5 @@
 <div class="modal-header">
     <h2 class="modal-title text-center"><span> {{ selectedHeading() }} </span></h2>
-
 </div>
 <div class="modal-body">
     <div ng-show="!isUserRegistered()">
@@ -67,10 +66,8 @@
             <a ng-click="register()">{{ getHeadingByStatus(!userClickedRegistered) }}</a>
         </div>
         <div class="pull-right">
-            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-primary" ng-click="ok()">{{ getHeadingByStatus(userClickedRegistered) }}</button>
             <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
         </div>
     </div>
-
-
 </div>

@@ -17,10 +17,12 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 		$scope.Ausgabenzeitraeume = [];
 		$scope.orderProp = "Name";
 
-		$scope.showAusgaben = function () {
+		$scope.MyUser = function () {
+			return userService.getCurrentUser();
+		}
+		$scope.isUserLoggedIn = function () {
 			return userService.isUserLoggedIn();
 		}
-
 		$scope.neueAufgabeModal = function (size) {
 			var modalInstance = $modal.open({
 				templateUrl: '../partials/newAusgabe.html',
@@ -40,11 +42,26 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 				$log.info('Modal dismissed at: ' + new Date());
 			});
 		};
-
 		$scope.loginModal = function (size) {
 			var modalInstance = $modal.open({
 				templateUrl: '../partials/logIn.html',
 				controller: 'ModalLogInController',
+				size: size,
+				scope: $scope
+			});
+
+			modalInstance.result.then(function (user) {
+				if (user != null) {
+					$log.info('Received Data LogIn Modal 2: ' + user);
+				}
+			}, function () {
+				$log.info('Modal dismissed at: ' + new Date());
+			});
+		};
+		$scope.editUser = function (size) {
+			var modalInstance = $modal.open({
+				templateUrl: '../partials/userDetails.html',
+				controller: 'ModalUserController',
 				size: size,
 				scope: $scope,
 				resolve: {
@@ -58,14 +75,11 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 			modalInstance.result.then(function (user) {
 				if (user != null) {
 					$log.info('Received Data LogIn Modal 2: ' + user);
-					//	alert(JSON.stringify(user));
-					//$rootScope.userData = user;
-					//$rootScope.$apply();
 				}
 			}, function () {
 				$log.info('Modal dismissed at: ' + new Date());
 			});
-		};
+		}
 
 		$scope.updateAusgabe = function (a, b) {
 			for (var i = 0; i < $scope.Ausgabenzeitraeume.length; i++) {
@@ -81,6 +95,7 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 				$log.info("--WATCH--userData-- New value detected: userData: " + newValue)
 				getAusgaben();
 				getAusgabenzeitraeume();
+				//$scope.userData = userService.getCurrentUser()
 			} else {
 				$log.info("--WATCH--userData-- Old value detected: userData: " + oldValue)
 			}
@@ -121,8 +136,7 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 
 		}
 	}
-)
-;
+);
 ausgabenmanagerControllers.controller('ModalNeueAufgabeController', function ($scope, $modalInstance, item) {
 	$scope.item = item;
 	$scope.ausgaben = $scope.$parent.Ausgabenzeitraeume;
@@ -133,7 +147,7 @@ ausgabenmanagerControllers.controller('ModalNeueAufgabeController', function ($s
 		$modalInstance.dismiss('cancel');
 	};
 });
-ausgabenmanagerControllers.controller('ModalLogInController', function ($scope, $modalInstance, userService, user) {
+ausgabenmanagerControllers.controller('ModalLogInController', function ($scope, $modalInstance, userService) {
 	$scope.Heading = {Register: 'Register', Login: 'Sign in'};
 	$scope.selectedHeading = function () {
 		return  $scope.getHeadingByStatus($scope.userClickedRegistered);
@@ -174,7 +188,16 @@ ausgabenmanagerControllers.controller('ModalLogInController', function ($scope, 
 
 
 });
-
+ausgabenmanagerControllers.controller('ModalUserController', function ($scope, $modalInstance, userService) {
+	$scope.ok = function () {
+		var n = $scope.MyUser();
+		userService.updateUser($scope.MyUser());
+		$modalInstance.close();
+	};
+	$scope.cancel = function () {
+		$modalInstance.dismiss('cancel');
+	};
+});
 var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 	.factory('AusgabenService', ['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
 	}])
@@ -186,21 +209,21 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 			return app.common.utils.readCookie('userid');
 		}
 		var getEmptyUser = function () {
-			return    {
-				//"Created": null,
+			//REMOVE THIS BECAUSE OF SQL PARSING ERROR...:(
+			//"Created": null,
+			//"LastModified": null,
+			return{
 				"Email": "",
 				"ID": 0,
-				//"LastModified": null,
 				"Nachname": "",
 				"UserId": app.common.utils.guid.getEmptyGuid(),
-				"Vorname": ""}
-
-		}
-		var iRegister = function (user) {
+				"Vorname": ""
+			}
+		};
+		var register = function (user) {
 			var deferred = $q.defer();
 			$http.post($rootScope.rootDomain + "/users/Register",
-				user
-				,
+				user,
 				{
 					dataType: 'json',
 					contentType: "application/json; charset=utf-8"
@@ -214,6 +237,27 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 					deferred.reject('Error: ' + JSON.stringify(status));
 				});
 			return  deferred.promise;
+		}
+		var updateUser = function (user) {
+			var deferred = $q.defer();
+			$http.put($rootScope.rootDomain + "/users/UpdateUserDetails",
+				user,
+				{
+					dataType: 'json',
+					contentType: "application/json; charset=utf-8"
+				})
+				.success(function (data) {
+					$rootScope.userData = data;
+					deferred.resolve($rootScope.userData);
+				})
+				.error(function (data, status, headers) {
+					$rootScope.isUserLoggedIn = false;
+					deferred.reject('Error: ' + JSON.stringify(status));
+				});
+			return  deferred.promise;
+		}
+		var getCurrentUser = function () {
+			return $rootScope.userData;
 		}
 		var tryLoginByCookie = function () {
 			var deferred = $q.defer();
@@ -252,7 +296,6 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 				})
 				.error(function (data, status, headers) {
 					$rootScope.isUserLoggedIn = false;
-
 					deferred.reject('Error: ' + JSON.stringify(status));
 				});
 			return  deferred.promise;
@@ -271,7 +314,13 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 				return getEmptyUser();
 			},
 			register: function (user) {
-				return iRegister(user);
+				return register(user);
+			},
+			getCurrentUser: function () {
+				return getCurrentUser();
+			},
+			updateUser: function (user) {
+				return updateUser(user);
 			}
 		};
 	}]);

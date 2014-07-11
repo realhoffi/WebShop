@@ -107,18 +107,17 @@
             border-right-width: 1px;
             border-top-width: 1px;
             border-bottom-width: 1px;
-            /*border-right: hidden;*/
-            /*border-top: hidden;*/
-            /*border-bottom: hidden;*/
             min-height: 100px;
             border-radius: 3px;
-
         }
 
         .bs-callout {
             padding: 20px;
             margin: 20px 0px;
+        }
 
+        .margin-top-10px {
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -126,7 +125,7 @@
 <div class="container-fluid" ng-controller="ausgabenCtrl">
     <div class="row">
         <div class="col-md-12">
-            <div class="panel panel-primary row">
+            <div class="panel panel-primary row ">
                 <div class="col-md-10">
                     <h1 class="text-center">
                         <b> <span class="glyphicon glyphicon-tasks"></span>
@@ -134,23 +133,24 @@
                     </h1>
                 </div>
                 <div class="col-md-2">
-                    <div class="panel btn-group-vertical btn-group-justified ">
-                        <div class="pull-left">
-
-                        </div>
+                    <div class="btn-group margin-top-10px btn-group-justified ">
                         <div class="pull-right">
-                            <button class="btn btn-primary " ng-click="loginModal()"> <span
-                                    class="glyphicon glyphicon-user"></span> <span>Sign in</span></button>
-                            <b>
-                                <button class="btn btn-primary " ng-click="editUser('lg')" ng-show="isUserLoggedIn()">
-                                    <b><span class="glyphicon glyphicon-cog"></span> <span>Settings</span></b></button>
-                            </b>
+                            <button class="btn btn-primary " ng-show="!isUserLoggedIn()" ng-click="loginModal()">
+                                <b> <span
+                                        class="glyphicon glyphicon-user"></span> <span>Sign in</span></b>
+                            </button>
+                            <button class="btn btn-primary " ng-click="logout()" ng-show="isUserLoggedIn()">
+                                <b><span class="glyphicon glyphicon-off"></span> <span>Logout</span></b>
+                            </button>
+                            <button class="btn btn-primary " ng-click="editUser('lg')" ng-show="isUserLoggedIn()">
+                                <b><span class="glyphicon glyphicon-cog"></span> <span>Settings</span></b>
+                            </button>
+
                         </div>
                     </div>
+                </div>
             </div>
         </div>
-    </div>
-
     </div>
     <div class="row">
         <div class="col-md-2">
@@ -171,7 +171,7 @@
                         </a>
 
                     </div>
-            </div>
+                </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
@@ -183,7 +183,7 @@
                             <span class="glyphicon "></span> Google
                         </a>
                     </div>
-            </div>
+                </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
@@ -195,8 +195,8 @@
                             <span class="glyphicon "></span> Favorit 1
                         </a>
                     </div>
+                </div>
             </div>
-        </div>
         </div>
         <div class="col-md-8" id="content" ng-show="isUserLoggedIn()">
             <div class="row">
@@ -227,7 +227,7 @@
                             </div>
                         </form>
                     </div>
-            </div>
+                </div>
             </div>
 
             <div class="row">
@@ -277,11 +277,11 @@
                                         </div>
                                     </form>
                                 </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
         <div class="col-md-2" ng-show="isUserLoggedIn()">
             <div class="row">
@@ -291,8 +291,8 @@
                         </button>
 
                     </div>
+                </div>
             </div>
-        </div>
         </div>
         <div class="col-md-10" ng-show="!isUserLoggedIn()">
             <div class="bs-callout bs-info">
@@ -303,11 +303,11 @@
                 </h2>
                 </p>
             </div>
-    </div>
+        </div>
     </div>
     <div class="row">
         <div class="panel-footer">
-            <div class="col-md-12 alert alert-info" ng-include="'../partials/userdetails.html'"></div>
+            <!--<div class="col-md-12 alert alert-info" ng-include="'../partials/userdetails.html'"></div>-->
         </div>
     </div>
 </div>

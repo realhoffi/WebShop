@@ -5,7 +5,6 @@
 var app = app || {};
 app.common = app.common || {};
 app.common.utils = {
-
 	readCookie: function (name) {
 		var nameEQ = name + "=";
 		var ca = document.cookie.split(';');
@@ -15,9 +14,19 @@ app.common.utils = {
 			if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
 		}
 		return null;
+	},
+	setButtonLoadingState: function (targetButton) {
+		if (targetButton)
+			$(targetButton).button('loading');
+	},
+	setButtonLoadingStateReset: function (targetButton) {
+		if (targetButton)
+			$(targetButton).button('reset')
 	}
 
-};
+
+}
+
 app.common.utils.guid = {
 	getEmptyGuid: function () {
 		return "{00000000-0000-0000-0000-000000000000}";

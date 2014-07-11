@@ -80,7 +80,10 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 				$log.info('Modal dismissed at: ' + new Date());
 			});
 		}
-
+		$scope.logout = function () {
+			$rootScope.isUserLoggedIn = false;
+			$rootScope.userData = null;
+		}
 		$scope.updateAusgabe = function (a, b) {
 			for (var i = 0; i < $scope.Ausgabenzeitraeume.length; i++) {
 				if ($scope.Ausgabenzeitraeume[i].ID == a) {
@@ -91,13 +94,17 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 
 		$rootScope.$watch('userData', function (newValue, oldValue, scope) {
 			$log.info('--WATCH--userData-- ' + new Date());
-			if (newValue && newValue !== oldValue) {
-				$log.info("--WATCH--userData-- New value detected: userData: " + newValue)
-				getAusgaben();
-				getAusgabenzeitraeume();
-				//$scope.userData = userService.getCurrentUser()
+			if (newValue && newValue != oldValue) {
+				$log.info("--WATCH--userData-- Discover new value userData: " + JSON.stringify(newValue));
+				if (!oldValue || (oldValue && newValue.UserId != oldValue.UserId)) {
+					$log.info("--WATCH--userData--Discover Updated userData");
+					getAusgaben();
+					getAusgabenzeitraeume();
+				} else {
+					$log.info("--WATCH--userData--NOT UPDATE NEEDED");
+				}
 			} else {
-				$log.info("--WATCH--userData-- Old value detected: userData: " + oldValue)
+				$log.info("--WATCH--userData-- Old value discovered: userData: " + JSON.stringify(oldValue))
 			}
 		});
 
@@ -148,29 +155,33 @@ ausgabenmanagerControllers.controller('ModalNeueAufgabeController', function ($s
 	};
 });
 ausgabenmanagerControllers.controller('ModalLogInController', function ($scope, $modalInstance, userService) {
-	$scope.Heading = {Register: 'Register', Login: 'Sign in'};
+	$scope.Heading = {Register: 'Register', Login: 'Sign in', Logout: 'Sign Out'};
 	$scope.selectedHeading = function () {
 		return  $scope.getHeadingByStatus($scope.userClickedRegistered);
 	}
 	$scope.getHeadingByStatus = function (b) {
 		return b ? $scope.Heading.Register : $scope.Heading.Login;
 	}
+
 	$scope.newUser = userService.getEmptyUser();
 	$scope.item = {name: ""};
 	$scope.userClickedRegistered = false;
-	$scope.ok = function () {
+	$scope.ok = function ($event) {
+		app.common.utils.setButtonLoadingState($event.currentTarget);
 		if ($scope.userClickedRegistered) {
 			userService.register($scope.newUser).then(
 				function (newuser) {
 					$modalInstance.close(newuser);
 				},
 				function (error) {
+					app.common.utils.setButtonLoadingStateReset($event.currentTarget);
 					alert('Error: ' + JSON.stringify(error));
 				});
 		} else {
 			userService.login($scope.item.name).then(function (loggedUser) {
 				$modalInstance.close(loggedUser);
 			}, function (error) {
+				app.common.utils.setButtonLoadingStateReset($event.currentTarget);
 				alert('Error: ' + JSON.stringify(error));
 			})
 		}
@@ -189,10 +200,18 @@ ausgabenmanagerControllers.controller('ModalLogInController', function ($scope, 
 
 });
 ausgabenmanagerControllers.controller('ModalUserController', function ($scope, $modalInstance, userService) {
-	$scope.ok = function () {
-		var n = $scope.MyUser();
-		userService.updateUser($scope.MyUser());
-		$modalInstance.close();
+	$scope.ok = function ($event) {
+		app.common.utils.setButtonLoadingState($event.currentTarget);
+		userService.updateUser($scope.MyUser()).then(
+			function (newuser) {
+				app.common.utils.setButtonLoadingStateReset($event.currentTarget);
+				$modalInstance.close(newuser);
+			},
+			function (error) {
+				app.common.utils.setButtonLoadingStateReset($event.currentTarget);
+				alert('Error: ' + JSON.stringify(error));
+			});
+
 	};
 	$scope.cancel = function () {
 		$modalInstance.dismiss('cancel');

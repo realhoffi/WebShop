@@ -11,16 +11,24 @@ ausgabenmanager.run(function ($rootScope) {
 });
 var ausgabenmanagerControllers = angular.module('ausgabenmanagerControllers', []);
 
-ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, $http, $rootScope, $log, userService, AusgabenService, AusgabenzeitraumService) {
+ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, $http, $rootScope, $log, userService, AusgabenService, AusgabenzeitraumService, PrioritaetService) {
 
 		$scope.Ausgaben = [];
 		$scope.Ausgabenzeitraeume = [];
+		$scope.Prioritaeten = [];
 		$scope.orderProp = "Name";
 
 		$scope.findAusgabezeitraumById = function (ausgabe) {
 			for (var i = 0; i < $scope.Ausgabenzeitraeume.length; i++) {
 				if ($scope.Ausgabenzeitraeume[i].ID == ausgabe.Ausgabezeitraum) {
 					return $scope.Ausgabenzeitraeume[i].Name;
+				}
+			}
+		}
+		$scope.findPrioritaetById = function (ausgabe) {
+			for (var i = 0; i < $scope.Ausgabenzeitraeume.length; i++) {
+				if ($scope.Prioritaeten[i].ID == ausgabe.Prioritaet) {
+					return $scope.Prioritaeten[i].Titel;
 				}
 			}
 		}
@@ -39,12 +47,21 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 				resolve: {
 					ausgabezeitraeume: function () {
 						return $scope.Ausgabenzeitraeume;
+					},
+					priorities: function () {
+						return $scope.Prioritaeten;
 					}
 				}
 			});
 
 			modalInstance.result.then(function (selectedItem) {
-				selectedItem != null && $scope.Ausgaben.push(selectedItem);
+				if (selectedItem != null) {
+					//STRANGE ANGULAR...CHECK IF INITIALIZED ARRAY IS LENGTH 0, IF YES, CREATE NEW ARRAY
+					if ($scope.Ausgaben.length == 0) {
+						$scope.Ausgaben = [];
+					}
+					$scope.Ausgaben.push((selectedItem));
+				}
 			}, function () {
 				$log.info('Modal dismissed at: ' + new Date());
 			});
@@ -91,7 +108,9 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 			$rootScope.isUserLoggedIn = false;
 			$rootScope.userData = null;
 		}
-		//Startup Methode
+
+		//Startup Method which watches, if the userdata changes
+		//it changes when A) a new user sign in or B) when the user is logged in
 		$rootScope.$watch('userData', function (newValue, oldValue, scope) {
 			$log.info('--WATCH--userData-- ' + new Date());
 			if (newValue && newValue != oldValue) {
@@ -117,6 +136,14 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 						}, function (error) {
 							$log.info("Error at getAusgabenzeitraeume() (" + new Date() + "): --> " + error);
 						});
+					PrioritaetService.getPrioritaeten().then(function (data) {
+						if (data != null) {
+							$scope.Prioritaeten = data;
+							$log.info('Received Data PrioritaetService: ' + JSON.stringify(data));
+						}
+					}, function (error) {
+						$log.info("Error at getPrioritaeten() (" + new Date() + "): --> " + error);
+					});
 
 				} else {
 					$log.info("--WATCH--userData--NOT UPDATE NEEDED");
@@ -126,7 +153,8 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 			}
 		});
 
-		//StartUp Methode
+		//StartUp Method to try Login! If not possible, SignIn command windows opens
+		//
 		$scope.$watch('$viewContentLoaded', function () {
 			$log.info('--WATCH--$viewContentLoaded-- ' + new Date());
 			userService.tryLogin().then(function (data) {
@@ -139,9 +167,10 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 		});
 	}
 );
-ausgabenmanagerControllers.controller('ModalNeueAusgabeController', function ($scope, $modalInstance, ausgabezeitraeume, AusgabenService) {
+ausgabenmanagerControllers.controller('ModalNeueAusgabeController', function ($scope, $modalInstance, ausgabezeitraeume, priorities, AusgabenService) {
 	$scope.ausgabe = AusgabenService.getEmptyAusgabe();
 	$scope.ausgabezeitraum = ausgabezeitraeume;
+	$scope.priorities = priorities;
 	$scope.ok = function ($event) {
 		app.common.utils.setButtonLoadingState($event.currentTarget);
 		AusgabenService.addNeueAusgabe($scope.ausgabe)
@@ -201,8 +230,6 @@ ausgabenmanagerControllers.controller('ModalLogInController', function ($scope, 
 		$scope.userClickedRegistered = !$scope.userClickedRegistered;
 		$scope.selectedHeading();
 	}
-
-
 });
 ausgabenmanagerControllers.controller('ModalUserController', function ($scope, $modalInstance, userService) {
 	$scope.ok = function ($event) {
@@ -263,7 +290,8 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 				"ID": 0,
 				"Name": "",
 				"UserId": app.common.utils.guid.getEmptyGuid(),
-				"Preis": 0
+				"Preis": 0,
+				"Prioritaet": 0
 			};
 		}
 		return{
@@ -297,6 +325,44 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 		return{
 			getAusgabenzeitraeume: function () {
 				return getAusgabenzeitraeume();
+			}
+		}
+	}])
+	.factory('PrioritaetService', ['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
+		var getPrioritaeten = function () {
+			var deferred = $q.defer();
+			$http.get($rootScope.rootDomain + '/Prioritaeten/GetPrioritaeten?uid=' + $rootScope.userData.UserId,
+				{cache: false})
+				.success(function (data) {
+					deferred.resolve(data);
+				})
+				.error(function (data, status, headers) {
+					deferred.reject('Error: ' + JSON.stringify(data));
+					alert('Fehler beim Datenabruf der getAusgabenzeitraeume... :(');
+				});
+
+			return deferred.promise;
+		}
+		var getPrioritaetById = function (id) {
+			var deferred = $q.defer();
+			$http.get($rootScope.rootDomain + '/Prioritaeten/GetPrioritaetById?pid=' + id,
+				{cache: false})
+				.success(function (data) {
+					deferred.resolve(data);
+				})
+				.error(function (data, status, headers) {
+					deferred.reject('Error: ' + JSON.stringify(data));
+					alert('Fehler beim Datenabruf der getAusgabenzeitraeume... :(');
+				});
+
+			return deferred.promise;
+		}
+		return{
+			getPrioritaeten: function () {
+				return getPrioritaeten();
+			},
+			getPrioritaetById: function (id) {
+				return getPrioritaetById(id);
 			}
 		}
 	}])

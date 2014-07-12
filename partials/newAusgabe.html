@@ -36,6 +36,18 @@
         </div>
         <div class="form-group">
             <h4 class="col-sm-2">
+                <span class="label label-primary">Priorität:</span>
+            </h4>
+
+            <div class="col-sm-6">
+                <select class="form-control" ng-model="ausgabe.Prioritaet"
+                        ng-options="prio.ID as prio.Titel for prio in priorities">
+                    <option value="">-- Priorität auswählen --</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <h4 class="col-sm-2">
                 <span class="label label-primary">Preis:</span>
             </h4>
 

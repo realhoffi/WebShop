@@ -17,6 +17,13 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 		$scope.Ausgabenzeitraeume = [];
 		$scope.orderProp = "Name";
 
+		$scope.findAusgabezeitraumById = function (ausgabe) {
+			for (var i = 0; i < $scope.Ausgabenzeitraeume.length; i++) {
+				if ($scope.Ausgabenzeitraeume[i].ID == ausgabe.Ausgabezeitraum) {
+					return $scope.Ausgabenzeitraeume[i].Name;
+				}
+			}
+		}
 		$scope.MyUser = function () {
 			return userService.getCurrentUser();
 		}

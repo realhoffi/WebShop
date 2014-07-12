@@ -255,7 +255,8 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 				"Beschreibung": "",
 				"ID": 0,
 				"Name": "",
-				"UserId": app.common.utils.guid.getEmptyGuid()
+				"UserId": app.common.utils.guid.getEmptyGuid(),
+				"Preis": 0
 			};
 		}
 		return{

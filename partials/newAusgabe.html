@@ -30,7 +30,7 @@
             <div class="col-sm-6">
                 <select class="form-control" ng-model="ausgabe.Ausgabezeitraum"
                         ng-options="choice.ID as choice.Name for choice in ausgabezeitraum">
-                <option value="">-- Ausgabezeitraum auswählen --</option>
+                    <option value="">-- Ausgabezeitraum auswählen --</option>
                 </select>
             </div>
         </div>
@@ -40,8 +40,7 @@
             </h4>
 
             <div class="col-sm-6">
-                <!--<input type="text" class="form-control"-->
-                <!--ng-model="Beschreibung">-->
+                <input type="text" class="form-control" ng-model="ausgabe.Preis">
             </div>
         </div>
     </form>

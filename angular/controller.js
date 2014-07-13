@@ -22,9 +22,9 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 			if (confirm("Wirklich löschen?")) {
 				AusgabenService.deleteAusgabe(ausgabe)
 					.then(function (data) {
-						alert(data);
+						$log.info('Ausgabe erfolgreich gelöscht');
 					}, function (error) {
-						alert(error)
+						alert('FEHLER: Ausgabe NICHT gelöscht: ' + error)
 					});
 			}
 		}

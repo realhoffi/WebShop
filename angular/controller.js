@@ -2,12 +2,13 @@
  * Created by fhoffma on 07.07.2014.
  */
 'use strict'
-
 var ausgabenmanager = angular.module('appAusgabenmanager', ['ui.bootstrap', 'ausgabenmanagerControllers', 'ausgabenmanagerServices']);
 ausgabenmanager.run(function ($rootScope, $log) {
 	$rootScope.isUserLoggedIn = false;
 	$rootScope.userData = null;
 	$rootScope.rootDomain = 'http://info.fhoffma.net/services';
+	$log.info("rootScope settings done");
+
 });
 var ausgabenmanagerControllers = angular.module('ausgabenmanagerControllers', []);
 
@@ -159,9 +160,9 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 		});
 
 		//StartUp Method to try Login! If not possible, SignIn command windows opens
-		//
 		$scope.$watch('$viewContentLoaded', function () {
 			$log.info('--WATCH--$viewContentLoaded-- ' + new Date());
+
 			userService.tryLogin().then(function (data) {
 				$log.info('--WATCH--$viewContentLoaded--: User found in Cookie: ' + JSON.stringify(data));
 			}, function (errorMsg) {

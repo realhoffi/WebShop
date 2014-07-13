@@ -13,20 +13,20 @@ var ausgabenmanagerControllers = angular.module('ausgabenmanagerControllers', []
 
 ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, $http, $rootScope, $log, userService, AusgabenService, AusgabenzeitraumService, PrioritaetService) {
 
-		$scope.Ausgaben = [];
+		$scope.Ausgaben = AusgabenService.getAusgabenCached();
 		$scope.Ausgabenzeitraeume = [];
 		$scope.Prioritaeten = [];
 		$scope.orderProp = "Name";
 
 		$scope.deleteAusgabe = function (ausgabe) {
-			//var s = confirm("Wirklich löschen?");
-			alert("Noch nicht implementiert");
-			AusgabenService.deleteAusgabe(ausgabe)
-				.then(function (data) {
-					alert(data);
-				}, function (error) {
-					alert(error)
-				});
+			if (confirm("Wirklich löschen?")) {
+				AusgabenService.deleteAusgabe(ausgabe)
+					.then(function (data) {
+						alert(data);
+					}, function (error) {
+						alert(error)
+					});
+			}
 		}
 		$scope.editAusgabe = function (ausgabe) {
 			ausgabe.Beschreibung = "Test";
@@ -76,9 +76,11 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 			});
 
 			modalInstance.result.then(function (selectedItem) {
-				if (selectedItem != null) {
-
+//MUST CALL THIS BECAUSE IF ARRAY IS NULL, IT DOES NOT GET UPDATED -.-
+				if ($scope.Ausgaben.length == 0) {
+					$scope.Ausgaben = AusgabenService.getAusgabenCached();
 				}
+
 			}, function () {
 				$log.info('Modal dismissed at: ' + new Date());
 			});
@@ -298,7 +300,15 @@ ausgabenmanagerControllers.controller('ModalUserController', function ($scope, $
 });
 var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 	.factory('AusgabenService', ['$http', '$q', '$rootScope', '$log', function ($http, $q, $rootScope, $log) {
-		var ausgaben;
+		var ausgaben = null;
+		var indexGetById = function (id) {
+			for (var i = 0; i < ausgaben.length; i++) {
+				if (ausgaben[i].ID == id) {
+					return i;
+				}
+			}
+			return null;
+		};
 		var iGetById = function (id) {
 			for (var i = 0; i < ausgaben.length; i++) {
 				if (ausgaben[i].ID == id) {
@@ -354,7 +364,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 					if (ausgaben.length == 0) {
 						ausgaben = [];
 					}
-					ausgaben.push((data));
+					ausgaben.push(data);
 					deferred.resolve(data);
 				})
 				.error(function (data, status, headers) {
@@ -400,11 +410,17 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 			$http.delete($rootScope.rootDomain + "/ausgaben/DeleteAusgabe?uid=" + $rootScope.userData.UserId,
 				{
 					data: ausgabe,
-					dataType: 'json',
-					contentType: "application/json; charset=utf-8"
+					headers: {
+						"Content-Type": "application/json"
+					},
+					method: 'DELETE',
+					dataType: 'json'
+
 				})
 				.success(function (data) {
 					if (data) {
+						var indx = indexGetById(ausgabe.ID)
+						ausgaben.splice(indx, 1);
 						deferred.resolve(data);
 					} else {
 						deferred.reject('Error: Ausgabe nicht gelöscht!');
@@ -433,7 +449,11 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 			},
 			deleteAusgabe: function (ausgabe) {
 				return deleteAusgabe(ausgabe)
+			},
+			getAusgabenCached: function () {
+				return ausgaben;
 			}
+
 		};
 	}])
 	.factory('AusgabenzeitraumService', ['$http', '$q', '$rootScope', '$log', function ($http, $q, $rootScope, $log) {

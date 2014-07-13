@@ -8,7 +8,6 @@ ausgabenmanager.run(function ($rootScope, $log) {
 	$rootScope.userData = null;
 	$rootScope.rootDomain = 'http://info.fhoffma.net/services';
 	$log.info("rootScope settings done");
-
 });
 var ausgabenmanagerControllers = angular.module('ausgabenmanagerControllers', []);
 
@@ -42,9 +41,7 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 				}
 			}
 		}
-		$scope.MyUser = function () {
-			return userService.getCurrentUser();
-		}
+
 		$scope.isUserLoggedIn = function () {
 			return userService.isUserLoggedIn();
 		}
@@ -72,48 +69,6 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 				$log.info('Modal dismissed at: ' + new Date());
 			});
 		};
-		$scope.loginModal = function (size) {
-			var modalInstance = $modal.open({
-				templateUrl: '../partials/logIn.html',
-				controller: 'ModalLogInController',
-				size: size,
-				scope: $scope
-			});
-
-			modalInstance.result.then(function (user) {
-				if (user != null) {
-					$log.info('Received Data LogIn Modal 2: ' + user);
-				}
-			}, function () {
-				$log.info('Modal dismissed at: ' + new Date());
-			});
-		};
-		$scope.editUser = function (size) {
-			var modalInstance = $modal.open({
-				templateUrl: '../partials/userDetails.html',
-				controller: 'ModalUserController',
-				size: size,
-				scope: $scope,
-				resolve: {
-					user: function () {
-						$log.info('loginModal 1');
-						return "";
-					}
-				}
-			});
-
-			modalInstance.result.then(function (user) {
-				if (user != null) {
-					$log.info('Received Data LogIn Modal 2: ' + user);
-				}
-			}, function () {
-				$log.info('Modal dismissed at: ' + new Date());
-			});
-		}
-		$scope.logout = function () {
-			$rootScope.isUserLoggedIn = false;
-			$rootScope.userData = null;
-		}
 
 		//Startup Method which watches, if the userdata changes
 		//it changes when A) a new user sign in or B) when the user is logged in
@@ -173,6 +128,56 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 		});
 	}
 );
+ausgabenmanagerControllers.controller('userCtrl', function ($scope, $modal, $http, $rootScope, $log, userService) {
+	$scope.MyUser = function () {
+		return userService.getCurrentUser();
+	}
+	$scope.isUserLoggedIn = function () {
+		return userService.isUserLoggedIn();
+	}
+	$scope.logout = function () {
+		$rootScope.isUserLoggedIn = false;
+		$rootScope.userData = null;
+	}
+	$scope.loginModal = function (size) {
+		var modalInstance = $modal.open({
+			templateUrl: '../partials/logIn.html',
+			controller: 'ModalLogInController',
+			size: size,
+			scope: $scope
+		});
+
+		modalInstance.result.then(function (user) {
+			if (user != null) {
+				$log.info('Received Data LogIn Modal 2: ' + user);
+			}
+		}, function () {
+			$log.info('Modal dismissed at: ' + new Date());
+		});
+	};
+	$scope.editUser = function (size) {
+		var modalInstance = $modal.open({
+			templateUrl: '../partials/userDetails.html',
+			controller: 'ModalUserController',
+			size: size,
+			scope: $scope,
+			resolve: {
+				user: function () {
+					$log.info('loginModal 1');
+					return "";
+				}
+			}
+		});
+
+		modalInstance.result.then(function (user) {
+			if (user != null) {
+				$log.info('Received Data LogIn Modal 2: ' + user);
+			}
+		}, function () {
+			$log.info('Modal dismissed at: ' + new Date());
+		});
+	}
+});
 ausgabenmanagerControllers.controller('ModalNeueAusgabeController', function ($scope, $modalInstance, $rootScope, ausgabezeitraeume, priorities, AusgabenService) {
 	$scope.ausgabe = AusgabenService.getEmptyAusgabe();
 	$scope.ausgabezeitraum = ausgabezeitraeume;

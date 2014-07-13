@@ -1,0 +1,48 @@
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+    border-color: #428bca;
+}
+
+.controlMaxSize {
+    width: 100%;
+}
+
+.bs-info {
+    border-color: #F0AD4E;
+    border-style: solid;
+    border-width: 10px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    min-height: 100px;
+    border-radius: 3px;
+}
+
+.bs-callout {
+    padding: 20px;
+    margin: 20px 0px;
+}
+
+.margin-top-10px {
+    margin-top: 10px;
+}
+
+a {
+    cursor: pointer;
+}
+
+.paddingRight10 {
+    padding-right: 10px;
+}
+
+.white {
+    color: #ffffff;
+}
+
+.red {
+    background-color: red !important;
+    color: red !important;
+    border: 2px red solid !important;
+}

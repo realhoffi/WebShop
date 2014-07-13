@@ -5,25 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Ausgabenmanager</title>
     <link href="../css/bootstrap.css" type="text/css" rel="stylesheet">
+    <link href="../appCss/appCss.css" type="text/css" rel="stylesheet">
     <script src="../js/jquery-1.11.0.min.js" type="application/javascript"></script>
     <script src="../js/bootstrap.js" type="application/javascript"></script>
     <script src="../js/angular.js" type="application/javascript"></script>
     <script src="../js/ui-bootstrap-tpls-0.11.0.js" type="application/javascript"></script>
     <script src="../angular/controller.js" type="application/javascript"></script>
     <script src="../angular/appHelper.js" type="application/javascript"></script>
+    <script src="../angular/app.js" type="application/javascript"></script>
     <script type="text/javascript">
-        if (typeof jQuery === 'undefined') {
-            throw new Error('Bootstrap\'s JavaScript requires jQuery')
-        }
-        +function ($) {
-            'use strict';
-            $(document).on('click.bs.collapse', '[data-toggle=collapse]', function (e) {
-                var b = $(e.currentTarget).find('span.indicator');
-                var c = $(b).toggleClass('glyphicon-chevron-right glyphicon-chevron-down');
-            });
-
-        }
-        (jQuery);
 
         var uid = '';
         function upload() {
@@ -61,56 +51,7 @@
             xhr.send(file);
         }
     </script>
-    <style type="text/css">
-        .vcenter {
-            display: inline-block;
-            vertical-align: middle;
-            float: none;
-            border-color: #428bca;
-        }
 
-        .controlMaxSize {
-            width: 100%;
-        }
-
-        .bs-info {
-            border-color: #F0AD4E;
-            border-style: solid;
-            border-width: 10px;
-            border-right-width: 1px;
-            border-top-width: 1px;
-            border-bottom-width: 1px;
-            min-height: 100px;
-            border-radius: 3px;
-        }
-
-        .bs-callout {
-            padding: 20px;
-            margin: 20px 0px;
-        }
-
-        .margin-top-10px {
-            margin-top: 10px;
-        }
-
-        a {
-            cursor: pointer;
-        }
-
-        .paddingRight10 {
-            padding-right: 10px;
-        }
-
-        .white {
-            color: #ffffff;
-        }
-
-        .red {
-            background-color: red !important;
-            color: red !important;
-            border: 2px red solid !important;
-        }
-    </style>
 </head>
 <body>
 <div class="container-fluid" ng-controller="ausgabenCtrl">

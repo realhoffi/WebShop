@@ -4,7 +4,7 @@
 'use strict'
 
 var ausgabenmanager = angular.module('appAusgabenmanager', ['ui.bootstrap', 'ausgabenmanagerControllers', 'ausgabenmanagerServices']);
-ausgabenmanager.run(function ($rootScope) {
+ausgabenmanager.run(function ($rootScope, $log) {
 	$rootScope.isUserLoggedIn = false;
 	$rootScope.userData = null;
 	$rootScope.rootDomain = 'http://info.fhoffma.net/services';
@@ -19,6 +19,7 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 		$scope.orderProp = "Name";
 
 		$scope.findAusgabezeitraumById = function (ausgabe) {
+
 			for (var i = 0; i < $scope.Ausgabenzeitraeume.length; i++) {
 				if ($scope.Ausgabenzeitraeume[i].ID == ausgabe.Ausgabezeitraum) {
 					return $scope.Ausgabenzeitraeume[i].Name;
@@ -26,7 +27,8 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 			}
 		}
 		$scope.findPrioritaetById = function (ausgabe) {
-			for (var i = 0; i < $scope.Ausgabenzeitraeume.length; i++) {
+
+			for (var i = 0; i < $scope.Prioritaeten.length; i++) {
 				if ($scope.Prioritaeten[i].ID == ausgabe.Prioritaet) {
 					return $scope.Prioritaeten[i].Titel;
 				}
@@ -56,11 +58,7 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 
 			modalInstance.result.then(function (selectedItem) {
 				if (selectedItem != null) {
-					//STRANGE ANGULAR...CHECK IF INITIALIZED ARRAY IS LENGTH 0, IF YES, CREATE NEW ARRAY
-					if ($scope.Ausgaben.length == 0) {
-						$scope.Ausgaben = [];
-					}
-					$scope.Ausgaben.push((selectedItem));
+
 				}
 			}, function () {
 				$log.info('Modal dismissed at: ' + new Date());
@@ -115,7 +113,7 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 			$log.info('--WATCH--userData-- ' + new Date());
 			if (newValue && newValue != oldValue) {
 				$log.info("--WATCH--userData-- Discover new value userData: " + JSON.stringify(newValue));
-				if (!oldValue || (oldValue && newValue.UserId != oldValue.UserId)) {
+				if (!oldValue || (oldValue && newValue.UserId && newValue.UserId != oldValue.UserId)) {
 					$log.info("--WATCH--userData--Discover Updated userData");
 					AusgabenService.getAusgaben()
 						.then(function (data) {
@@ -167,12 +165,13 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 		});
 	}
 );
-ausgabenmanagerControllers.controller('ModalNeueAusgabeController', function ($scope, $modalInstance, ausgabezeitraeume, priorities, AusgabenService) {
+ausgabenmanagerControllers.controller('ModalNeueAusgabeController', function ($scope, $modalInstance, $rootScope, ausgabezeitraeume, priorities, AusgabenService) {
 	$scope.ausgabe = AusgabenService.getEmptyAusgabe();
 	$scope.ausgabezeitraum = ausgabezeitraeume;
 	$scope.priorities = priorities;
 	$scope.ok = function ($event) {
 		app.common.utils.setButtonLoadingState($event.currentTarget);
+		$scope.ausgabe.UserId = $rootScope.userData.UserId;
 		AusgabenService.addNeueAusgabe($scope.ausgabe)
 			.then(function (data) {
 				app.common.utils.setButtonLoadingStateReset($event.currentTarget);
@@ -182,7 +181,6 @@ ausgabenmanagerControllers.controller('ModalNeueAusgabeController', function ($s
 				alert('Error: ' + JSON.stringify(error));
 			}
 		);
-
 	};
 	$scope.cancel = function () {
 		$modalInstance.dismiss('cancel');
@@ -250,25 +248,54 @@ ausgabenmanagerControllers.controller('ModalUserController', function ($scope, $
 	};
 });
 var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
-	.factory('AusgabenService', ['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
+	.factory('AusgabenService', ['$http', '$q', '$rootScope', '$log', function ($http, $q, $rootScope, $log) {
+		var ausgaben;
+		var iGetById = function (id) {
+			for (var i = 0; i < ausgaben.length; i++) {
+				if (ausgaben[i].ID == id) {
+					return ausgaben[i];
+				}
+			}
+			return null;
+		};
+
+		var getAusgabeById = function (id) {
+			var deferred = $q.defer();
+			if (ausgaben) {
+				var p = iGetById(id);
+				deferred.resolve(p);
+			} else {
+				deferred.resolve(null);
+			}
+
+			return deferred.promise;
+		}
 		var getAusgaben = function () {
 			var deferred = $q.defer();
-			$http.get($rootScope.rootDomain + '/ausgaben/getausgaben?uid=' + $rootScope.userData.UserId,
-				{
-					cache: false
-				})
-				.success(function (data) {
-					deferred.resolve(data);
-				})
-				.error(function (data, status, headers) {
-					deferred.reject('Error: ' + JSON.stringify(data));
-					alert('Fehler beim Datenabruf der Ausgaben... :(');
-				});
+			if (ausgaben) {
+				$log.info("AusgabenService are cached");
+				deferred.resolve(ausgaben);
+			} else {
+				$log.info("AusgabenService HTTP Call!");
+				$http.get($rootScope.rootDomain + '/ausgaben/getausgaben?uid=' + $rootScope.userData.UserId,
+					{
+						cache: false
+					})
+					.success(function (data) {
+						$log.info("AusgabenService HTTP success!");
+						ausgaben = data;
+						deferred.resolve(ausgaben);
+					})
+					.error(function (data, status, headers) {
+						$log.error("AusgabenService fail! Error: " + JSON.stringify(data) + " --> " + JSON.stringify(status));
+						deferred.reject('Error: ' + JSON.stringify(data));
+						alert('Fehler beim Datenabruf der Ausgaben... :(');
+					});
+			}
 			return deferred.promise;
 		}
 		var addNewAusgabe = function (ausgabe) {
 			var deferred = $q.defer();
-			ausgabe.UserId = $rootScope.userData.UserId;
 			$http.post($rootScope.rootDomain + "/ausgaben/CreateAusgabe?uid=" + $rootScope.userData.UserId,
 				ausgabe,
 				{
@@ -276,6 +303,10 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 					contentType: "application/json; charset=utf-8"
 				})
 				.success(function (data) {
+					if (ausgaben.length == 0) {
+						ausgaben = [];
+					}
+					ausgaben.push((data));
 					deferred.resolve(data);
 				})
 				.error(function (data, status, headers) {
@@ -303,21 +334,34 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 			},
 			addNeueAusgabe: function (ausgabe) {
 				return addNewAusgabe(ausgabe);
+			},
+			getAusgabeById: function (id) {
+				return getAusgabeById(id);
 			}
 		};
 	}])
-	.factory('AusgabenzeitraumService', ['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
+	.factory('AusgabenzeitraumService', ['$http', '$q', '$rootScope', '$log', function ($http, $q, $rootScope, $log) {
+		var ausgabenzeitraeume;
 		var getAusgabenzeitraeume = function () {
 			var deferred = $q.defer();
-			$http.get($rootScope.rootDomain + '/Ausgabenzeitraum/GetAusgabenzeitraeume?uid=' + $rootScope.userData.UserId,
-				{cache: false})
-				.success(function (data) {
-					deferred.resolve(data);
-				})
-				.error(function (data, status, headers) {
-					deferred.reject('Error: ' + JSON.stringify(data));
-					alert('Fehler beim Datenabruf der getAusgabenzeitraeume... :(');
-				});
+			if (ausgabenzeitraeume) {
+				$log.info("AusgabenzeitraumService are cached");
+				deferred.resolve(ausgabenzeitraeume);
+			} else {
+				$log.info("AusgabenzeitraumService HTTP Call!");
+				$http.get($rootScope.rootDomain + '/Ausgabenzeitraum/GetAusgabenzeitraeume?uid=' + $rootScope.userData.UserId,
+					{cache: false})
+					.success(function (data) {
+						$log.info("AusgabenzeitraumService HTTP success!");
+						ausgabenzeitraeume = data;
+						deferred.resolve(ausgabenzeitraeume);
+					})
+					.error(function (data, status, headers) {
+						$log.error("AusgabenzeitraumService fail! Error: " + JSON.stringify(data) + " --> " + JSON.stringify(status));
+						deferred.reject('Error: ' + JSON.stringify(data));
+						alert('Fehler beim Datenabruf der getAusgabenzeitraeume... :(');
+					});
+			}
 
 			return deferred.promise;
 		}
@@ -328,32 +372,57 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 			}
 		}
 	}])
-	.factory('PrioritaetService', ['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
+	.factory('PrioritaetService', ['$http', '$q', '$rootScope', '$log', '$timeout', function ($http, $q, $rootScope, $log, $timeout) {
+		var prioritaeten;
+		var iGetById = function (id) {
+			for (var i = 0; i < prioritaeten.length; i++) {
+				if (prioritaeten[i].ID == id) {
+					return prioritaeten[i];
+				}
+			}
+			return null;
+		};
 		var getPrioritaeten = function () {
 			var deferred = $q.defer();
-			$http.get($rootScope.rootDomain + '/Prioritaeten/GetPrioritaeten?uid=' + $rootScope.userData.UserId,
-				{cache: false})
-				.success(function (data) {
-					deferred.resolve(data);
-				})
-				.error(function (data, status, headers) {
-					deferred.reject('Error: ' + JSON.stringify(data));
-					alert('Fehler beim Datenabruf der getAusgabenzeitraeume... :(');
-				});
-
+			if (prioritaeten) {
+				$log.info("PrioritaetService are cached");
+				deferred.resolve(prioritaeten);
+			} else {
+				$log.info("PrioritaetService HTTP Call!");
+				$http.get($rootScope.rootDomain + '/Prioritaeten/GetPrioritaeten?uid=' + $rootScope.userData.UserId,
+					{cache: false})
+					.success(function (data) {
+						$log.info("PrioritaetService HTTP success!");
+						prioritaeten = data;
+						deferred.resolve(prioritaeten);
+					})
+					.error(function (data, status, headers) {
+						$log.error("AusgabenzeitraumService fail! Error: " + JSON.stringify(data) + " --> " + JSON.stringify(status));
+						deferred.reject('Error: ' + JSON.stringify(data));
+						alert('Fehler beim Datenabruf der getAusgabenzeitraeume... :(');
+					});
+			}
 			return deferred.promise;
 		}
 		var getPrioritaetById = function (id) {
 			var deferred = $q.defer();
-			$http.get($rootScope.rootDomain + '/Prioritaeten/GetPrioritaetById?pid=' + id,
-				{cache: false})
-				.success(function (data) {
-					deferred.resolve(data);
-				})
-				.error(function (data, status, headers) {
-					deferred.reject('Error: ' + JSON.stringify(data));
-					alert('Fehler beim Datenabruf der getAusgabenzeitraeume... :(');
-				});
+
+			if (prioritaeten) {
+				$log.info("PrioritaetService are cached");
+				var p = iGetById(id);
+				deferred.resolve(p);
+			} else {
+				$http.get($rootScope.rootDomain + '/Prioritaeten/GetPrioritaetById?pid=' + id,
+					{cache: false})
+					.success(function (data) {
+						deferred.resolve(data);
+					})
+					.error(function (data, status, headers) {
+						deferred.reject('Error: ' + JSON.stringify(data));
+						alert('Fehler beim Datenabruf der getPrioritaetById... :(');
+					});
+			}
+
 
 			return deferred.promise;
 		}
@@ -366,10 +435,12 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 			}
 		}
 	}])
-	.factory('userService', ['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
+	.factory('userService', ['$http', '$q', '$rootScope', '$log', function ($http, $q, $rootScope, $log) {
 		var currentUserId = "";
+		var thisUser;
+		var isThisUserLoggedIn = false;
 		var getUserId = function () {
-			return app.common.utils.readCookie('userid');
+			return getCurrentUser() ? getCurrentUser().UserId : app.common.utils.readCookie('userid');
 		}
 		var getEmptyUser = function () {
 			//REMOVE THIS BECAUSE OF SQL PARSING ERROR...:(
@@ -429,8 +500,10 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 			currentUserId = 'Testadress@gmail.com';
 			if (currentUserId != null && currentUserId.length > 0) {
 				logIn(currentUserId).then(function (user) {
+					$log.info('tryLoginByCookie success! UserData: ' + JSON.stringify(user));
 					deferred.resolve(true);
 				}, function (reason) {
+					$log.error("tryLoginByCookie error: " + reason);
 					deferred.reject('Error: ' + reason);
 				});
 				;
@@ -453,13 +526,15 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 					contentType: "application/json; charset=utf-8"
 				})
 				.success(function (data) {
+					$log.info('logIn success! UserData: ' + JSON.stringify(data));
 					$rootScope.userData = data;
 					$rootScope.isUserLoggedIn = true;
-
 					deferred.resolve($rootScope.userData);
 				})
 				.error(function (data, status, headers) {
+					$log.error("tryLoginByCookie error: " + data);
 					$rootScope.isUserLoggedIn = false;
+					$rootScope.userData = null;
 					deferred.reject('Error: ' + JSON.stringify(status));
 				});
 			return  deferred.promise;

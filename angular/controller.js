@@ -21,9 +21,17 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 		$scope.deleteAusgabe = function (ausgabe) {
 			//var s = confirm("Wirklich löschen?");
 			alert("Noch nicht implementiert");
+			AusgabenService.deleteAusgabe(ausgabe)
+				.then(function (data) {
+					alert(data);
+				}, function (error) {
+					alert(error)
+				});
 		}
 		$scope.editAusgabe = function (ausgabe) {
-			alert("Noch nicht implementiert");
+			ausgabe.Beschreibung = "Test";
+			ausgabe.Name = "Done ID" + ausgabe.ID;
+			AusgabenService.updateAusgabe(ausgabe);
 		}
 		$scope.findAusgabezeitraumById = function (ausgabe) {
 
@@ -45,7 +53,7 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 		$scope.isUserLoggedIn = function () {
 			return userService.isUserLoggedIn();
 		}
-		$scope.neueAusgabeModal = function (size) {
+		$scope.neueAusgabeModal = function (size, typ, ausgab) {
 			var modalInstance = $modal.open({
 				templateUrl: '../partials/newAusgabe.html',
 				controller: 'ModalNeueAusgabeController',
@@ -57,6 +65,12 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 					},
 					priorities: function () {
 						return $scope.Prioritaeten;
+					},
+					type: function () {
+						return typ;
+					},
+					ausgabe: function () {
+						return ausgab;
 					}
 				}
 			});
@@ -178,22 +192,44 @@ ausgabenmanagerControllers.controller('userCtrl', function ($scope, $modal, $htt
 		});
 	}
 });
-ausgabenmanagerControllers.controller('ModalNeueAusgabeController', function ($scope, $modalInstance, $rootScope, ausgabezeitraeume, priorities, AusgabenService) {
-	$scope.ausgabe = AusgabenService.getEmptyAusgabe();
+ausgabenmanagerControllers.controller('ModalNeueAusgabeController', function ($scope, $modalInstance, $rootScope, ausgabezeitraeume, priorities, AusgabenService, type, ausgabe) {
+	var type = type;
+	$scope.ausgabe = null;
+	if (type == 'new') {
+		$scope.ausgabe = AusgabenService.getEmptyAusgabe();
+	} else if (type == 'edit') {
+		$scope.ausgabe = ausgabe;
+	} else {
+		alert("Type not found");
+	}
+
 	$scope.ausgabezeitraum = ausgabezeitraeume;
 	$scope.priorities = priorities;
 	$scope.ok = function ($event) {
 		app.common.utils.setButtonLoadingState($event.currentTarget);
-		$scope.ausgabe.UserId = $rootScope.userData.UserId;
-		AusgabenService.addNeueAusgabe($scope.ausgabe)
-			.then(function (data) {
-				app.common.utils.setButtonLoadingStateReset($event.currentTarget);
-				$modalInstance.close(data);
-			}, function (error) {
-				app.common.utils.setButtonLoadingStateReset($event.currentTarget);
-				alert('Error: ' + JSON.stringify(error));
-			}
-		);
+		if (type == 'new') {
+			$scope.ausgabe.UserId = $rootScope.userData.UserId;
+			AusgabenService.addNeueAusgabe($scope.ausgabe)
+				.then(function (data) {
+					app.common.utils.setButtonLoadingStateReset($event.currentTarget);
+					$modalInstance.close(data);
+				}, function (error) {
+					app.common.utils.setButtonLoadingStateReset($event.currentTarget);
+					alert('Error: ' + JSON.stringify(error));
+				}
+			);
+		} else if (type == 'edit') {
+			AusgabenService.updateAusgabe($scope.ausgabe)
+				.then(function (data) {
+					app.common.utils.setButtonLoadingStateReset($event.currentTarget);
+					$modalInstance.close(data);
+				}, function (error) {
+					app.common.utils.setButtonLoadingStateReset($event.currentTarget);
+					alert('Error: ' + JSON.stringify(error));
+				}
+			);
+		}
+
 	};
 	$scope.cancel = function () {
 		$modalInstance.dismiss('cancel');
@@ -271,7 +307,6 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 			}
 			return null;
 		};
-
 		var getAusgabeById = function (id) {
 			var deferred = $q.defer();
 			if (ausgaben) {
@@ -336,7 +371,49 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 				"UserId": app.common.utils.guid.getEmptyGuid(),
 				"Preis": 0,
 				"Prioritaet": 0
+
 			};
+		}
+		var updateAusgabe = function (ausgabe) {
+			var deferred = $q.defer();
+			$http.put($rootScope.rootDomain + "/ausgaben/UpdateAusgabenDetails?uid=" + $rootScope.userData.UserId,
+				ausgabe,
+				{
+					dataType: 'json',
+					contentType: "application/json; charset=utf-8"
+				})
+				.success(function (data) {
+					if (data) {
+						var ausg = iGetById(data.ID);
+						deferred.resolve(ausg);
+					} else {
+						deferred.reject('Error: Ausgabe intern nicht gefunden!');
+					}
+				})
+				.error(function (data, status, headers) {
+					deferred.reject('Error: ' + JSON.stringify(status));
+				});
+			return  deferred.promise;
+		}
+		var deleteAusgabe = function (ausgabe) {
+			var deferred = $q.defer();
+			$http.delete($rootScope.rootDomain + "/ausgaben/DeleteAusgabe?uid=" + $rootScope.userData.UserId,
+				{
+					data: ausgabe,
+					dataType: 'json',
+					contentType: "application/json; charset=utf-8"
+				})
+				.success(function (data) {
+					if (data) {
+						deferred.resolve(data);
+					} else {
+						deferred.reject('Error: Ausgabe nicht gelöscht!');
+					}
+				})
+				.error(function (data, status, headers) {
+					deferred.reject('Error: ' + JSON.stringify(status));
+				});
+			return  deferred.promise;
 		}
 		return{
 			getAusgaben: function () {
@@ -348,8 +425,14 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 			addNeueAusgabe: function (ausgabe) {
 				return addNewAusgabe(ausgabe);
 			},
+			updateAusgabe: function (ausgabe) {
+				return updateAusgabe(ausgabe);
+			},
 			getAusgabeById: function (id) {
 				return getAusgabeById(id);
+			},
+			deleteAusgabe: function (ausgabe) {
+				return deleteAusgabe(ausgabe)
 			}
 		};
 	}])

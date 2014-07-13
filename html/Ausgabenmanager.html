@@ -63,8 +63,8 @@
                 </h1>
             </div>
             <div class="col-md-2" ng-controller="userCtrl">
-            <div class="btn-group margin-top-10px btn-group-justified ">
-                    <div class="pull-right">
+                <div class="btn-group margin-top-10px btn-group-justified ">
+                <div class="pull-right">
                         <button class="btn btn-primary " ng-show="!isUserLoggedIn()" ng-click="loginModal()">
                             <b> <span
                                     class="glyphicon glyphicon-user"></span> <span>Sign in</span></b>
@@ -191,7 +191,7 @@
                                                     <b>
                                                         <a>
                                                 <span class="glyphicon glyphicon-pencil paddingRight10 white"
-                                                      ng-click="editAusgabe(ausgabe)"></span>
+                                                      ng-click="neueAusgabeModal('lg','edit',ausgabe)"></span>
                                                         </a>
                                                         <a>
                                                 <span class="glyphicon glyphicon-trash paddingRight10 white"
@@ -258,7 +258,8 @@
 
                                 <h3>
                                     <span class="glyphicon glyphicon-thumbs-down"></span><span>  Sie haben noch keine Ausgaben angelegt.</span></br></br>
-                                    Klicken Sie auf <a ng-click="neueAusgabeModal('lg')">Neue Ausgabe</a>, um eine neue
+                                Klicken Sie auf <a ng-click="neueAusgabeModal('lg','new',ausgabe)">Neue Ausgabe</a>,
+                                um eine neue
                                     Ausgabe
                                     anzulegen.</span>
                                 </h3>
@@ -287,7 +288,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="panel panel-success">
-                                <button class="btn btn-primary btn-lg btn-block" ng-click="neueAusgabeModal('lg')">Neue
+                                <button class="btn btn-primary btn-lg btn-block"
+                                        ng-click="neueAusgabeModal('lg','new',null)">Neue
                                     Ausgabe
                                 </button>
 
@@ -303,8 +305,8 @@
 
 </div>
 <div class="row" id="footer">
-<div class="panel-footer">
-        <!--<div class="col-md-12 alert alert-info" ng-include="'../partials/userdetails.html'"></div>-->
+    <div class="panel-footer">
+    <!--<div class="col-md-12 alert alert-info" ng-include="'../partials/userdetails.html'"></div>-->
     </div>
 </div>
 </div>

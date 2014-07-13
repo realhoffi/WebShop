@@ -46,3 +46,9 @@ a {
     color: red !important;
     border: 2px red solid !important;
 }
+
+.form-group.required .control-label:after {
+    content: "  *";
+    color: red;
+
+}

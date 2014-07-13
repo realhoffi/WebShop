@@ -2,62 +2,69 @@
     <h3 class="modal-title">Neue Ausgabe erstellen</h3>
 </div>
 <div class="modal-body">
-    <form class="form-horizontal" role="form">
-        <div class="form-group">
-            <h4 class="col-sm-2">
-                <span class="label label-primary">Titel:</span>
+    <form class="form-horizontal" role="form" ng-submit="ok($event)">
+        <div class="form-group required ">
+            <h4 class="col-sm-3">
+                <span class="label label-primary control-label">Titel:</span>
             </h4>
 
-            <div class="col-sm-10">
-                <input type="text" ng-model="ausgabe.Name" class="form-control ">
+            <div class="col-sm-9 required">
+                <input type="text" ng-model="ausgabe.Name" required="required" class="form-control">
             </div>
         </div>
-        <div class="form-group">
-            <h4 class="col-sm-2">
-                <span class=" label label-primary">Beschreibung:</span>
+        <div class="form-group required">
+            <h4 class="col-sm-3">
+                <span class=" label label-primary control-label">Beschreibung:</span>
             </h4>
 
-            <div class="col-sm-10">
-                <input type="text" class="form-control"
-                       ng-model="ausgabe.Beschreibung">
+            <div class="col-sm-9">
+                <!--<input type="text" class="form-control" required="required"-->
+                <!--ng-model="ausgabe.Beschreibung">-->
+                <textarea cols="30" rows="3" type="text" maxlength="255" class="form-control" required="required"
+                          ng-model="ausgabe.Beschreibung"></textarea>
             </div>
         </div>
-        <div class="form-group">
-            <h4 class="col-sm-2">
-                <span class="label label-primary">Ausgabezeitraum:</span>
+        <div class="form-group required">
+            <h4 class="col-sm-3">
+                <span class="label label-primary control-label">Ausgabezeitraum:</span>
             </h4>
 
             <div class="col-sm-6">
-                <select class="form-control" ng-model="ausgabe.Ausgabezeitraum"
+                <select class="form-control" ng-model="ausgabe.Ausgabezeitraum" required="required"
                         ng-options="choice.ID as choice.Name for choice in ausgabezeitraum">
                     <option value="">-- Ausgabezeitraum auswählen --</option>
                 </select>
             </div>
         </div>
-        <div class="form-group">
-            <h4 class="col-sm-2">
-                <span class="label label-primary">Priorität:</span>
+        <div class="form-group required">
+            <h4 class="col-sm-3">
+                <span class="label label-primary control-label">Priorität:</span>
             </h4>
 
             <div class="col-sm-6">
-                <select class="form-control" ng-model="ausgabe.Prioritaet"
+                <select class="form-control" ng-model="ausgabe.Prioritaet" required="required"
                         ng-options="prio.ID as prio.Titel for prio in priorities">
                     <option value="">-- Priorität auswählen --</option>
                 </select>
             </div>
         </div>
-        <div class="form-group">
-            <h4 class="col-sm-2">
-                <span class="label label-primary">Preis:</span>
+        <div class="form-group required">
+            <h4 class="col-sm-3">
+                <span class="label label-primary control-label">Preis:</span>
             </h4>
 
             <div class="col-sm-6">
-                <input type="text" class="form-control" ng-model="ausgabe.Preis">
+                <input class="form-control" ng-model="ausgabe.Preis" required="required">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-9 col-md-3">
+                <br>
+                <input class="btn btn-primary" type="submit" onclick="" value="OK"/>
+                <input class="btn btn-warning" type="reset" ng-click="cancel()" value="Close"/>
             </div>
         </div>
     </form>
 </div>
-<div class="modal-footer">
-    <button class="btn btn-primary" ng-click="ok($event)">OK</button>
-    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-</div>
+
+

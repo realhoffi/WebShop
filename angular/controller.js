@@ -18,6 +18,13 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 		$scope.Prioritaeten = [];
 		$scope.orderProp = "Name";
 
+		$scope.deleteAusgabe = function (ausgabe) {
+			//var s = confirm("Wirklich löschen?");
+			alert("Noch nicht implementiert");
+		}
+		$scope.editAusgabe = function (ausgabe) {
+			alert("Noch nicht implementiert");
+		}
 		$scope.findAusgabezeitraumById = function (ausgabe) {
 
 			for (var i = 0; i < $scope.Ausgabenzeitraeume.length; i++) {

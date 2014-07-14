@@ -198,7 +198,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 			}
 		}
 	}])
-	.factory('PrioritaetService', ['$http', '$q', '$rootScope', '$log', '$timeout', function ($http, $q, $rootScope, $log, $timeout) {
+	.factory('PrioritaetService', ['$http', '$q', '$rootScope', '$log', function ($http, $q, $rootScope, $log) {
 		var prioritaeten;
 		var iGetById = function (id) {
 			for (var i = 0; i < prioritaeten.length; i++) {

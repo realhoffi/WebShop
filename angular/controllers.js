@@ -5,7 +5,7 @@
 
 var ausgabenmanagerControllers = angular.module('ausgabenmanagerControllers', []);
 
-ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, $http, $rootScope, $log, userService, AusgabenService, AusgabenzeitraumService, PrioritaetService) {
+ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, $http, $rootScope, $log, $timeout, userService, AusgabenService, AusgabenzeitraumService, PrioritaetService) {
 
 		$scope.Ausgaben = AusgabenService.getAusgabenCached();
 		$scope.Ausgabenzeitraeume = [];
@@ -88,34 +88,37 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 				$log.info("--WATCH--userData-- Discover new value userData: " + JSON.stringify(newValue));
 				if (!oldValue || (oldValue && newValue.UserId && newValue.UserId != oldValue.UserId)) {
 					$log.info("--WATCH--userData--Discover Updated userData");
+					alert(':(');
+					$timeout(function () {
+						AusgabenService.getAusgaben()
+							.then(function (data) {
+								if (data != null) {
+									$scope.Ausgaben = data;
+									$log.info('Received Data AusgabenService: ' + JSON.stringify(data));
+								}
+							}, function (error) {
+								$log.info("Error at getAusgaben() (" + new Date() + "): --> " + error);
+							});
 
-					AusgabenService.getAusgaben()
-						.then(function (data) {
+						AusgabenzeitraumService.getAusgabenzeitraeume()
+							.then(function (data) {
+								if (data != null) {
+									$scope.Ausgabenzeitraeume = data;
+									$log.info('Received Data AusgabenzeitraumService: ' + JSON.stringify(data));
+								}
+							}, function (error) {
+								$log.info("Error at getAusgabenzeitraeume() (" + new Date() + "): --> " + error);
+							});
+						PrioritaetService.getPrioritaeten().then(function (data) {
 							if (data != null) {
-								$scope.Ausgaben = data;
-								$log.info('Received Data AusgabenService: ' + JSON.stringify(data));
+								$scope.Prioritaeten = data;
+								$log.info('Received Data PrioritaetService: ' + JSON.stringify(data));
 							}
 						}, function (error) {
-							$log.info("Error at getAusgaben() (" + new Date() + "): --> " + error);
+							$log.info("Error at getPrioritaeten() (" + new Date() + "): --> " + error);
 						});
 
-					AusgabenzeitraumService.getAusgabenzeitraeume()
-						.then(function (data) {
-							if (data != null) {
-								$scope.Ausgabenzeitraeume = data;
-								$log.info('Received Data AusgabenzeitraumService: ' + JSON.stringify(data));
-							}
-						}, function (error) {
-							$log.info("Error at getAusgabenzeitraeume() (" + new Date() + "): --> " + error);
-						});
-					PrioritaetService.getPrioritaeten().then(function (data) {
-						if (data != null) {
-							$scope.Prioritaeten = data;
-							$log.info('Received Data PrioritaetService: ' + JSON.stringify(data));
-						}
-					}, function (error) {
-						$log.info("Error at getPrioritaeten() (" + new Date() + "): --> " + error);
-					});
+					}, 1000);
 
 				} else {
 					$log.info("--WATCH--userData--NOT UPDATE NEEDED");

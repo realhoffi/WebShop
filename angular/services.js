@@ -39,6 +39,11 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 				deferred.resolve(ausgaben);
 			} else {
 				$log.info("AusgabenService HTTP Call!");
+				$log.info($rootScope.userData.UserId);
+				if ($rootScope.userData.UserId == 'undefined' || $rootScope.userData.UserId == undefined || $rootScope.userData.UserId.length == 0) {
+					$log.info('USERDATA undefined');
+				}
+
 				$http.get($rootScope.rootDomain + '/ausgaben/getausgaben?uid=' + $rootScope.userData.UserId,
 					{
 						cache: false

@@ -42,6 +42,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 				$log.info($rootScope.userData.UserId);
 				if ($rootScope.userData.UserId == 'undefined' || $rootScope.userData.UserId == undefined || $rootScope.userData.UserId.length == 0) {
 					$log.info('USERDATA undefined');
+					alert(':(');
 				}
 
 				$http.get($rootScope.rootDomain + '/ausgaben/getausgaben?uid=' + $rootScope.userData.UserId,

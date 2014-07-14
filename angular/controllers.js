@@ -88,7 +88,6 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 				$log.info("--WATCH--userData-- Discover new value userData: " + JSON.stringify(newValue));
 				if (!oldValue || (oldValue && newValue.UserId && newValue.UserId != oldValue.UserId)) {
 					$log.info("--WATCH--userData--Discover Updated userData");
-					alert(':(');
 					$timeout(function () {
 						AusgabenService.getAusgaben()
 							.then(function (data) {

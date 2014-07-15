@@ -1,51 +1,53 @@
 <div>
-    <div class="modal-header">
-        <h2 class="modal-title text-center"><span> Change your User-Details</span></h2>
-    </div>
-    <div class="modal-body">
-        <form class="form-horizontal" role="form">
-            <div class="form-group">
-                <h4 class="col-md-3"><span>UserId:</span>
+    <form class="form-horizontal" role="form" name="form">
+        <div class="modal-header">
+            <h2 class="modal-title text-center"><span> Change your User-Details</span></h2>
+        </div>
+        <div class="modal-body">
+
+            <div class="form-group required ">
+                <h4 class="col-md-2"><span class="label label-primary control-label">UserId:</span>
                 </h4>
 
                 <div class="col-md-8">
-                    <span class="form-control"><b>{{ MyUser().UserId }}</b></span>
+                    <span class="form-control" required><b>{{ MyUser().UserId }}</b></span>
                 </div>
             </div>
-            <div class="form-group">
-                <h4 class="col-md-3"><span>Email:</span>
+            <div class="form-group required">
+                <h4 class="col-md-2"><span class="label label-primary control-label">Email:</span>
                 </h4>
 
                 <div class="col-md-8">
-                    <input class="form-control" ng-model="MyUser().Email">
+                    <input class="form-control" required ng-model="MyUser().Email">
                 </div>
             </div>
-            <div class="form-group">
-                <h4 class="col-md-3"><span>First-Name:</span>
+            <div class="form-group required">
+                <h4 class="col-md-2"><span class="label label-primary control-label">First-Name:</span>
                 </h4>
 
                 <div class="col-md-8">
-                    <input class="form-control" ng-model="MyUser().Vorname">
+                    <input class="form-control" required ng-model="MyUser().Vorname">
                 </div>
             </div>
-            <div class="form-group">
-                <h4 class="col-md-3"><span>Last-Name:</span>
+            <div class="form-group required">
+                <h4 class="col-md-2"><span class="label label-primary control-label">Last-Name:</span>
                 </h4>
 
                 <div class="col-md-8">
-                    <input class="form-control" ng-model="MyUser().Nachname">
+                    <input class="form-control" required ng-model="MyUser().Nachname">
                 </div>
             </div>
-        </form>
-    </div>
-    <div class="modal-footer">
-        <div class="btn-group-vertical btn-group-justified">
-            <div class="pull-left">
-            </div>
-            <div class="pull-right">
-                <button class="btn btn-primary" ng-click="ok($event)">Save</button>
-                <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+
+        </div>
+        <div class="modal-footer">
+            <div class="btn-group-vertical btn-group-justified ">
+                <div class="pull-left">
+                </div>
+                <div class="pull-right">
+                    <button class="btn btn-primary" ng-disabled="form.$invalid" ng-click="ok($event)">Save</button>
+                    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+                </div>
             </div>
         </div>
-    </div>
+    </form>
 </div>

@@ -22,8 +22,13 @@ if (typeof jQuery === 'undefined') {
 
 var ausgabenmanager = angular.module('appAusgabenmanager', ['ui.bootstrap', 'ausgabenmanagerControllers', 'ausgabenmanagerServices']);
 ausgabenmanager.run(function ($rootScope, $log) {
+	var maxCountFailCount = 3;
 	$rootScope.isUserLoggedIn = false;
 	$rootScope.userData = null;
+	$rootScope.maxFailCounter = maxCountFailCount;
+	$rootScope.resetFailCounter = function () {
+		$rootScope.maxFailCounter = maxCountFailCount;
+	}
 	$rootScope.rootDomain = 'http://info.fhoffma.net/services';
 	$log.info("rootScope settings done");
 });

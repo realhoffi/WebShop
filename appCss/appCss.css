@@ -52,3 +52,11 @@ a {
     color: red;
 
 }
+
+form input.ng-invalid.ng-dirty, form textarea.ng-invalid.ng-dirty, form select.ng-invalid.ng-dirty {
+    background-color: #FA787E;
+}
+
+/*form input.ng-valid.ng-dirty, form select.ng-valid.ng-dirty, form textarea.ng-valid.ng-dirty {*/
+/*background-color: #78FA89;*/
+/*}*/

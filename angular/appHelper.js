@@ -28,13 +28,10 @@ app.common.utils = {
 		$(form).find('input[required], select[required], textarea[required]').each(function () {
 			// add a class to each required field with "required" & the input type
 			// using the normal "getAttribute" method because jQuery's attr always returns "text"
-			//	$(this).attr('class', 'required ' + this.getAttribute('type')).removeAttr('required');
-			if ($(this).val() == "0" || $(this).val().length == 0);
-			{
+			if (!$(this).val() || $(this).val().length == 0) {
 				retVal = false;
 				$(this).parent().attr('class', $(this).parent().attr('class') + " has-error");
 			}
-
 		});
 		return retVal;
 	}

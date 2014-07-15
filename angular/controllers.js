@@ -89,6 +89,17 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 				if (!oldValue || (oldValue && newValue.UserId && newValue.UserId != oldValue.UserId)) {
 					$log.info("--WATCH--userData--Discover Updated userData");
 					$timeout(function () {
+						//Check if UserId=null, if yes, redirect to current Page, maximum is maxFailcounter!
+						$log.info($rootScope.userData.UserId);
+						if ($rootScope.userData.UserId == 'undefined' || $rootScope.userData.UserId == undefined || $rootScope.userData.UserId.length == 0) {
+							$log.info('USERDATA undefined. Redirect to Page again');
+							if ($rootScope.maxFailCounter > 0) {
+								$rootScope.maxFailCounter--;
+								window.location.href = window.location.href;
+							}
+						}
+						$rootScope.resetFailCounter();
+
 						AusgabenService.getAusgaben()
 							.then(function (data) {
 								if (data != null) {
@@ -117,7 +128,7 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 							$log.info("Error at getPrioritaeten() (" + new Date() + "): --> " + error);
 						});
 
-					}, 1000);
+					}, 500);
 
 				} else {
 					$log.info("--WATCH--userData--NOT UPDATE NEEDED");
@@ -239,6 +250,10 @@ ausgabenmanagerControllers.controller('ModalNeueAusgabeController', function ($s
 	};
 });
 ausgabenmanagerControllers.controller('ModalLogInController', function ($scope, $modalInstance, userService) {
+	$scope.newUser = userService.getEmptyUser();
+	$scope.item = {name: ""};
+	$scope.userClickedRegistered = false;
+
 	$scope.Heading = {Register: 'Register', Login: 'Sign in', Logout: 'Sign Out'};
 	$scope.selectedHeading = function () {
 		return  $scope.getHeadingByStatus($scope.userClickedRegistered);
@@ -246,10 +261,14 @@ ausgabenmanagerControllers.controller('ModalLogInController', function ($scope, 
 	$scope.getHeadingByStatus = function (b) {
 		return b ? $scope.Heading.Register : $scope.Heading.Login;
 	}
+	$scope.checkValidation = function () {
+		if ($scope.userClickedRegistered) {
+			return this.formRegister.$invalid;
+		} else {
+			return this.formLogin.$invalid;
+		}
+	}
 
-	$scope.newUser = userService.getEmptyUser();
-	$scope.item = {name: ""};
-	$scope.userClickedRegistered = false;
 	$scope.ok = function ($event) {
 		app.common.utils.setButtonLoadingState($event.currentTarget);
 		if ($scope.userClickedRegistered) {
@@ -283,6 +302,8 @@ ausgabenmanagerControllers.controller('ModalLogInController', function ($scope, 
 });
 ausgabenmanagerControllers.controller('ModalUserController', function ($scope, $modalInstance, userService) {
 	$scope.ok = function ($event) {
+		var isValid = app.common.utils.validateForm($event.currentTarget);
+		if (!isValid)return false;
 		app.common.utils.setButtonLoadingState($event.currentTarget);
 		userService.updateUser($scope.MyUser()).then(
 			function (newuser) {

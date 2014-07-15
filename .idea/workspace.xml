@@ -2,14 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="33469c24-7a96-412e-9d56-a358b96f40de" name="Default" comment="initialize">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/angular/app.js" afterPath="$PROJECT_DIR$/angular/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/appCss/appCss.css" afterPath="$PROJECT_DIR$/appCss/appCss.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/angular/appHelper.js" afterPath="$PROJECT_DIR$/angular/appHelper.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/angular/controllers.js" afterPath="$PROJECT_DIR$/angular/controllers.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/partials/logIn.html" afterPath="$PROJECT_DIR$/partials/logIn.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/partials/newAusgabe.html" afterPath="$PROJECT_DIR$/partials/newAusgabe.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/angular/services.js" afterPath="$PROJECT_DIR$/angular/services.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/partials/userdetails.html" afterPath="$PROJECT_DIR$/partials/userdetails.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="WebShop.iws" />
@@ -36,7 +28,7 @@
       <file leaf-file-name="Ausgabenmanager.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/html/Ausgabenmanager.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.35167465" vertical-offset="1678" max-vertical-offset="5270">
+            <state vertical-scroll-proportion="0.352518" vertical-offset="1678" max-vertical-offset="5270">
               <caret line="116" column="18" selection-start-line="116" selection-start-column="18" selection-end-line="116" selection-end-column="18" />
               <folding>
                 <element signature="tag#div#1;tag#div#0;tag#div#0;tag#div#1;tag#div#1;tag#div#0;tag#body#0;tag#html#0" expanded="false" />
@@ -605,7 +597,11 @@
       <created>1405369553771</created>
       <updated>1405369553771</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="initialize">
+      <created>1405447593400</created>
+      <updated>1405447593400</updated>
+    </task>
+    <option name="localTasksCounter" value="63" />
     <servers />
   </component>
   <component name="TodoView" selected-index="2">
@@ -1089,7 +1085,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/html/Ausgabenmanager.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35167465" vertical-offset="1678" max-vertical-offset="5270">
+        <state vertical-scroll-proportion="0.352518" vertical-offset="1678" max-vertical-offset="5270">
           <caret line="116" column="18" selection-start-line="116" selection-start-column="18" selection-end-line="116" selection-end-column="18" />
           <folding>
             <element signature="tag#div#1;tag#div#0;tag#div#0;tag#div#1;tag#div#1;tag#div#0;tag#body#0;tag#html#0" expanded="false" />

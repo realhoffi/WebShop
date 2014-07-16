@@ -65,10 +65,11 @@
                 </h1>
             </div>
             <div class="col-md-2" ng-controller="userCtrl">
-                <div class="btn-group margin-top-10px btn-group-justified ">
-                    <div class="pull-right">
-                    <button class="btn btn-primary " ng-show="!isUserLoggedIn()" ng-click="loginModal()">
-                            <b> <span
+                <div class="row ">
+                    <div class="btn-block text-center margin-top-10px">
+
+                        <button class="btn btn-primary " ng-show="!isUserLoggedIn()" ng-click="loginModal()">
+                        <b> <span
                                     class="glyphicon glyphicon-user"></span> <span>Sign in</span></b>
                         </button>
                         <button class="btn btn-primary " ng-click="logout()" ng-show="isUserLoggedIn()">
@@ -77,6 +78,7 @@
                         <button class="btn btn-primary " ng-click="editUser('lg')" ng-show="isUserLoggedIn()">
                             <b><span class="glyphicon glyphicon-cog"></span> <span>Settings</span></b>
                         </button>
+
 
                     </div>
                 </div>

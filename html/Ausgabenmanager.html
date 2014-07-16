@@ -61,7 +61,7 @@
             <div class="col-md-10">
                 <h1 class="text-center">
                     <b> <span class="glyphicon glyphicon-tasks"></span>
-                        <span> Ausgabenmanager</span></b>
+                        <span>Ausgabenmanager</span></b>
                 </h1>
             </div>
             <div class="col-md-2" ng-controller="userCtrl">
@@ -69,7 +69,7 @@
                     <div class="btn-block text-center margin-top-10px">
 
                         <button class="btn btn-primary " ng-show="!isUserLoggedIn()" ng-click="loginModal()">
-                        <b> <span
+                            <b> <span
                                     class="glyphicon glyphicon-user"></span> <span>Sign in</span></b>
                         </button>
                         <button class="btn btn-primary " ng-click="logout()" ng-show="isUserLoggedIn()">
@@ -175,8 +175,8 @@
                                 <div class="panel panel-primary">
                                     <div class="panel-heading ">
                                         <div class="row">
-                                            <div class="col-md-10 pull-left">
-                                                <a data-toggle="collapse" data-parent="#ausgabenAccordion"
+                                            <div class="col-md-9 pull-left">
+                                            <a data-toggle="collapse" data-parent="#ausgabenAccordion"
                                                    href="#acc{{ausgabe.ID}}">
                                                     <h4>
                                                         <b>
@@ -190,8 +190,8 @@
                                                 </a>
 
                                             </div>
-                                            <div class="col-md-2 pull-right">
-                                                <h4 class="pull-right">
+                                            <div class="col-md-3 pull-right">
+                                            <h4 class="pull-right">
                                                     <b>
                                                         <a>
                                                 <span class="glyphicon glyphicon-pencil paddingRight10 white"
@@ -211,40 +211,40 @@
                                         <div class="panel-body">
                                             <form class="form-horizontal" role="form">
                                                 <div class="form-group">
-                                                    <h4 class="col-sm-2">
-                                                        <span class=" label label-primary">Beschreibung:</span>
+                                                    <h4 class="col-sm-3">
+                                                    <span class=" label label-primary">Beschreibung:</span>
                                                     </h4>
 
-                                                    <div class="col-sm-10">
-                                                        <span class="form-control">{{ ausgabe.Beschreibung }}</span>
+                                                    <div class="col-sm-9">
+                                                    <span class="form-control">{{ ausgabe.Beschreibung }}</span>
                                                     </div>
 
                                                 </div>
                                                 <div class="form-group">
-                                                    <h4 class="col-sm-2">
-                                                        <span class="label label-primary">Ausgabezeitraum:</span>
+                                                    <h4 class="col-sm-3">
+                                                    <span class="label label-primary">Ausgabezeitraum:</span>
                                                     </h4>
 
-                                                    <div class="col-sm-6">
-                                                        <span class="form-control">{{ findAusgabezeitraumById(ausgabe) }}</span>
+                                                    <div class="col-sm-9">
+                                                    <span class="form-control">{{ findAusgabezeitraumById(ausgabe) }}</span>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <h4 class="col-sm-2">
-                                                        <span class="label label-primary">Priorität:</span>
+                                                    <h4 class="col-sm-3">
+                                                    <span class="label label-primary">Priorität:</span>
                                                     </h4>
 
-                                                    <div class="col-sm-6">
-                                                        <span class="form-control">{{ findPrioritaetById(ausgabe) }}</span>
+                                                    <div class="col-sm-9">
+                                                    <span class="form-control">{{ findPrioritaetById(ausgabe) }}</span>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <h4 class="col-sm-2">
-                                                        <span class=" label label-primary">Preis:</span>
+                                                    <h4 class="col-sm-3">
+                                                    <span class=" label label-primary">Preis:</span>
                                                     </h4>
 
-                                                    <div class="col-sm-10">
-                                                        <span class="form-control">{{ ausgabe.Preis }}</span>
+                                                    <div class="col-sm-9">
+                                                    <span class="form-control">{{ ausgabe.Preis }}</span>
                                                     </div>
 
                                                 </div>

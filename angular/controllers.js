@@ -90,6 +90,7 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 
 		//Startup Method which watches, if the userdata changes
 		//it changes when A) a new user sign in or B) when the user is logged in
+		//EDIT NEW! NO NEED TO CHECK USERDATA FOR CHANGE, SERVICES CACHE ITEMS!
 		$rootScope.$watch('userData', function (newValue, oldValue, scope) {
 				$log.info('--WATCH--userData-- ' + new Date());
 //			if (newValue && newValue != oldValue) {

@@ -91,60 +91,62 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 		//Startup Method which watches, if the userdata changes
 		//it changes when A) a new user sign in or B) when the user is logged in
 		$rootScope.$watch('userData', function (newValue, oldValue, scope) {
-			$log.info('--WATCH--userData-- ' + new Date());
-			if (newValue && newValue != oldValue) {
+				$log.info('--WATCH--userData-- ' + new Date());
+//			if (newValue && newValue != oldValue) {
 				$log.info("--WATCH--userData-- Discover new value userData: " + JSON.stringify(newValue));
-				if (!oldValue || (oldValue && newValue.UserId && newValue.UserId != oldValue.UserId)) {
-					$log.info("--WATCH--userData--Discover Updated userData");
-					$timeout(function () {
-						//Check if UserId=null, if yes, redirect to current Page, maximum is maxFailcounter!
-						$log.info($rootScope.userData.UserId);
-						if ($rootScope.userData.UserId == 'undefined' || $rootScope.userData.UserId == undefined || $rootScope.userData.UserId.length == 0) {
-							$log.info('USERDATA undefined. Redirect to Page again');
-							if ($rootScope.maxFailCounter > 0) {
-								$rootScope.maxFailCounter--;
-								window.location.href = window.location.href;
-							}
+				//	if (!oldValue || (oldValue && newValue.UserId && newValue.UserId != oldValue.UserId)) {
+				$log.info("--WATCH--userData--Discover Updated userData");
+				$timeout(function () {
+					//Check if UserId=null, if yes, redirect to current Page, maximum is maxFailcounter!
+					$log.info($rootScope.userData.UserId);
+					if ($rootScope.userData.UserId == 'undefined' || $rootScope.userData.UserId == undefined || $rootScope.userData.UserId.length == 0) {
+						$log.info('USERDATA undefined. Redirect to Page again');
+						if ($rootScope.maxFailCounter > 0) {
+							$rootScope.maxFailCounter--;
+							window.location.href = window.location.href;
 						}
-						$rootScope.resetFailCounter();
+					}
+					$rootScope.resetFailCounter();
 
-						AusgabenService.getAusgaben()
-							.then(function (data) {
-								if (data != null) {
-									$scope.Ausgaben = data;
-									$log.info('Received Data AusgabenService: ' + JSON.stringify(data));
-								}
-							}, function (error) {
-								$log.info("Error at getAusgaben() (" + new Date() + "): --> " + error);
-							});
-
-						AusgabenzeitraumService.getAusgabenzeitraeume()
-							.then(function (data) {
-								if (data != null) {
-									$scope.Ausgabenzeitraeume = data;
-									$log.info('Received Data AusgabenzeitraumService: ' + JSON.stringify(data));
-								}
-							}, function (error) {
-								$log.info("Error at getAusgabenzeitraeume() (" + new Date() + "): --> " + error);
-							});
-						PrioritaetService.getPrioritaeten().then(function (data) {
+					AusgabenService.getAusgaben()
+						.then(function (data) {
 							if (data != null) {
-								$scope.Prioritaeten = data;
-								$log.info('Received Data PrioritaetService: ' + JSON.stringify(data));
+								$scope.Ausgaben = data;
+								$log.info('Received Data AusgabenService: ' + JSON.stringify(data));
 							}
 						}, function (error) {
-							$log.info("Error at getPrioritaeten() (" + new Date() + "): --> " + error);
+							$log.info("Error at getAusgaben() (" + new Date() + "): --> " + error);
 						});
 
-					}, 500);
+					AusgabenzeitraumService.getAusgabenzeitraeume()
+						.then(function (data) {
+							if (data != null) {
+								$scope.Ausgabenzeitraeume = data;
+								$log.info('Received Data AusgabenzeitraumService: ' + JSON.stringify(data));
+							}
+						}, function (error) {
+							$log.info("Error at getAusgabenzeitraeume() (" + new Date() + "): --> " + error);
+						});
+					PrioritaetService.getPrioritaeten().then(function (data) {
+						if (data != null) {
+							$scope.Prioritaeten = data;
+							$log.info('Received Data PrioritaetService: ' + JSON.stringify(data));
+						}
+					}, function (error) {
+						$log.info("Error at getPrioritaeten() (" + new Date() + "): --> " + error);
+					});
 
-				} else {
-					$log.info("--WATCH--userData--NOT UPDATE NEEDED");
-				}
-			} else {
-				$log.info("--WATCH--userData-- Old value discovered: userData: " + JSON.stringify(oldValue))
+				}, 500);
+
+				//	} else {
+				//		$log.info("--WATCH--userData--NOT UPDATE NEEDED");
+//				}
+//			} else {
+//				$log.info("--WATCH--userData-- Old value discovered: userData: " + JSON.stringify(oldValue))
+				//		}
 			}
-		});
+		)
+		;
 	}
 );
 ausgabenmanagerControllers.controller('userCtrl', function ($scope, $modal, $http, $rootScope, $log, userService) {

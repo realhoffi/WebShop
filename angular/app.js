@@ -49,6 +49,14 @@ ausgabenmanager.config(['$routeProvider',
 				templateUrl: '../partials/ausgabenBericht.html',
 				controller: 'ausgabenCtrl'
 			}).
+			when('/favoritenOverview', {
+				templateUrl: '../partials/favoritenOverview.html',
+				controller: 'favoriteCtrl'
+			}).
+			when('/fileOverview', {
+				templateUrl: '../partials/fileOverview.html',
+				controller: 'fileCtrl'
+			}).
 			otherwise({
 				redirectTo: '/angulartest.html'
 			});

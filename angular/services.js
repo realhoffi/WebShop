@@ -51,7 +51,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 					.error(function (data, status, headers) {
 						$log.error("AusgabenService fail! Error: " + JSON.stringify(data) + " --> " + JSON.stringify(status));
 						deferred.reject('Error: ' + JSON.stringify(data));
-						alert('Fehler beim Datenabruf der Ausgaben... :(');
+						alert('AusgabenService: Fehler beim Datenabruf der Ausgaben... :(');
 					});
 			}
 			return deferred.promise;
@@ -179,7 +179,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 					.error(function (data, status, headers) {
 						$log.error("AusgabenzeitraumService fail! Error: " + JSON.stringify(data) + " --> " + JSON.stringify(status));
 						deferred.reject('Error: ' + JSON.stringify(data));
-						alert('Fehler beim Datenabruf der getAusgabenzeitraeume... :(');
+						alert('AusgabenzeitraumService: Fehler beim Datenabruf der getAusgabenzeitraeume... :(');
 					});
 			}
 
@@ -195,8 +195,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 			}
 		}
 	}])
-	.
-	factory('PrioritaetService', ['$http', '$q', '$rootScope', '$log', function ($http, $q, $rootScope, $log) {
+	.factory('PrioritaetService', ['$http', '$q', '$rootScope', '$log', function ($http, $q, $rootScope, $log) {
 		var prioritaeten;
 		var iGetById = function (id) {
 			for (var i = 0; i < prioritaeten.length; i++) {
@@ -223,7 +222,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 					.error(function (data, status, headers) {
 						$log.error("AusgabenzeitraumService fail! Error: " + JSON.stringify(data) + " --> " + JSON.stringify(status));
 						deferred.reject('Error: ' + JSON.stringify(data));
-						alert('Fehler beim Datenabruf der getAusgabenzeitraeume... :(');
+						alert('AusgabenzeitraumService: Fehler beim Datenabruf der getAusgabenzeitraeume... :(');
 					});
 			}
 			return deferred.promise;
@@ -243,7 +242,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 					})
 					.error(function (data, status, headers) {
 						deferred.reject('Error: ' + JSON.stringify(data));
-						alert('Fehler beim Datenabruf der getPrioritaetById... :(');
+						alert('PrioritaetService: Fehler beim Datenabruf der getPrioritaetById... :(');
 					});
 			}
 
@@ -389,4 +388,171 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 				return updateUser(user);
 			}
 		};
+	}])
+	.factory('fileService', ['$http', '$q', '$rootScope', '$log', function ($http, $q, $rootScope, $log) {
+
+	}])
+	.factory('favoriteService', ['$http', '$q', '$rootScope', '$log', function ($http, $q, $rootScope, $log) {
+		var favoriten;
+
+		var indexGetById = function (id) {
+			for (var i = 0; i < favoriten.length; i++) {
+				if (favoriten[i].ID == id) {
+					return i;
+				}
+			}
+			return null;
+		};
+		var iGetById = function (id) {
+			for (var i = 0; i < favoriten.length; i++) {
+				if (favoriten[i].ID == id) {
+					return favoriten[i];
+				}
+			}
+			return null;
+		};
+		var getFavoriten = function () {
+			var deferred = $q.defer();
+			if (favoriten) {
+				$log.info("favoriteService are cached");
+				deferred.resolve(favoriten);
+			} else {
+				$log.info("favoriteService HTTP Call!");
+				$http.get($rootScope.rootDomain + '/Favoriten/GetFavoriten?uid=' + $rootScope.userData.UserId,
+					{cache: false})
+					.success(function (data) {
+						$log.info("PrioritaetService HTTP success!");
+						favoriten = data;
+						deferred.resolve(favoriten);
+					})
+					.error(function (data, status, headers) {
+						$log.error("favoriteService fail! Error: " + JSON.stringify(data) + " --> " + JSON.stringify(status));
+						deferred.reject('Error: ' + JSON.stringify(data));
+						alert('favoriteService: Fehler beim Datenabruf der getFavoriten... :(');
+					});
+			}
+			return deferred.promise;
+		}
+		var getFavoriteById = function (id) {
+			var deferred = $q.defer();
+
+			if (prioritaeten) {
+				$log.info("favoriteService are cached");
+				var p = iGetById(id);
+				deferred.resolve(p);
+			} else {
+				$http.get($rootScope.rootDomain + '/Favoriten/GetFavoriteById?fid=' + id,
+					{cache: false})
+					.success(function (data) {
+						deferred.resolve(data);
+					})
+					.error(function (data, status, headers) {
+						deferred.reject('Error: ' + JSON.stringify(data));
+						alert('favoriteService: Fehler beim Datenabruf der getPrioritaetById... :(');
+					});
+			}
+
+
+			return deferred.promise;
+		}
+
+		var addNewFavorite = function (favorite) {
+			var deferred = $q.defer();
+			$http.post($rootScope.rootDomain + "/Favoriten/CreateFavorite?uid=" + $rootScope.userData.UserId,
+				favorite,
+				{
+					dataType: 'json',
+					contentType: "application/json; charset=utf-8"
+				})
+				.success(function (data) {
+					if (favoriten.length == 0) {
+						favoriten = [];
+					}
+					favoriten.push(data);
+					deferred.resolve(data);
+				})
+				.error(function (data, status, headers) {
+					deferred.reject('Error: ' + JSON.stringify(status));
+				});
+			return  deferred.promise;
+		}
+		var getEmptyFavorite = function () {
+			return {
+				"URL": "",
+				"ID": null,
+				"Name": "",
+				"UserId": app.common.utils.guid.getEmptyGuid()
+			};
+		}
+		var updateFavorite = function (favorite) {
+			var deferred = $q.defer();
+			$http.put($rootScope.rootDomain + "/Favoriten/UpdateFavoriteDetails?uid=" + $rootScope.userData.UserId,
+				favorite,
+				{
+					dataType: 'json',
+					contentType: "application/json; charset=utf-8"
+				})
+				.success(function (data) {
+					if (data) {
+						var fav = iGetById(data.ID);
+						deferred.resolve(fav);
+					} else {
+						deferred.reject('Error: favoriteService intern nicht gefunden!');
+					}
+				})
+				.error(function (data, status, headers) {
+					deferred.reject('Error: ' + JSON.stringify(status));
+				});
+			return  deferred.promise;
+		}
+		var deleteFavorite = function (favorite) {
+			var deferred = $q.defer();
+			$http.delete($rootScope.rootDomain + "/Favoriten/DeleteFavorite?uid=" + $rootScope.userData.UserId,
+				{
+					data: favorite,
+					headers: {
+						"Content-Type": "application/json"
+					},
+					method: 'DELETE',
+					dataType: 'json'
+
+				})
+				.success(function (data) {
+					if (data) {
+						var indx = indexGetById(favorite.ID)
+						favoriten.splice(indx, 1);
+						deferred.resolve(data);
+					} else {
+						deferred.reject('Error: Ausgabe nicht gelöscht!');
+					}
+				})
+				.error(function (data, status, headers) {
+					deferred.reject('Error: ' + JSON.stringify(status));
+				});
+			return  deferred.promise;
+		}
+
+		return{
+			getFavoriten: function () {
+				return getFavoriten();
+			},
+			getEmptyFavorite: function () {
+				return getEmptyFavorite();
+			},
+			addNewFavorite: function (favorite) {
+				return addNewFavorite(favorite);
+			},
+			updateFavorite: function (favorite) {
+				return updateFavorite(favorite);
+			},
+			getFavoriteById: function (id) {
+				return getFavoriteById(id);
+			},
+			deleteFavorite: function (favorite) {
+				return deleteFavorite(favorite)
+			},
+			getFavoritenCached: function () {
+				return favoriten;
+			}
+		}
 	}]);

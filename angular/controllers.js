@@ -35,10 +35,11 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 			AusgabenService.updateAusgabe(ausgabe);
 		}
 		$scope.findAusgabezeitraumById = function (ausgabe) {
-
-			for (var i = 0; i < $scope.Ausgabenzeitraeume.length; i++) {
-				if ($scope.Ausgabenzeitraeume[i].ID == ausgabe.Ausgabezeitraum) {
-					return $scope.Ausgabenzeitraeume[i].Name;
+			if ($scope.Ausgabenzeitraeume) {
+				for (var i = 0; i < $scope.Ausgabenzeitraeume.length; i++) {
+					if ($scope.Ausgabenzeitraeume[i].ID == ausgabe.Ausgabezeitraum) {
+						return $scope.Ausgabenzeitraeume[i].Name;
+					}
 				}
 			}
 		}
@@ -146,8 +147,7 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 //				$log.info("--WATCH--userData-- Old value discovered: userData: " + JSON.stringify(oldValue))
 				//		}
 			}
-		)
-		;
+		);
 	}
 );
 ausgabenmanagerControllers.controller('userCtrl', function ($scope, $modal, $http, $rootScope, $log, userService) {
@@ -331,5 +331,40 @@ ausgabenmanagerControllers.controller('ModalUserController', function ($scope, $
 		$modalInstance.dismiss('cancel');
 	};
 });
+ausgabenmanagerControllers.controller('fileCtrl', function ($scope, $modal, $http, $rootScope, $log, userService) {
+});
+ausgabenmanagerControllers.controller('favoriteCtrl', function ($scope, $modal, $http, $rootScope, $log, $timeout, favoriteService) {
+	$scope.Favoriten = [];
 
+	$rootScope.$watch('userData', function (newValue, oldValue, scope) {
+			$log.info('--WATCH--userData-- ' + new Date());
+			$log.info("--WATCH--userData-- Discover new value userData: " + JSON.stringify(newValue));
+			//	if (!oldValue || (oldValue && newValue.UserId && newValue.UserId != oldValue.UserId)) {
+			$log.info("--WATCH--userData--Discover Updated userData");
+			$timeout(function () {
+				//Check if UserId=null, if yes, redirect to current Page, maximum is maxFailcounter!
+				$log.info($rootScope.userData.UserId);
+				if ($rootScope.userData.UserId == 'undefined' || $rootScope.userData.UserId == undefined || $rootScope.userData.UserId.length == 0) {
+					$log.info('USERDATA undefined. Redirect to Page again');
+					if ($rootScope.maxFailCounter > 0) {
+						$rootScope.maxFailCounter--;
+						window.location.href = window.location.href;
+					}
+				}
+				$rootScope.resetFailCounter();
+				favoriteService.getFavoriten()
+					.then(function (data) {
+						if (data != null) {
+							$scope.Favoriten = data;
+							$log.info('Received Data favoriteService: ' + JSON.stringify(data));
+						}
+					}, function (error) {
+						$log.info("Error at getAusgaben() (" + new Date() + "): --> " + error);
+					});
+
+
+			}, 500);
+		}
+	);
+});
 

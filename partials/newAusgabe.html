@@ -2,7 +2,7 @@
     <!--<form class="form-horizontal css-form" role="form" ng-submit="ok($event)">-->
     <form class="form-horizontal css-form" role="form" name="form">
         <div class="modal-header">
-            <h3 class="modal-title">Neue Ausgabe erstellen</h3>
+            <h2 class="modal-title text-center"><span>{{ Heading() }}</span></h2>
         </div>
         <div class="modal-body">
             <div class="form-group required ">
@@ -32,7 +32,7 @@
                 </h4>
 
                 <div class="col-sm-9">
-                <select class="form-control" ng-model="ausgabe.Ausgabezeitraum"
+                    <select class="form-control" ng-model="ausgabe.Ausgabezeitraum"
                             ng-options="choice.ID as choice.Name for choice in ausgabezeitraum" required>
                         <option value="">-- Ausgabezeitraum auswählen --</option>
                     </select>
@@ -57,7 +57,7 @@
                 </h4>
 
                 <div class="col-sm-9">
-                <input class="form-control" ng-model="ausgabe.Preis" required>
+                    <input class="form-control" ng-model="ausgabe.Preis" required>
                 </div>
             </div>
         </div>

@@ -479,7 +479,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 		var getEmptyFavorite = function () {
 			return {
 				"URL": "",
-				"ID": null,
+				"ID": 0,
 				"Name": "",
 				"UserId": app.common.utils.guid.getEmptyGuid()
 			};

@@ -213,7 +213,16 @@ ausgabenmanagerControllers.controller('userCtrl', function ($scope, $modal, $htt
 	}
 });
 ausgabenmanagerControllers.controller('ModalNeueAusgabeController', function ($scope, $modalInstance, $rootScope, ausgabezeitraeume, priorities, AusgabenService, type, ausgabe) {
+
 	var type = type;
+	$scope.Heading = function () {
+		if (type == "new") {
+			return "Neue Ausgabe";
+		}
+		if (type == 'edit') {
+			return "Ausgabe bearbeiten";
+		}
+	}
 	$scope.ausgabe = null;
 	if (type == 'new') {
 		$scope.ausgabe = AusgabenService.getEmptyAusgabe();
@@ -226,11 +235,6 @@ ausgabenmanagerControllers.controller('ModalNeueAusgabeController', function ($s
 	$scope.ausgabezeitraum = ausgabezeitraeume;
 	$scope.priorities = priorities;
 	$scope.ok = function ($event) {
-		var valResult = app.common.utils.validateForm($event.currentTarget);
-		if (!valResult) {
-			alert('not validated...');
-			return;
-		}
 		app.common.utils.setButtonLoadingState($event.currentTarget);
 		if (type == 'new') {
 			$scope.ausgabe.UserId = $rootScope.userData.UserId;
@@ -333,38 +337,132 @@ ausgabenmanagerControllers.controller('ModalUserController', function ($scope, $
 });
 ausgabenmanagerControllers.controller('fileCtrl', function ($scope, $modal, $http, $rootScope, $log, userService) {
 });
-ausgabenmanagerControllers.controller('favoriteCtrl', function ($scope, $modal, $http, $rootScope, $log, $timeout, favoriteService) {
-	$scope.Favoriten = [];
+ausgabenmanagerControllers.controller('manageFavoriteController', function ($scope, $modalInstance, $rootScope, favoriteService, type, favorite) {
 
-	$rootScope.$watch('userData', function (newValue, oldValue, scope) {
-			$log.info('--WATCH--userData-- ' + new Date());
-			$log.info("--WATCH--userData-- Discover new value userData: " + JSON.stringify(newValue));
-			//	if (!oldValue || (oldValue && newValue.UserId && newValue.UserId != oldValue.UserId)) {
-			$log.info("--WATCH--userData--Discover Updated userData");
-			$timeout(function () {
-				//Check if UserId=null, if yes, redirect to current Page, maximum is maxFailcounter!
-				$log.info($rootScope.userData.UserId);
-				if ($rootScope.userData.UserId == 'undefined' || $rootScope.userData.UserId == undefined || $rootScope.userData.UserId.length == 0) {
-					$log.info('USERDATA undefined. Redirect to Page again');
-					if ($rootScope.maxFailCounter > 0) {
-						$rootScope.maxFailCounter--;
-						window.location.href = window.location.href;
-					}
-				}
-				$rootScope.resetFailCounter();
-				favoriteService.getFavoriten()
-					.then(function (data) {
-						if (data != null) {
-							$scope.Favoriten = data;
-							$log.info('Received Data favoriteService: ' + JSON.stringify(data));
-						}
-					}, function (error) {
-						$log.info("Error at getAusgaben() (" + new Date() + "): --> " + error);
-					});
-
-
-			}, 500);
+	var type = type;
+	$scope.favorite = null;
+	$scope.Heading = function () {
+		if (type == "new") {
+			return "Neuer Favorit";
 		}
-	);
+		if (type == 'edit') {
+			return "Favorit bearbeiten";
+		}
+	}
+
+	if (type == 'new') {
+		$scope.favorite = favoriteService.getEmptyFavorite();
+	} else if (type == 'edit') {
+		$scope.favorite = favorite;
+	} else {
+		alert("Type not found");
+	}
+
+	$scope.ok = function ($event) {
+		app.common.utils.setButtonLoadingState($event.currentTarget);
+		if (type == 'new') {
+			$scope.favorite.UserId = $rootScope.userData.UserId;
+			favoriteService.addNewFavorite($scope.favorite)
+				.then(function (data) {
+					app.common.utils.setButtonLoadingStateReset($event.currentTarget);
+					$modalInstance.close(data);
+				}, function (error) {
+					app.common.utils.setButtonLoadingStateReset($event.currentTarget);
+					alert('Error: ' + JSON.stringify(error));
+				}
+			);
+		} else if (type == 'edit') {
+			favoriteService.updateFavorite($scope.favorite)
+				.then(function (data) {
+					app.common.utils.setButtonLoadingStateReset($event.currentTarget);
+					$modalInstance.close(data);
+				}, function (error) {
+					app.common.utils.setButtonLoadingStateReset($event.currentTarget);
+					alert('Error: ' + JSON.stringify(error));
+				}
+			);
+		}
+
+	};
+	$scope.cancel = function () {
+		$modalInstance.dismiss('cancel');
+	};
 });
+ausgabenmanagerControllers.controller('favoriteCtrl', function ($scope, $modal, $http, $rootScope, $log, $timeout, favoriteService) {
+		$scope.Favoriten = [];
+		$scope.manageFavorit = function (size, favorite, type) {
+			if (type == 'delete') {
+				if (confirm("Wirklich löschen?")) {
+					favoriteService.deleteFavorite(favorite)
+						.then(function (data) {
+							$log.info('Ausgabe erfolgreich gelöscht');
+						}, function (error) {
+							alert('FEHLER: Ausgabe NICHT gelöscht: ' + error)
+						});
+				}
+			} else if (type == 'edit' || type == 'new') {
+				var modalInstance = $modal.open({
+					templateUrl: '../partials/manageFavorite.html',
+					controller: 'manageFavoriteController',
+					size: size,
+					scope: $scope,
+					resolve: {
+						type: function () {
+							return type;
+						},
+						favorite: function () {
+							return favorite;
+						}
+					}
+				});
+
+				modalInstance.result.then(function (favorite) {
+					//MUST CALL THIS BECAUSE IF ARRAY IS NULL, IT DOES NOT GET UPDATED -.-
+					if ($scope.Favoriten.length == 0) {
+						$scope.Favoriten = favoriteService.getFavoritenCached();
+					}
+
+					if (favorite != null) {
+						$log.info('Received Data manageFavoriteController: ' + favorite);
+					}
+				}, function () {
+					$log.info('Modal dismissed at: ' + new Date());
+				});
+			} else {
+				alert("Action not found");
+			}
+		}
+		$rootScope.$watch('userData', function (newValue, oldValue, scope) {
+				$log.info('--WATCH--userData-- ' + new Date());
+				$log.info("--WATCH--userData-- Discover new value userData: " + JSON.stringify(newValue));
+				//	if (!oldValue || (oldValue && newValue.UserId && newValue.UserId != oldValue.UserId)) {
+				$log.info("--WATCH--userData--Discover Updated userData");
+				$timeout(function () {
+					//Check if UserId=null, if yes, redirect to current Page, maximum is maxFailcounter!
+					$log.info($rootScope.userData.UserId);
+					if ($rootScope.userData.UserId == 'undefined' || $rootScope.userData.UserId == undefined || $rootScope.userData.UserId.length == 0) {
+						$log.info('USERDATA undefined. Redirect to Page again');
+						if ($rootScope.maxFailCounter > 0) {
+							$rootScope.maxFailCounter--;
+							window.location.href = window.location.href;
+						}
+					}
+					$rootScope.resetFailCounter();
+					favoriteService.getFavoriten()
+						.then(function (data) {
+							if (data != null) {
+								$scope.Favoriten = data;
+								$log.info('Received Data favoriteService: ' + JSON.stringify(data));
+							}
+						}, function (error) {
+							$log.info("Error at getAusgaben() (" + new Date() + "): --> " + error);
+						});
+
+
+				}, 500);
+			}
+		);
+	}
+)
+;
 

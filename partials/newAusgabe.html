@@ -31,8 +31,8 @@
                     <span class="label label-primary control-label">Ausgabezeitraum:</span>
                 </h4>
 
-                <div class="col-sm-6">
-                    <select class="form-control" ng-model="ausgabe.Ausgabezeitraum"
+                <div class="col-sm-9">
+                <select class="form-control" ng-model="ausgabe.Ausgabezeitraum"
                             ng-options="choice.ID as choice.Name for choice in ausgabezeitraum" required>
                         <option value="">-- Ausgabezeitraum auswählen --</option>
                     </select>
@@ -43,12 +43,12 @@
                     <span class="label label-primary control-label">Priorität:</span>
                 </h4>
 
-                <div class="col-sm-6">
+                <div class="col-sm-9">
                     <select class="form-control" ng-model="ausgabe.Prioritaet" name="businessprocess"
                             ng-options="prio.ID as prio.Titel for prio in priorities" required>
                         <option value="">-- Priorität auswählen --</option>
                     </select>
-                    <span ng-show="form.businessprocess.$error.required">Select service</span>
+                    <!--<span ng-show="form.businessprocess.$error.required">Select service</span>-->
                 </div>
             </div>
             <div class="form-group required">
@@ -56,8 +56,8 @@
                     <span class="label label-primary control-label">Preis:</span>
                 </h4>
 
-                <div class="col-sm-6">
-                    <input class="form-control" ng-model="ausgabe.Preis" required>
+                <div class="col-sm-9">
+                <input class="form-control" ng-model="ausgabe.Preis" required>
                 </div>
             </div>
         </div>

@@ -60,7 +60,7 @@
                                                 <b>
                                                     <a>
                                                 <span class="glyphicon glyphicon-pencil paddingRight10 white"
-                                                      ng-click="neueAusgabeModal(null,'edit',ausgabe)"></span>
+                                                      ng-click="neueAusgabeModal('','edit',ausgabe)"></span>
                                                     </a>
                                                     <a>
                                                 <span class="glyphicon glyphicon-trash paddingRight10 white"
@@ -127,7 +127,7 @@
 
                             <h3>
                                 <span class="glyphicon glyphicon-thumbs-down"></span><span>  Sie haben noch keine Ausgaben angelegt.</span></br></br>
-                            Klicken Sie auf <a ng-click="neueAusgabeModal(null,'new',ausgabe)">Neue Ausgabe</a>,
+                            Klicken Sie auf <a ng-click="neueAusgabeModal('','new',ausgabe)">Neue Ausgabe</a>,
                                 um eine neue
                                 Ausgabe
                                 anzulegen.</span>
@@ -158,8 +158,8 @@
                     <div class="col-md-12">
                         <div class="panel panel-success">
                             <button class="btn btn-primary btn-lg btn-block"
-                                    ng-click="neueAusgabeModal(null,'new',null)">
-                                Neue
+                                    ng-click="neueAusgabeModal('','new',null)">
+                            Neue
                                 Ausgabe
                             </button>
 

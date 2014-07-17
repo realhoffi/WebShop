@@ -21,10 +21,8 @@ if (typeof jQuery === 'undefined') {
 
 
 var ausgabenmanager = angular.module('ausgabenmanager', ['ngRoute', 'ui.bootstrap', 'ausgabenmanagerControllers', 'ausgabenmanagerServices']);
-ausgabenmanager.run(function ($rootScope, $log, $templateCache) {
-	$log.info("delete cache");
-	$templateCache.removeAll();
-	$log.info("delete cache successful");
+ausgabenmanager.run(function ($rootScope, $log) {
+
 	var maxCountFailCount = 3;
 	$rootScope.isUserLoggedIn = false;
 	$rootScope.userData = null;

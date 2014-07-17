@@ -20,7 +20,7 @@ if (typeof jQuery === 'undefined') {
 (jQuery)
 
 
-var ausgabenmanager = angular.module('appAusgabenmanager', ['ui.bootstrap', 'ausgabenmanagerControllers', 'ausgabenmanagerServices']);
+var ausgabenmanager = angular.module('ausgabenmanager', ['ngRoute', 'ui.bootstrap', 'ausgabenmanagerControllers', 'ausgabenmanagerServices']);
 ausgabenmanager.run(function ($rootScope, $log) {
 	var maxCountFailCount = 3;
 	$rootScope.isUserLoggedIn = false;
@@ -32,3 +32,20 @@ ausgabenmanager.run(function ($rootScope, $log) {
 	$rootScope.rootDomain = 'http://info.fhoffma.net/services';
 	$log.info("rootScope settings done");
 });
+
+ausgabenmanager.config(['$routeProvider',
+	function ($routeProvider) {
+		$routeProvider
+			.when('/', {
+				templateUrl: '../partials/ausgabenOverview.html',
+				controller: 'ausgabenCtrl'
+			}).
+			when('/ausgabenOverview', {
+				templateUrl: '../partials/ausgabenOverview.html',
+				controller: 'ausgabenCtrl'
+			}).
+
+			otherwise({
+				redirectTo: '/angulartest.html'
+			});
+	}]);

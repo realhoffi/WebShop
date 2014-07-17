@@ -1,0 +1,172 @@
+<!--ng-controller="ausgabenCtrl"-->
+<div class="row">
+    <div class="col-md-10">
+        <div class="row" ng-show="isUserLoggedIn()">
+            <div class="col-md-12">
+                <div class="row" ng-show="Ausgaben.length > 0">
+                    <div class="col-md-12">
+                        <div class=" panel col-md-offset-1">
+                            <div class="form-horizontal bs-callout bs-info" role="form">
+                                <div class="form-group">
+                                    <h4 class="col-md-2">
+                                        <b><span class="glyphicon glyphicon-search"></span> <span>Suche:</span></b>
+                                    </h4>
+
+                                    <div class="col-md-5">
+                                        <input class="form-control" ng-model="query" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <h4 class="col-md-2">
+                                        <b><span>Sortieren:</span></b>
+                                    </h4>
+
+                                    <div class="col-md-5">
+                                        <select class="form-control" ng-model="orderProp">
+                                            <option value="Beschreibung">Beschreibung</option>
+                                            <option value="Name">Name</option>
+                                            <option value="Ausgabezeitraum">Ausgabezeitraum</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-12" id="main">
+                        <div class="panel-group col-md-offset-1 " id="ausgabenAccordion"
+                             ng-repeat="ausgabe in Ausgaben | filter:query | orderBy: orderProp">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading ">
+                                    <div class="row">
+                                        <div class="col-md-9 pull-left">
+                                            <a data-toggle="collapse" data-parent="#ausgabenAccordion"
+                                               href="#acc{{ausgabe.ID}}">
+                                                <h4>
+                                                    <b>
+                                            <span
+                                                    class="indicator glyphicon glyphicon-chevron-right pull-left white paddingRight10">
+                                                </span>
+                                                <span class="white">
+                                                {{ausgabe.Name}}</span>
+                                                    </b>
+                                                </h4>
+                                            </a>
+
+                                        </div>
+                                        <div class="col-md-3 pull-right">
+                                            <h4 class="pull-right">
+                                                <b>
+                                                    <a>
+                                                <span class="glyphicon glyphicon-pencil paddingRight10 white"
+                                                      ng-click="neueAusgabeModal('lg','edit',ausgabe)"></span>
+                                                    </a>
+                                                    <a>
+                                                <span class="glyphicon glyphicon-trash paddingRight10 white"
+                                                      ng-click="deleteAusgabe(ausgabe,$index)"></span>
+                                                    </a>
+                                                </b>
+                                            </h4>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="acc{{ausgabe.ID}}" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <form class="form-horizontal" role="form">
+                                            <div class="form-group">
+                                                <h4 class="col-sm-3">
+                                                    <span class=" label label-primary">Beschreibung:</span>
+                                                </h4>
+
+                                                <div class="col-sm-9">
+                                                    <span class="form-control">{{ ausgabe.Beschreibung }}</span>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <h4 class="col-sm-3">
+                                                    <span class="label label-primary">Ausgabezeitraum:</span>
+                                                </h4>
+
+                                                <div class="col-sm-9">
+                                                    <span class="form-control">{{ findAusgabezeitraumById(ausgabe) }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <h4 class="col-sm-3">
+                                                    <span class="label label-primary">Priorität:</span>
+                                                </h4>
+
+                                                <div class="col-sm-9">
+                                                    <span class="form-control">{{ findPrioritaetById(ausgabe) }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <h4 class="col-sm-3">
+                                                    <span class=" label label-primary">Preis:</span>
+                                                </h4>
+
+                                                <div class="col-sm-9">
+                                                    <span class="form-control">{{ ausgabe.Preis }}</span>
+                                                </div>
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12" ng-show="Ausgaben.length < 1">
+                        <div class="bs-callout bs-info">
+                            <p>
+
+                            <h3>
+                                <span class="glyphicon glyphicon-thumbs-down"></span><span>  Sie haben noch keine Ausgaben angelegt.</span></br></br>
+                                Klicken Sie auf <a ng-click="neueAusgabeModal('lg','new',ausgabe)">Neue Ausgabe</a>,
+                                um eine neue
+                                Ausgabe
+                                anzulegen.</span>
+                            </h3>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" ng-show="!isUserLoggedIn()">
+                <div class="bs-callout bs-info">
+                    <p>
+
+                    <h2>
+                        <span class="glyphicon glyphicon-thumbs-down"></span><span>  Um diese Funktionen nutzen zu können, melden Sie sich bitte an...</span>
+                    </h2>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="row">
+            <div class="col-md-12" ng-show="isUserLoggedIn()">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-success">
+                            <button class="btn btn-primary btn-lg btn-block"
+                                    ng-click="neueAusgabeModal('lg','new',null)">Neue
+                                Ausgabe
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

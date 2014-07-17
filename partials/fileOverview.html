@@ -1,1 +1,34 @@
-FILES
+<div class="row">
+    <div class="col-md-3">
+        <div class="panel-group">
+            <h4>
+                <b>
+                    <div class="panel bs-info list-group-item">
+                        <div>
+                            <a class="paddingRight10" ng-click="manageFile(null,null,'new')">
+                                <span class="glyphicon glyphicon-plus"></span>
+                                <span> Datei</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div ng-repeat="fav in Favoriten" class="panel panel-primary list-group-item">
+
+                        <div class="pull-left ">
+                            <a class="showCursor" ng-href="{{ fav.URL }}">{{ fav.Name }}</a>
+                        </div>
+                        <div class="pull-right  ">
+                            <a class="paddingRight10  ">
+                                <span class="glyphicon glyphicon-pencil "
+                                      ng-click="manageFile(null,fav,'edit')"></span>
+                            </a>
+                            <a class="paddingRight10 ">
+                                <span class="glyphicon glyphicon-trash "
+                                      ng-click="manageFile(null,fav,'delete')"></span>
+                            </a>
+                        </div>
+                    </div>
+                </b>
+            </h4>
+        </div>
+    </div>
+</div>

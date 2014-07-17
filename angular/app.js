@@ -11,10 +11,10 @@ if (typeof jQuery === 'undefined') {
 		var b = $(e.currentTarget).find('span.indicator');
 		var c = $(b).toggleClass('glyphicon-chevron-right glyphicon-chevron-down');
 	});
-	$("form.input").click(function (e) {
-		alert(':(');
-		e.preventDefault();
-	});
+//	$("form.input").click(function (e) {
+//		alert(':(');
+//		e.preventDefault();
+//	});
 
 }
 (jQuery)
@@ -44,7 +44,10 @@ ausgabenmanager.config(['$routeProvider',
 				templateUrl: '../partials/ausgabenOverview.html',
 				controller: 'ausgabenCtrl'
 			}).
-
+			when('/ausgabenBericht', {
+				templateUrl: '../partials/ausgabenBericht.html',
+				controller: 'ausgabenCtrl'
+			}).
 			otherwise({
 				redirectTo: '/angulartest.html'
 			});

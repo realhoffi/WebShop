@@ -189,10 +189,14 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 		return{
 			getAusgabenzeitraeume: function () {
 				return getAusgabenzeitraeume();
+			},
+			getAusgabenzeitraeumeCached: function () {
+				return ausgabenzeitraeume;
 			}
 		}
 	}])
-	.factory('PrioritaetService', ['$http', '$q', '$rootScope', '$log', function ($http, $q, $rootScope, $log) {
+	.
+	factory('PrioritaetService', ['$http', '$q', '$rootScope', '$log', function ($http, $q, $rootScope, $log) {
 		var prioritaeten;
 		var iGetById = function (id) {
 			for (var i = 0; i < prioritaeten.length; i++) {
@@ -252,6 +256,9 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 			},
 			getPrioritaetById: function (id) {
 				return getPrioritaetById(id);
+			},
+			getPrioritaetenCached: function () {
+				return prioritaeten;
 			}
 		}
 	}])

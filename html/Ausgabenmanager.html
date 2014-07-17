@@ -57,94 +57,94 @@
 </head>
 <body>
 <div class="container-fluid" id="mainForm">
-<div class="row" id="headerForm">
-    <div class="col-md-12">
-        <div class="panel panel-primary row ">
-            <div class="col-md-10">
-                <h1 class="text-center">
-                    <b> <span class="glyphicon glyphicon-tasks"></span>
-                        <span>Ausgabenmanager</span></b>
-                </h1>
-            </div>
-            <div class="col-md-2" ng-controller="userCtrl">
-                <div class="row ">
-                    <div class="btn-block text-center margin-top-10px">
+    <div class="row" id="headerForm">
+        <div class="col-md-12">
+            <div class="panel panel-primary row ">
+                <div class="col-md-10">
+                    <h1 class="text-center">
+                        <b> <span class="glyphicon glyphicon-tasks"></span>
+                            <span>Ausgabenmanager</span></b>
+                    </h1>
+                </div>
+                <div class="col-md-2" ng-controller="userCtrl">
+                    <div class="row ">
+                        <div class="btn-block text-center margin-top-10px">
 
-                        <button class="btn btn-primary " ng-show="!isUserLoggedIn()" ng-click="loginModal()">
-                            <b> <span
-                                    class="glyphicon glyphicon-user"></span> <span>Sign in</span></b>
-                        </button>
-                        <button class="btn btn-primary " ng-click="logout()" ng-show="isUserLoggedIn()">
-                            <b><span class="glyphicon glyphicon-off"></span> <span>Logout</span></b>
-                        </button>
-                        <button class="btn btn-primary " ng-click="editUser('lg')" ng-show="isUserLoggedIn()">
-                            <b><span class="glyphicon glyphicon-cog"></span> <span>Settings</span></b>
-                        </button>
+                            <button class="btn btn-primary " ng-show="!isUserLoggedIn()" ng-click="loginModal()">
+                                <b> <span
+                                        class="glyphicon glyphicon-user"></span> <span>Sign in</span></b>
+                            </button>
+                            <button class="btn btn-primary " ng-click="logout()" ng-show="isUserLoggedIn()">
+                                <b><span class="glyphicon glyphicon-off"></span> <span>Logout</span></b>
+                            </button>
+                            <button class="btn btn-primary " ng-click="editUser('lg')" ng-show="isUserLoggedIn()">
+                                <b><span class="glyphicon glyphicon-cog"></span> <span>Settings</span></b>
+                            </button>
 
 
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="row" id="contentForm">
-<div class="col-md-2">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="panel panel-success">
-                <a href="#" class="list-group-item active">
-                    <b> <span class="glyphicon glyphicon-user"></span> <span>Zusammenfassung</span></b>
-                </a>
-                <a href="#ausgabenOverview" class="list-group-item">
-                    <span class="glyphicon "></span> Übersicht
-                </a>
-                <a href="#" class="list-group-item">
-                    <span class="glyphicon "></span> Meine monatlichenAusgaben
-                </a>
-                <a href="#" class="list-group-item">
-                    <span class="glyphicon "></span> Kostenkalkulation
-                </a>
+    <div class="row" id="contentForm">
+        <div class="col-md-2">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-success">
+                        <a href="#" class="list-group-item active">
+                            <b> <span class="glyphicon glyphicon-user"></span> <span>Zusammenfassung</span></b>
+                        </a>
+                        <a href="#ausgabenOverview" class="list-group-item">
+                            <span class="glyphicon "></span> Ausgabenübersicht
+                        </a>
+                        <a href="#ausgabenBericht" class="list-group-item">
+                            <span class="glyphicon "></span> Kostenaufstellung
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <span class="glyphicon "></span> Kostenkalkulation
+                        </a>
 
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-success">
+                        <a href="#" class="list-group-item active">
+                            <b> <span class="glyphicon glyphicon-user"></span> <span>Charts</span></b>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <span class="glyphicon "></span> Google
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="panel panel-success">
+                        <a href="#" class="list-group-item active">
+                            <b> <span class="glyphicon glyphicon-star"></span> <span>Meine Favoriten</span></b>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <span class="glyphicon "></span> Favorit 1
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="panel panel-success">
-                <a href="#" class="list-group-item active">
-                    <b> <span class="glyphicon glyphicon-user"></span> <span>Charts</span></b>
-                </a>
-                <a href="#" class="list-group-item">
-                    <span class="glyphicon "></span> Google
-                </a>
-            </div>
+        <div class="col-md-10" id="content">
+            <div ng-view></div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-10">
-            <div class="panel panel-success">
-                <a href="#" class="list-group-item active">
-                    <b> <span class="glyphicon glyphicon-star"></span> <span>Meine Favoriten</span></b>
-                </a>
-                <a href="#" class="list-group-item">
-                    <span class="glyphicon "></span> Favorit 1
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-    <div class="col-md-10" id="content">
-        <div ng-view></div>
-    </div>
 
 
-</div>
-<div class="row" id="footer">
-    <div class="panel-footer">
-        <!--<div class="col-md-12 alert alert-info" ng-include="'../partials/userdetails.html'"></div>-->
     </div>
-</div>
+    <div class="row" id="footer">
+        <div class="panel-footer">
+            <!--<div class="col-md-12 alert alert-info" ng-include="'../partials/userdetails.html'"></div>-->
+        </div>
+    </div>
 </div>
 </body>
 </html>

@@ -8,10 +8,17 @@ var ausgabenmanagerControllers = angular.module('ausgabenmanagerControllers', []
 ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, $http, $rootScope, $log, $timeout, userService, AusgabenService, AusgabenzeitraumService, PrioritaetService) {
 
 		$scope.Ausgaben = AusgabenService.getAusgabenCached();
-		$scope.Ausgabenzeitraeume = [];
-		$scope.Prioritaeten = [];
+		$scope.Ausgabenzeitraeume = AusgabenzeitraumService.getAusgabenzeitraeumeCached();
+		$scope.Prioritaeten = PrioritaetService.getPrioritaetenCached();
 		$scope.orderProp = "Name";
 
+		$scope.gesamtAusgaben = function () {
+			var sum = 0;
+			for (var i = 0; i < $scope.Ausgaben.length; i++) {
+				sum += $scope.Ausgaben[i].Preis;
+			}
+			return sum;
+		}
 		$scope.deleteAusgabe = function (ausgabe) {
 			if (confirm("Wirklich löschen?")) {
 				AusgabenService.deleteAusgabe(ausgabe)
@@ -36,10 +43,11 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 			}
 		}
 		$scope.findPrioritaetById = function (ausgabe) {
-
-			for (var i = 0; i < $scope.Prioritaeten.length; i++) {
-				if ($scope.Prioritaeten[i].ID == ausgabe.Prioritaet) {
-					return $scope.Prioritaeten[i].Titel;
+			if ($scope.Prioritaeten) {
+				for (var i = 0; i < $scope.Prioritaeten.length; i++) {
+					if ($scope.Prioritaeten[i].ID == ausgabe.Prioritaet) {
+						return $scope.Prioritaeten[i].Titel;
+					}
 				}
 			}
 		}

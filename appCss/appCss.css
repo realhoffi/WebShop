@@ -5,6 +5,10 @@
     border-color: #428bca;
 }
 
+.noDecoration {
+    text-decoration: none !important;
+}
+
 .controlMaxSize {
     width: 100%;
 }
@@ -16,7 +20,6 @@
     border-right-width: 1px;
     border-top-width: 1px;
     border-bottom-width: 1px;
-
     border-radius: 3px;
 }
 

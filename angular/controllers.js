@@ -100,8 +100,9 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 				$log.info("--WATCH--userData--Discover Updated userData");
 				$timeout(function () {
 					//Check if UserId=null, if yes, redirect to current Page, maximum is maxFailcounter!
-					$log.info($rootScope.userData.UserId);
-					if ($rootScope.userData.UserId == 'undefined' || $rootScope.userData.UserId == undefined || $rootScope.userData.UserId.length == 0) {
+					$rootScope.userData ? $log.info($rootScope.userData.UserId) : $log.info('--WATCH--userdata-- is null...');
+					;
+					if (!$rootScope.userData || $rootScope.userData.UserId == 'undefined' || $rootScope.userData.UserId == undefined || $rootScope.userData.UserId.length == 0) {
 						$log.info('USERDATA undefined. Redirect to Page again');
 						if ($rootScope.maxFailCounter > 0) {
 							$rootScope.maxFailCounter--;
@@ -138,7 +139,7 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 						$log.info("Error at getPrioritaeten() (" + new Date() + "): --> " + error);
 					});
 
-				}, 500);
+				}, 800);
 
 				//	} else {
 				//		$log.info("--WATCH--userData--NOT UPDATE NEEDED");
@@ -439,8 +440,9 @@ ausgabenmanagerControllers.controller('favoriteCtrl', function ($scope, $modal, 
 				$log.info("--WATCH--userData--Discover Updated userData");
 				$timeout(function () {
 					//Check if UserId=null, if yes, redirect to current Page, maximum is maxFailcounter!
-					$log.info($rootScope.userData.UserId);
-					if ($rootScope.userData.UserId == 'undefined' || $rootScope.userData.UserId == undefined || $rootScope.userData.UserId.length == 0) {
+					$rootScope.userData ? $log.info($rootScope.userData.UserId) : $log.info('--WATCH--userdata-- is null...');
+
+					if (!$rootScope.userData && $rootScope.userData.UserId == 'undefined' || $rootScope.userData.UserId == undefined || $rootScope.userData.UserId.length == 0) {
 						$log.info('USERDATA undefined. Redirect to Page again');
 						if ($rootScope.maxFailCounter > 0) {
 							$rootScope.maxFailCounter--;
@@ -459,7 +461,7 @@ ausgabenmanagerControllers.controller('favoriteCtrl', function ($scope, $modal, 
 						});
 
 
-				}, 500);
+				}, 800);
 			}
 		);
 	}

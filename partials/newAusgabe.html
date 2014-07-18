@@ -1,6 +1,5 @@
 <div>
-    <!--<form class="form-horizontal css-form" role="form" ng-submit="ok($event)">-->
-    <form class="form-horizontal css-form" role="form" name="form">
+    <form class="form-horizontal css-form" novalidate role="form" name="form">
         <div class="modal-header">
             <h2 class="modal-title text-center"><span>{{ Heading() }}</span></h2>
         </div>
@@ -20,8 +19,6 @@
                 </h4>
 
                 <div class="col-sm-9">
-                    <!--<input type="text" class="form-control" required-->
-                    <!--ng-model="ausgabe.Beschreibung">-->
                     <textarea cols="30" rows="3" type="text" maxlength="255" class="form-control" required
                               ng-model="ausgabe.Beschreibung"></textarea>
                 </div>
@@ -34,7 +31,7 @@
                 <div class="col-sm-9">
                     <select class="form-control" ng-model="ausgabe.Ausgabezeitraum"
                             ng-options="choice.ID as choice.Name for choice in ausgabezeitraum" required>
-                        <option value="">-- Ausgabezeitraum auswählen --</option>
+                        <option value="">Ausgabezeitraum auswählen</option>
                     </select>
                 </div>
             </div>
@@ -46,7 +43,7 @@
                 <div class="col-sm-9">
                     <select class="form-control" ng-model="ausgabe.Prioritaet" name="businessprocess"
                             ng-options="prio.ID as prio.Titel for prio in priorities" required>
-                        <option value="">-- Priorität auswählen --</option>
+                        <option value="">Priorität auswählen</option>
                     </select>
                     <!--<span ng-show="form.businessprocess.$error.required">Select service</span>-->
                 </div>

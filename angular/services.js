@@ -357,15 +357,20 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
                     $log.info('logIn success! UserData: ' + JSON.stringify(data));
                     var response = jQuery.parseJSON(JSON.stringify(data));
                     if (typeof response == 'object') {
-                        $log.info('logIn success! RESPONESETYPE= OBJECT!: ');
-
+                        $log.info('logIn success! Response-type is OBJECT');
                         $rootScope.userData = data;
                         $rootScope.isUserLoggedIn = true;
                         deferred.resolve($rootScope.userData);
-
+                        $rootScope.resetFailCounter();
                     } else {
-                        $log.info('logIn success! RESPONESETYPE= ------NOT OBJECT!-------: ');
-                        deferred.reject("UserService --> REJECT because errormessage is inside");
+                        $log.info('logIn success! But response-type is NOT OBJECT');
+                        $log.info('Do login again!');
+                        if ($rootScope.maxFailCounter >= 0) {
+                            $rootScope.maxFailCounter--;
+                            logIn(uId);
+                        } else {
+                            deferred.reject("UserService --> REJECT because errormessage is inside");
+                        }
                     }
 
                 })

@@ -44,22 +44,22 @@ ausgabenmanager.run(function ($rootScope, $log, userService) {
     $rootScope.$watch('$viewContentLoaded', function () {
         $log.info('--WATCH--$viewContentLoaded-- ' + new Date());
         $log.info('- call tryLogin -');
-        // userService.tryLogin();
-        if (userService.getUserId) {
-            $log.info('--WATCH--$viewContentLoaded-- ' + new Date());
-            userService.tryLogin().then(function (data) {
-                $log.info('--WATCH--$viewContentLoaded--: User found in Cookie: ' + JSON.stringify(data));
-            }, function (errorMsg) {
-                $log.info("--WATCH--$viewContentLoaded--ERROR: " + JSON.stringify(errorMsg))
-                $rootScope.needLoginPage = true;
-                $rootScope.userData = null;
-                return;
-            });
-        } else {
-            $rootScope.needLoginPage = true;
-            $rootScope.userData = null;
-            return;
-        }
+        userService.tryLogin();
+//        if (userService.getUserId) {
+//            $log.info('--WATCH--$viewContentLoaded-- ' + new Date());
+//            userService.tryLogin().then(function (data) {
+//                $log.info('--WATCH--$viewContentLoaded--: User found in Cookie: ' + JSON.stringify(data));
+//            }, function (errorMsg) {
+//                $log.info("--WATCH--$viewContentLoaded--ERROR: " + JSON.stringify(errorMsg))
+//                $rootScope.needLoginPage = true;
+//                $rootScope.userData = null;
+//                return;
+//            });
+//        } else {
+//            $rootScope.needLoginPage = true;
+//            $rootScope.userData = null;
+//            return;
+//        }
     });
 });
 

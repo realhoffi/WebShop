@@ -361,6 +361,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
                         $rootScope.userData = data;
                         $rootScope.isUserLoggedIn = true;
                         deferred.resolve($rootScope.userData);
+                        $log.info('logIn: resetFailCounter ');
                         $rootScope.resetFailCounter();
                     } else {
                         $log.info('logIn success! But response-type is NOT OBJECT');

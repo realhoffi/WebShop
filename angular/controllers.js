@@ -99,10 +99,12 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 				//	if (!oldValue || (oldValue && newValue.UserId && newValue.UserId != oldValue.UserId)) {
 				$log.info("--WATCH--userData--Discover Updated userData");
 				$timeout(function () {
+					//alert($rootScope.checkUserData());
 					//Check if UserId=null, if yes, redirect to current Page, maximum is maxFailcounter!
 					$rootScope.userData ? $log.info($rootScope.userData.UserId) : $log.info('--WATCH--userdata-- is null...');
-					;
-					if (!$rootScope.userData || $rootScope.userData.UserId == 'undefined' || $rootScope.userData.UserId == undefined || $rootScope.userData.UserId.length == 0) {
+
+//					if (!$rootScope.userData || $rootScope.userData.UserId == 'undefined' || $rootScope.userData.UserId == undefined || $rootScope.userData.UserId.length == 0) {
+					if ($rootScope.checkUserData()) {
 						$log.info('USERDATA undefined. Redirect to Page again');
 						if ($rootScope.maxFailCounter > 0) {
 							$rootScope.maxFailCounter--;
@@ -442,7 +444,8 @@ ausgabenmanagerControllers.controller('favoriteCtrl', function ($scope, $modal, 
 					//Check if UserId=null, if yes, redirect to current Page, maximum is maxFailcounter!
 					$rootScope.userData ? $log.info($rootScope.userData.UserId) : $log.info('--WATCH--userdata-- is null...');
 
-					if (!$rootScope.userData && $rootScope.userData.UserId == 'undefined' || $rootScope.userData.UserId == undefined || $rootScope.userData.UserId.length == 0) {
+//					if (!$rootScope.userData || $rootScope.userData.UserId == 'undefined' || $rootScope.userData.UserId == undefined || $rootScope.userData.UserId.length == 0) {
+					if ($rootScope.checkUserData()) {
 						$log.info('USERDATA undefined. Redirect to Page again');
 						if ($rootScope.maxFailCounter > 0) {
 							$rootScope.maxFailCounter--;

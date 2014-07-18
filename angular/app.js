@@ -27,11 +27,18 @@ ausgabenmanager.run(function ($rootScope, $log) {
 	$rootScope.isUserLoggedIn = false;
 	$rootScope.userData = null;
 	$rootScope.maxFailCounter = maxCountFailCount;
+	$rootScope.rootDomain = 'http://info.fhoffma.net/services';
+	$log.info("rootScope settings done");
 	$rootScope.resetFailCounter = function () {
 		$rootScope.maxFailCounter = maxCountFailCount;
 	}
-	$rootScope.rootDomain = 'http://info.fhoffma.net/services';
-	$log.info("rootScope settings done");
+	$rootScope.checkUserData = function () {
+		$log.info('checkUserData is called. FALSE = GOOD, TRUE = BAD  :()');
+		var retVal = (!$rootScope.userData || $rootScope.userData.UserId == 'undefined' ||
+			$rootScope.userData.UserId == undefined || $rootScope.userData.UserId.length == 0);
+		$log.info('checkUserData result: ' + retVal);
+		return retVal;
+	}
 });
 
 ausgabenmanager.config(['$routeProvider',

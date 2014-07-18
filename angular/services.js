@@ -358,12 +358,16 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
                     var response = jQuery.parseJSON(JSON.stringify(data));
                     if (typeof response == 'object') {
                         $log.info('logIn success! RESPONESETYPE= OBJECT!: ');
+
+                        $rootScope.userData = data;
+                        $rootScope.isUserLoggedIn = true;
+                        deferred.resolve($rootScope.userData);
+
                     } else {
                         $log.info('logIn success! RESPONESETYPE= ------NOT OBJECT!-------: ');
+                        deferred.reject("UserService --> REJECT because errormessage is inside");
                     }
-                    $rootScope.userData = data;
-                    $rootScope.isUserLoggedIn = true;
-                    deferred.resolve($rootScope.userData);
+
                 })
                 .error(function (data, status, headers) {
                     $log.error("tryLoginByCookie error: " + data);

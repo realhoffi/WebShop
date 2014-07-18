@@ -93,25 +93,11 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
         //EDIT NEW! NO NEED TO CHECK USERDATA FOR CHANGE, SERVICES CACHE ITEMS!
         $rootScope.$watch('userData', function (newValue, oldValue, scope) {
                 $log.info('--WATCH--userData-- ' + new Date());
-//			if (newValue && newValue != oldValue) {
                 $log.info("--WATCH--userData-- Discover new value userData: " + JSON.stringify(newValue));
-                //	if (!oldValue || (oldValue && newValue.UserId && newValue.UserId != oldValue.UserId)) {
-                $log.info("--WATCH--userData--Discover Updated userData");
+                $rootScope.userData ? $log.info($rootScope.userData.UserId) : $log.info('--WATCH--userdata-- is NULL, exit function.');
+                if (!$rootScope.userData)return;
                 $timeout(function () {
-                    //alert($rootScope.checkUserData());
                     //Check if UserId=null, if yes, redirect to current Page, maximum is maxFailcounter!
-                    $rootScope.userData ? $log.info($rootScope.userData.UserId) : $log.info('--WATCH--userdata-- is null...');
-
-//					if (!$rootScope.userData || $rootScope.userData.UserId == 'undefined' || $rootScope.userData.UserId == undefined || $rootScope.userData.UserId.length == 0) {
-                    if ($rootScope.checkUserData()) {
-                        $log.info('USERDATA undefined. Redirect to Page again');
-                        if ($rootScope.maxFailCounter > 0) {
-                            $rootScope.maxFailCounter--;
-                            window.location.href = window.location.href;
-                        }
-                        return;
-                    }
-                    $rootScope.resetFailCounter();
 
                     AusgabenService.getAusgaben()
                         .then(function (data) {
@@ -141,14 +127,7 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
                         $log.info("Error at getPrioritaeten() (" + new Date() + "): --> " + error);
                     });
 
-                }, 1000);
-
-                //	} else {
-                //		$log.info("--WATCH--userData--NOT UPDATE NEEDED");
-//				}
-//			} else {
-//				$log.info("--WATCH--userData-- Old value discovered: userData: " + JSON.stringify(oldValue))
-                //		}
+                }, 200);
             }
         );
     }
@@ -175,6 +154,7 @@ ausgabenmanagerControllers.controller('userCtrl', function ($scope, $modal, $htt
         modalInstance.result.then(function (user) {
             if (user != null) {
                 $log.info('Received Data LogIn Modal 2: ' + user);
+                $rootScope.needLoginPage = false;
             }
         }, function () {
             $log.info('Modal dismissed at: ' + new Date());
@@ -202,6 +182,11 @@ ausgabenmanagerControllers.controller('userCtrl', function ($scope, $modal, $htt
             $log.info('Modal dismissed at: ' + new Date());
         });
     }
+    $rootScope.$watch('needLoginPage', function (newValue, oldValue, scope) {
+        if (newValue) {
+            $scope.loginModal();
+        }
+    });
 });
 ausgabenmanagerControllers.controller('ModalNeueAusgabeController', function ($scope, $modalInstance, $rootScope, ausgabezeitraeume, priorities, AusgabenService, type, ausgabe) {
 
@@ -425,23 +410,10 @@ ausgabenmanagerControllers.controller('favoriteCtrl', function ($scope, $modal, 
         }
         $rootScope.$watch('userData', function (newValue, oldValue, scope) {
                 $log.info('--WATCH--userData-- ' + new Date());
-                $log.info("--WATCH--userData-- Discover new value userData: " + JSON.stringify(newValue));
-                //	if (!oldValue || (oldValue && newValue.UserId && newValue.UserId != oldValue.UserId)) {
-                $log.info("--WATCH--userData--Discover Updated userData");
+                $log.info("--WATCH--userData-- Discover userData: " + JSON.stringify(newValue));
+                $rootScope.userData ? $log.info($rootScope.userData.UserId) : $log.info('--WATCH--userdata-- is NULL, exit function');
+                if (!$rootScope.userData)return;
                 $timeout(function () {
-                    //Check if UserId=null, if yes, redirect to current Page, maximum is maxFailcounter!
-                    $rootScope.userData ? $log.info($rootScope.userData.UserId) : $log.info('--WATCH--userdata-- is null...');
-
-//					if (!$rootScope.userData || $rootScope.userData.UserId == 'undefined' || $rootScope.userData.UserId == undefined || $rootScope.userData.UserId.length == 0) {
-                    if ($rootScope.checkUserData()) {
-                        $log.info('USERDATA undefined. Redirect to Page again');
-                        if ($rootScope.maxFailCounter > 0) {
-                            $rootScope.maxFailCounter--;
-                            window.location.href = window.location.href;
-                        }
-                        return;
-                    }
-                    $rootScope.resetFailCounter();
                     favoriteService.getFavoriten()
                         .then(function (data) {
                             if (data != null) {
@@ -451,9 +423,7 @@ ausgabenmanagerControllers.controller('favoriteCtrl', function ($scope, $modal, 
                         }, function (error) {
                             $log.info("Error at getAusgaben() (" + new Date() + "): --> " + error);
                         });
-
-
-                }, 1000);
+                }, 200);
             }
         );
     }

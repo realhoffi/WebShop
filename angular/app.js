@@ -24,6 +24,7 @@ var ausgabenmanager = angular.module('ausgabenmanager', ['ngRoute', 'ui.bootstra
 ausgabenmanager.run(function ($rootScope, $log, userService) {
 
     var maxCountFailCount = 3;
+    $rootScope.needLoginPage = false;
     $rootScope.isUserLoggedIn = false;
     $rootScope.userData = null;
     $rootScope.maxFailCounter = maxCountFailCount;
@@ -42,12 +43,18 @@ ausgabenmanager.run(function ($rootScope, $log, userService) {
     //StartUp Method to try Login! If not possible, SignIn command windows opens
     $rootScope.$watch('$viewContentLoaded', function () {
         $log.info('--WATCH--$viewContentLoaded-- ' + new Date());
-        userService.tryLogin().then(function (data) {
-            $log.info('--WATCH--$viewContentLoaded--: User found in Cookie: ' + JSON.stringify(data));
-        }, function (errorMsg) {
-            $log.info("--WATCH--$viewContentLoaded--ERROR: " + JSON.stringify(errorMsg))
-            $scope.loginModal();
-        });
+        if (userService.getUserId) {
+            $log.info('--WATCH--$viewContentLoaded-- ' + new Date());
+            userService.tryLogin().then(function (data) {
+                $log.info('--WATCH--$viewContentLoaded--: User found in Cookie: ' + JSON.stringify(data));
+            }, function (errorMsg) {
+                $log.info("--WATCH--$viewContentLoaded--ERROR: " + JSON.stringify(errorMsg))
+            });
+        } else {
+            $rootScope.needLoginPage = true;
+            $rootScope.userData = null;
+            return;
+        }
     });
 });
 

@@ -39,9 +39,9 @@ ausgabenmanager.run(function ($rootScope, $log, userService) {
         $log.info('checkUserData result: ' + retVal);
         return retVal;
     }
+    //StartUp Method to try Login! If not possible, SignIn command windows opens
     $rootScope.$watch('$viewContentLoaded', function () {
         $log.info('--WATCH--$viewContentLoaded-- ' + new Date());
-
         userService.tryLogin().then(function (data) {
             $log.info('--WATCH--$viewContentLoaded--: User found in Cookie: ' + JSON.stringify(data));
         }, function (errorMsg) {

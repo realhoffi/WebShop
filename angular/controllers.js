@@ -52,7 +52,6 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
                 }
             }
         }
-
         $scope.isUserLoggedIn = function () {
             return userService.isUserLoggedIn();
         }
@@ -155,18 +154,6 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
     }
 );
 ausgabenmanagerControllers.controller('userCtrl', function ($scope, $modal, $http, $rootScope, $log, userService) {
-    //StartUp Method to try Login! If not possible, SignIn command windows opens
-//	$scope.$watch('$viewContentLoaded', function () {
-//		$log.info('--WATCH--$viewContentLoaded-- ' + new Date());
-//
-//		userService.tryLogin().then(function (data) {
-//			$log.info('--WATCH--$viewContentLoaded--: User found in Cookie: ' + JSON.stringify(data));
-//		}, function (errorMsg) {
-//			$log.info("--WATCH--$viewContentLoaded--ERROR: " + JSON.stringify(errorMsg))
-//			$scope.loginModal();
-//		});
-//	});
-
     $scope.MyUser = function () {
         return userService.getCurrentUser();
     }

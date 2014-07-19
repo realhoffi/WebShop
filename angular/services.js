@@ -539,8 +539,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 
 		}
 	}])
-	.
-	factory('favoriteService', ['$http', '$q', '$rootScope', '$log', function ($http, $q, $rootScope, $log) {
+	.factory('favoriteService', ['$http', '$q', '$rootScope', '$log', function ($http, $q, $rootScope, $log) {
 		var favoriten;
 
 		var indexGetById = function (id) {

@@ -409,7 +409,6 @@ ausgabenmanagerControllers.controller('ModalLogInController', function ($scope, 
 				});
 		} else {
 			userService.login($scope.item.name).then(function (loggedUser) {
-				alert(loggedUser);
 				$modalInstance.close(loggedUser);
 			}, function (error) {
 				app.common.utils.setButtonLoadingStateReset($event.currentTarget);

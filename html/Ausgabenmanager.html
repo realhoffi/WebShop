@@ -20,44 +20,6 @@
     <script src="../angular/controllers.js" type="application/javascript"></script>
     <script src="../angular/services.js" type="application/javascript"></script>
 
-
-    <script type="text/javascript">
-        function upload() {
-            var fileContent = $("#fileInput")[0];
-            var file = fileContent.files[0];
-            var name = file.name;
-            var size = file.size;
-            var type = file.type;
-
-
-            var reader = new FileReader();
-
-            reader.onload = function (event) {
-                console.log(event.target);
-            };
-            console.log(file);
-
-            reader.readAsDataURL(file);
-
-            var xhr = new XMLHttpRequest();
-            xhr.upload.onprogress = function (e) {
-                var percent = ((100 * e.loaded) / e.total);
-                // Render a pretty progress bar
-            };
-            xhr.onreadystatechange = function (e) {
-                if (e.target.readyState == 4) {
-                    // Handle file upload complete
-                    alert('ready');
-                } else if (e.target.readyState == 2) {
-                    alert(e.target.status + " : " + e.target.statusText);
-                }
-            };
-            //  xhr.open('POST', 'http://localhost:54091/File/SaveFile?fid=' + name, true);
-            xhr.open('POST', 'http://info.fhoffma.net/services/File/SaveFile?fid=' + name, true);
-            xhr.setRequestHeader('X-FileName', name); // Pass the filename along
-            xhr.send(file);
-        }
-    </script>
 </head>
 <body>
 <div class="container-fluid" id="mainForm">

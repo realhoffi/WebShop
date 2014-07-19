@@ -322,7 +322,6 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 		var tryLoginByCookie = function () {
 			var deferred = $q.defer();
 			currentUserId = getUserId();
-			//	currentUserId = 'Testadress@gmail.com';
 			if (currentUserId != null && currentUserId.length > 0) {
 				logIn(currentUserId).then(function (user) {
 					$log.info('tryLoginByCookie success! UserData: ' + JSON.stringify(user));
@@ -359,10 +358,12 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 						$log.info('logIn success! Response-type is OBJECT');
 						$rootScope.userData = data;
 						$rootScope.isUserLoggedIn = true;
+						$log.info('CreateUserCookie');
 						app.common.utils.createCookie("userid", $rootScope.userData.UserId, 20);
-						deferred.resolve($rootScope.userData);
-						$rootScope.resetFailCounter();
 						$log.info('logIn: resetFailCounter ');
+						$rootScope.resetFailCounter();
+						deferred.resolve($rootScope.userData);
+
 					} else {
 						$log.info('logIn success! But response-type is NOT OBJECT');
 						$log.info('Do login again!');
@@ -370,7 +371,6 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 							$rootScope.maxFailCounter--;
 							logIn(uId);
 						} else {
-							//$rootScope.isAppLoading = false;
 							deferred.reject("UserService --> REJECT because errormessage is inside");
 							return;
 						}

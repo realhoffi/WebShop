@@ -15,6 +15,15 @@ app.common.utils = {
 		}
 		return null;
 	},
+	createCookie: function (name, value, days) {
+		if (days) {
+			var date = new Date();
+			date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+			var expires = "; expires=" + date.toGMTString();
+		}
+		else var expires = "";
+		document.cookie = name + "=" + value + expires + "; path=/";
+	},
 	setButtonLoadingState: function (targetButton) {
 		if (targetButton)
 			$(targetButton).button('loading');
@@ -34,9 +43,29 @@ app.common.utils = {
 			}
 		});
 		return retVal;
+	},
+	getSpinnerInstance: function () {
+		var opts = {
+			lines: 11, // The number of lines to draw
+			length: 0, // The length of each line
+			width: 27, // The line thickness
+			radius: 60, // The radius of the inner circle
+			corners: 1, // Corner roundness (0..1)
+			rotate: 44, // The rotation offset
+			direction: 1, // 1: clockwise, -1: counterclockwise
+			color: '#000', // #rgb or #rrggbb or array of colors
+			speed: 1, // Rounds per second
+			trail: 100, // Afterglow percentage
+			shadow: false, // Whether to render a shadow
+			hwaccel: false, // Whether to use hardware acceleration
+			className: 'spinner', // The CSS class to assign to the spinner
+			zIndex: 2e9, // The z-index (defaults to 2000000000)
+			top: '40%', // Top position relative to parent
+			left: '50%' // Left position relative to parent
+		};
+
+		return new Spinner(opts);
 	}
-
-
 }
 
 app.common.utils.guid = {

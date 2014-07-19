@@ -263,10 +263,9 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 	}])
 	.factory('userService', ['$http', '$q', '$rootScope', '$log', function ($http, $q, $rootScope, $log) {
 		var currentUserId = "";
-		var thisUser;
-		var isThisUserLoggedIn = false;
 		var getUserId = function () {
-			return getCurrentUser() ? getCurrentUser().UserId : app.common.utils.readCookie('userid');
+			var currentUser = getCurrentUser();
+			return currentUser ? getCurrentUser().UserId : app.common.utils.readCookie('userid');
 		}
 		var getEmptyUser = function () {
 			//REMOVE THIS BECAUSE OF SQL PARSING ERROR...:(
@@ -323,7 +322,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 		var tryLoginByCookie = function () {
 			var deferred = $q.defer();
 			currentUserId = getUserId();
-			currentUserId = 'Testadress@gmail.com';
+			//	currentUserId = 'Testadress@gmail.com';
 			if (currentUserId != null && currentUserId.length > 0) {
 				logIn(currentUserId).then(function (user) {
 					$log.info('tryLoginByCookie success! UserData: ' + JSON.stringify(user));
@@ -360,10 +359,10 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 						$log.info('logIn success! Response-type is OBJECT');
 						$rootScope.userData = data;
 						$rootScope.isUserLoggedIn = true;
-						$rootScope.isAppLoading = false;
+						app.common.utils.createCookie("userid", $rootScope.userData.UserId, 20);
 						deferred.resolve($rootScope.userData);
-						$log.info('logIn: resetFailCounter ');
 						$rootScope.resetFailCounter();
+						$log.info('logIn: resetFailCounter ');
 					} else {
 						$log.info('logIn success! But response-type is NOT OBJECT');
 						$log.info('Do login again!');
@@ -371,9 +370,11 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 							$rootScope.maxFailCounter--;
 							logIn(uId);
 						} else {
-							$rootScope.isAppLoading = false;
+							//$rootScope.isAppLoading = false;
 							deferred.reject("UserService --> REJECT because errormessage is inside");
+							return;
 						}
+						deferred.resolve(data);
 					}
 
 				})
@@ -407,6 +408,9 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 			},
 			updateUser: function (user) {
 				return updateUser(user);
+			},
+			getUserId: function () {
+				return getUserId();
 			}
 		};
 	}])
@@ -486,8 +490,8 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 				{cache: false})
 				.success(function (data) {
 					$log.info("fileService HTTP success getFileByName!");
-					files = data;
-					deferred.resolve(files);
+					file.FileStreamData = data;
+					deferred.resolve(data);
 				})
 				.error(function (data, status, headers) {
 					$log.error("fileService fail! Error: " + JSON.stringify(data) + " --> " + JSON.stringify(status));

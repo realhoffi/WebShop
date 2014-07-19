@@ -94,7 +94,7 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 		$rootScope.$watch('userData', function (newValue, oldValue, scope) {
 				$log.info('--WATCH--userData-- ' + new Date());
 				$log.info("--WATCH--userData-- Discover new value userData: " + JSON.stringify(newValue));
-				$rootScope.userData ? $log.info($rootScope.userData.UserId) : $log.info('--WATCH--userdata-- is NULL, exit function.');
+				$rootScope.userData ? $log.info($rootScope.userData.UserId) : $log.info('--WATCH ausgabenCtrl--userdata-- is NULL, exit function.');
 				if (!$rootScope.userData)return;
 				$timeout(function () {
 					//Check if UserId=null, if yes, redirect to current Page, maximum is maxFailcounter!
@@ -235,7 +235,7 @@ ausgabenmanagerControllers.controller('favoriteCtrl', function ($scope, $modal, 
 		$rootScope.$watch('userData', function (newValue, oldValue, scope) {
 				$log.info('--WATCH--userData-- ' + new Date());
 				$log.info("--WATCH--userData-- Discover userData: " + JSON.stringify(newValue));
-				$rootScope.userData ? $log.info($rootScope.userData.UserId) : $log.info('--WATCH--userdata-- is NULL, exit function');
+				$rootScope.userData ? $log.info($rootScope.userData.UserId) : $log.info('--WATCH favoriteCtrl--userdata-- is NULL, exit function');
 				if (!$rootScope.userData)return;
 				$timeout(function () {
 					favoriteService.getFavoriten()
@@ -255,9 +255,10 @@ ausgabenmanagerControllers.controller('favoriteCtrl', function ($scope, $modal, 
 ausgabenmanagerControllers.controller('fileCtrl', function ($scope, $modal, $http, $rootScope, $log, $timeout, fileService) {
 	$scope.Files = [];
 	$scope.loadFile = function (file) {
-		alert();
+
 		fileService.getFileByName(file).then(function (data) {
 			$log.info('file erfolgreich geladen');
+			alert(file.FileStreamData);
 		}, function (error) {
 			alert('FEHLER: file NICHT geladen: ' + error)
 		});
@@ -307,6 +308,8 @@ ausgabenmanagerControllers.controller('fileCtrl', function ($scope, $modal, $htt
 		}
 	}
 	$rootScope.$watch('userData', function (newValue, oldValue, scope) {
+		$rootScope.userData ? $log.info($rootScope.userData.UserId) : $log.info('--WATCH fileCtrl--userdata-- is NULL, exit function.');
+		if (!$rootScope.userData)return;
 		$timeout(function () {
 			fileService.getFiles()
 				.then(function (data) {
@@ -425,8 +428,6 @@ ausgabenmanagerControllers.controller('ModalLogInController', function ($scope, 
 });
 ausgabenmanagerControllers.controller('ModalUserController', function ($scope, $modalInstance, userService) {
 	$scope.ok = function ($event) {
-		var isValid = app.common.utils.validateForm($event.currentTarget);
-		if (!isValid)return false;
 		app.common.utils.setButtonLoadingState($event.currentTarget);
 		userService.updateUser($scope.MyUser()).then(
 			function (newuser) {

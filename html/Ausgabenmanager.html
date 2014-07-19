@@ -36,6 +36,7 @@
                 console.log(event.target);
             };
             console.log(file);
+
             reader.readAsDataURL(file);
 
             var xhr = new XMLHttpRequest();
@@ -161,7 +162,7 @@
             <div ng-view></div>
         </div>
     </div>
-    <div class="row" id="contentNoLogIn" ng-show="!$root.isUserLoggedIn">
+    <div class="row" id="contentNoLogIn" ng-show="!isAppLoading && !$root.isUserLoggedIn">
         <div class="col-md-12">
             <div class="bs-callout bs-info">
                 <p>

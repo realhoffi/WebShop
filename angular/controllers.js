@@ -293,14 +293,14 @@ ausgabenmanagerControllers.controller('fileCtrl', function ($scope, $modal, $htt
 				}
 			});
 
-			modalInstance.result.then(function (favorite) {
+			modalInstance.result.then(function (newFile) {
 				//MUST CALL THIS BECAUSE IF ARRAY IS NULL, IT DOES NOT GET UPDATED -.-
 				if ($scope.Files.length == 0) {
-					$scope.Files = favoriteService.getFavoritenCached();
+					$scope.Files = fileService.getFiles();
 				}
 
-				if (favorite != null) {
-					$log.info('Received Data manageFavoriteController: ' + favorite);
+				if (newFile != null) {
+					$log.info('Received Data fileCtrl: ' + newFile);
 				}
 			}, function () {
 				$log.info('Modal dismissed at: ' + new Date());
@@ -498,7 +498,7 @@ ausgabenmanagerControllers.controller('ModalFavoriteController', function ($scop
 	};
 });
 ausgabenmanagerControllers.controller('ModalFileController', function ($scope, $modalInstance, $rootScope, fileService, type, file) {
-
+	var mfile = $scope.myFile;
 	var type = type;
 	$scope.file = null;
 	$scope.Heading = function () {
@@ -519,18 +519,26 @@ ausgabenmanagerControllers.controller('ModalFileController', function ($scope, $
 	}
 
 	$scope.ok = function ($event) {
+		//not working with modal windows...
+		//mfile = $scope.myFile;
+		for (var cs = $scope.$$childHead; cs; cs = cs.$$nextSibling) {
+			if (!mfile) {
+				mfile = cs.myFile;
+			}
+		}
 		app.common.utils.setButtonLoadingState($event.currentTarget);
 		if (type == 'new') {
-			$scope.favorite.UserId = $rootScope.userData.UserId;
-//			favoriteService.addNewFavorite($scope.favorite)
-//				.then(function (data) {
-//					app.common.utils.setButtonLoadingStateReset($event.currentTarget);
-//					$modalInstance.close(data);
-//				}, function (error) {
-//					app.common.utils.setButtonLoadingStateReset($event.currentTarget);
-//					alert('Error: ' + JSON.stringify(error));
-//				}
-//			);
+			$scope.file.FileName = mfile.name;
+			$scope.file.UserId = $rootScope.userData.UserId;
+			fileService.uploadFile($scope.file, mfile)
+				.then(function (data) {
+					app.common.utils.setButtonLoadingStateReset($event.currentTarget);
+					$modalInstance.close(data);
+				}, function (error) {
+					app.common.utils.setButtonLoadingStateReset($event.currentTarget);
+					alert('Error: ' + JSON.stringify(error));
+				}
+			);
 		} else if (type == 'edit') {
 //			favoriteService.updateFavorite($scope.favorite)
 //				.then(function (data) {

@@ -441,7 +441,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 					.error(function (data, status, headers) {
 						$log.error("fileService fail! Error: " + JSON.stringify(data) + " --> " + JSON.stringify(status));
 						deferred.reject('Error: ' + JSON.stringify(data));
-						alert('fileService: Fehler beim Datenabruf der getFavoriten... :(');
+						alert('fileService: Fehler beim Datenabruf der getFiles... :(');
 					});
 			}
 			return deferred.promise;
@@ -482,7 +482,6 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 				});
 			return  deferred.promise;
 		}
-
 		var getFileByName = function (file) {
 			var deferred = $q.defer();
 
@@ -503,6 +502,24 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 
 			return deferred.promise;
 		}
+		var uploadFile = function (fileObj, inputObj) {
+			var deferred = $q.defer();
+			var fd = new FormData();
+			fd.append('file', inputObj);
+			$log.info("fileService HTTP Call! uploadFile");
+			$http.post($rootScope.rootDomain + '/Files/UploadFile?fid=' + fileObj.FileName + '&uid=' + $rootScope.userData.UserId, fd, {
+				transformRequest: angular.identity,
+				headers: {'Content-Type': undefined}
+			}).success(function (data) {
+				files.push(data);
+				$log.info("fileService HTTP Call! uploadFile success" + JSON.stringify(data));
+				deferred.resolve(data);
+			}).error(function (data, status, headers) {
+				$log.info("fileService HTTP Call! uploadFile ERROR");
+				deferred.reject('Error: ' + JSON.stringify(status));
+			});
+			return deferred.promise;
+		}
 		return{
 			getFiles: function () {
 				return getFiles();
@@ -515,6 +532,9 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 			},
 			getFileByName: function (file) {
 				return getFileByName(file);
+			},
+			uploadFile: function (file, dataStream) {
+				return uploadFile(file, dataStream);
 			}
 
 		}

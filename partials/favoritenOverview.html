@@ -6,15 +6,14 @@
                     <div class="panel bs-info list-group-item ">
                         <div>
                             <a class="paddingRight10 noDecoration" ng-click="manageFavorit(null,null,'new')">
-                            <span class="glyphicon glyphicon-plus"></span>
+                                <span class="glyphicon glyphicon-plus"></span>
                                 <span> Favorite</span>
                             </a>
                         </div>
                     </div>
                     <div ng-repeat="fav in Favoriten" class="panel panel-primary list-group-item">
-
-                        <div class="pull-left ">
-                            <a class="showCursor" ng-href="{{ fav.URL }}">{{ fav.Name }}</a>
+                        <div class="pull-left">
+                            <a class="showCursor noDecoration" ng-href="{{ fav.URL }}"><span>{{ fav.Name }}</span></a>
                         </div>
                         <div class="pull-right  ">
                             <a class="paddingRight10  ">

@@ -5,25 +5,24 @@
                 <b>
                     <div class="panel bs-info list-group-item">
                         <div>
-                            <a class="paddingRight10" ng-click="manageFile(null,null,'new')">
-                                <span class="glyphicon glyphicon-plus"></span>
+                            <a class="paddingRight10 nodecoration" ng-click="manageFile(null,null,'new')">
+                            <span class="glyphicon glyphicon-plus"></span>
                                 <span> Datei</span>
                             </a>
                         </div>
                     </div>
-                    <div ng-repeat="fav in Favoriten" class="panel panel-primary list-group-item">
-
+                    <div ng-repeat="file in Files" class="panel panel-primary list-group-item">
                         <div class="pull-left ">
-                            <a class="showCursor" ng-href="{{ fav.URL }}">{{ fav.Name }}</a>
+                            <span class="showCursor active" ng-click="loadFile(file)">{{ file.FileName }}</span>
                         </div>
                         <div class="pull-right  ">
                             <a class="paddingRight10  ">
                                 <span class="glyphicon glyphicon-pencil "
-                                      ng-click="manageFile(null,fav,'edit')"></span>
+                                      ng-click="manageFile(null,file,'edit')"></span>
                             </a>
                             <a class="paddingRight10 ">
                                 <span class="glyphicon glyphicon-trash "
-                                      ng-click="manageFile(null,fav,'delete')"></span>
+                                      ng-click="manageFile(null,file,'delete')"></span>
                             </a>
                         </div>
                     </div>

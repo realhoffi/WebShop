@@ -1,6 +1,6 @@
-<div class="row">
+<div class="row" ng-show="$root.isUserLoggedIn">
     <div class="col-md-10">
-        <div class="row" ng-show="isUserLoggedIn()">
+        <div class="row">
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-12">
@@ -22,8 +22,8 @@
                 <div class="row" ng-show="Ausgaben.length > 0">
                     <div class="col-md-12">
                         <div class="col-md-offset-1">
-                        <div class="form-horizontal bs-callout bs-info" role="form">
-                                <div class="form-group">
+                            <div class="form-horizontal bs-callout bs-info" role="form">
+                            <div class="form-group">
                                     <h4 class="col-md-2">
                                         <b><span class="glyphicon glyphicon-search"></span> <span>Suche:</span></b>
                                     </h4>
@@ -155,35 +155,6 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12" ng-show="!isUserLoggedIn()">
-                <div class="bs-callout bs-info">
-                    <p>
 
-                    <h2>
-                        <span class="glyphicon glyphicon-thumbs-down"></span><span>  Um diese Funktionen nutzen zu können, melden Sie sich bitte an...</span>
-                    </h2>
-                    </p>
-                </div>
-            </div>
-        </div>
     </div>
-    <!--<div class="col-md-2">-->
-    <!--<div class="row">-->
-    <!--<div class="col-md-12" ng-show="isUserLoggedIn()">-->
-    <!--<div class="row">-->
-    <!--<div class="col-md-12">-->
-    <!--<div class="panel panel-success">-->
-    <!--<button class="btn btn-primary btn-lg btn-block"-->
-    <!--ng-click="neueAusgabeModal('','new',null)">-->
-    <!--Neue-->
-    <!--Ausgabe-->
-    <!--</button>-->
-
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
 </div>

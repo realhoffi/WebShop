@@ -110,7 +110,7 @@
             </div>
         </div>
     </div>
-    <div class="row" id="contentForm" ng-show="!isAppLoading">
+    <div class="row" id="contentForm" ng-show="!isAppLoading && $root.isUserLoggedIn">
         <div class="col-md-2">
             <div class="row">
                 <div class="col-md-12">
@@ -156,10 +156,21 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-10" id="content">
-            <div ng-view></div>
+        <div class="col-md-10" id="content" ng-show="$root.isUserLoggedIn">
+        <div ng-view></div>
         </div>
+    </div>
+    <div class="row" id="contentNoLogIn" ng-show="!$root.isUserLoggedIn">
+        <div class="col-md-12">
+            <div class="bs-callout bs-info">
+                <p>
 
+                <h2>
+                    <span class="glyphicon glyphicon-thumbs-down"></span><span>  Um diese Funktionen nutzen zu können, melden Sie sich bitte an...</span>
+                </h2>
+                </p>
+            </div>
+        </div>
     </div>
     <div class="row" id="footer">
         <div class="panel-footer">

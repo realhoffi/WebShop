@@ -21,7 +21,32 @@ if (typeof jQuery === 'undefined') {
 
 var ausgabenmanager = angular.module('ausgabenmanager', ['ngRoute', 'ui.bootstrap', 'ausgabenmanagerControllers', 'ausgabenmanagerServices']);
 ausgabenmanager.run(function ($rootScope, $log, userService) {
-
+	$rootScope.spinner;
+	$rootScope.showSpinner = function () {
+		var opts = {
+			lines: 11, // The number of lines to draw
+			length: 0, // The length of each line
+			width: 27, // The line thickness
+			radius: 60, // The radius of the inner circle
+			corners: 1, // Corner roundness (0..1)
+			rotate: 44, // The rotation offset
+			direction: 1, // 1: clockwise, -1: counterclockwise
+			color: '#000', // #rgb or #rrggbb or array of colors
+			speed: 1, // Rounds per second
+			trail: 100, // Afterglow percentage
+			shadow: false, // Whether to render a shadow
+			hwaccel: false, // Whether to use hardware acceleration
+			className: 'spinner', // The CSS class to assign to the spinner
+			zIndex: 2e9, // The z-index (defaults to 2000000000)
+			top: '40%', // Top position relative to parent
+			left: '50%' // Left position relative to parent
+		};
+		var target = document.getElementById('mainForm');
+		$rootScope.spinner = new Spinner(opts).spin(target);
+	}
+	$rootScope.hideSpinner = function () {
+		$rootScope.spinner.stop();
+	}
 	var maxCountFailCount = 3;
 	$rootScope.isAppLoading = true;
 	$rootScope.needLoginPage = false;
@@ -110,36 +135,35 @@ ausgabenmanager.config(['$routeProvider',
 				redirectTo: '/angulartest.html'
 			});
 	}]);
-ausgabenmanager.config(function ($httpProvider) {
-	$httpProvider.interceptors.push(function ($q, $rootScope) {
-		return {
-			'request': function (config) {
-				$rootScope.$broadcast('loading-started');
-				return config || $q.when(config);
-			},
-			'response': function (response) {
-				$rootScope.$broadcast('loading-complete');
-				return response || $q.when(response);
-			}
-		};
-	});
-});
-
-ausgabenmanager.directive("loadingIndicator", function () {
-	return {
-		restrict: "A",
-		template: "<div class='alert alert-info'>Loading...</div>",
-		link: function (scope, element, attrs) {
-			scope.$on("loading-started", function (e) {
-				element.css({"display": ""});
-				//	alert('s');
-			});
-
-			scope.$on("loading-complete", function (e) {
-				//alert('h');
-				element.css({"display": "none"});
-			});
-
-		}
-	};
-});
+//ausgabenmanager.config(function ($httpProvider) {
+//	$httpProvider.interceptors.push(function ($q, $rootScope) {
+//		return {
+//			'request': function (config) {
+//				$rootScope.$broadcast('loading-started');
+//				return config || $q.when(config);
+//			},
+//			'response': function (response) {
+//				$rootScope.$broadcast('loading-complete');
+//				return response || $q.when(response);
+//			}
+//		};
+//	});
+//});
+//ausgabenmanager.directive("loadingIndicator", function () {
+//	return {
+//		restrict: "A",
+//		template: "<div class='alert alert-info'> LOADING </div>",
+//		link: function (scope, element, attrs) {
+//			scope.$on("loading-started", function (e) {
+//				element.css({"display": ""});
+//				//	alert('s');
+//			});
+//
+//			scope.$on("loading-complete", function (e) {
+//				//alert('h');
+//				element.css({"display": "none"});
+//			});
+//
+//		}
+//	};
+//});

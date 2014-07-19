@@ -2,12 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="33469c24-7a96-412e-9d56-a358b96f40de" name="Default" comment="initialize">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/TESTCODE" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/html/Ausgabenmanager.html" afterPath="$PROJECT_DIR$/html/Ausgabenmanager.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/angular/app.js" afterPath="$PROJECT_DIR$/angular/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/angular/controllers.js" afterPath="$PROJECT_DIR$/angular/controllers.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/partials/manageFile.html" afterPath="$PROJECT_DIR$/partials/manageFile.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/angular/services.js" afterPath="$PROJECT_DIR$/angular/services.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="WebShop.iws" />
@@ -950,7 +944,11 @@
       <created>1405800785988</created>
       <updated>1405800785988</updated>
     </task>
-    <option name="localTasksCounter" value="95" />
+    <task id="LOCAL-00095" summary="initialize">
+      <created>1405809714005</created>
+      <updated>1405809714005</updated>
+    </task>
+    <option name="localTasksCounter" value="96" />
     <servers />
   </component>
   <component name="TodoView" selected-index="2">
@@ -1385,7 +1383,7 @@
             <element signature="e#11984#13544#0" expanded="false" />
             <element signature="e#13655#14161#0" expanded="false" />
             <element signature="e#14308#15653#0" expanded="false" />
-            <element signature="e#15788#17353#0" expanded="false" />
+            <element signature="e#15788#17357#0" expanded="false" />
           </folding>
         </state>
       </provider>

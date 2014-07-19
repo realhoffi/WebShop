@@ -153,7 +153,7 @@ ausgabenmanagerControllers.controller('userCtrl', function ($scope, $modal, $htt
 
 		modalInstance.result.then(function (user) {
 			if (user != null) {
-				$log.info('Received Data LogIn Modal 2: ' + user);
+				$log.info('Received Data LogIn Result: ' + user);
 				$rootScope.needLoginPage = false;
 			}
 		}, function () {
@@ -394,7 +394,6 @@ ausgabenmanagerControllers.controller('ModalLogInController', function ($scope, 
 			return this.formLogin.$invalid;
 		}
 	}
-
 	$scope.ok = function ($event) {
 		app.common.utils.setButtonLoadingState($event.currentTarget);
 		if ($scope.userClickedRegistered) {

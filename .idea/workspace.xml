@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="33469c24-7a96-412e-9d56-a358b96f40de" name="Default" comment="initialize">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/angular/controllers.js" afterPath="$PROJECT_DIR$/angular/controllers.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="WebShop.iws" />
@@ -25,13 +26,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="controllers.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="controllers.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/angular/controllers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.20994475" vertical-offset="5615" max-vertical-offset="8585">
-              <caret line="386" column="45" selection-start-line="386" selection-start-column="45" selection-end-line="386" selection-end-column="45" />
+            <state vertical-scroll-proportion="-1.12" vertical-offset="2352" max-vertical-offset="8568">
+              <caret line="140" column="5" selection-start-line="140" selection-start-column="5" selection-end-line="140" selection-end-column="5" />
               <folding>
-                <element signature="e#10377#11789#0" expanded="false" />
+                <element signature="e#10376#11788#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -52,11 +53,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="services.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="services.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/angular/services.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.56" vertical-offset="261" max-vertical-offset="6545">
-              <caret line="328" column="38" selection-start-line="328" selection-start-column="38" selection-end-line="328" selection-end-column="38" />
+            <state vertical-scroll-proportion="0.52117866" vertical-offset="261" max-vertical-offset="6545">
+              <caret line="335" column="19" selection-start-line="335" selection-start-column="19" selection-end-line="335" selection-end-column="19" />
               <folding>
                 <element signature="e#240#4307#0" expanded="false" />
                 <element signature="e#4424#5571#0" expanded="false" />
@@ -131,10 +132,10 @@
         <option value="$PROJECT_DIR$/html/Ausgabenmanager.html" />
         <option value="$PROJECT_DIR$/partials/favoritenOverview.html" />
         <option value="$PROJECT_DIR$/partials/fileOverview.html" />
-        <option value="$PROJECT_DIR$/angular/controllers.js" />
         <option value="$PROJECT_DIR$/angular/appHelper.js" />
         <option value="$PROJECT_DIR$/angular/app.js" />
         <option value="$PROJECT_DIR$/angular/services.js" />
+        <option value="$PROJECT_DIR$/angular/controllers.js" />
       </list>
     </option>
   </component>
@@ -983,7 +984,11 @@
       <created>1405789862736</created>
       <updated>1405789862736</updated>
     </task>
-    <option name="localTasksCounter" value="87" />
+    <task id="LOCAL-00087" summary="initialize">
+      <created>1405789890613</created>
+      <updated>1405789890613</updated>
+    </task>
+    <option name="localTasksCounter" value="88" />
     <servers />
   </component>
   <component name="TodoView" selected-index="2">
@@ -1441,6 +1446,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/angular/controllers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.12" vertical-offset="2352" max-vertical-offset="8568">
+          <caret line="140" column="5" selection-start-line="140" selection-start-column="5" selection-end-line="140" selection-end-column="5" />
+          <folding>
+            <element signature="e#10376#11788#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/angular/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="331" max-vertical-offset="2414">
@@ -1456,8 +1471,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/angular/services.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.56" vertical-offset="261" max-vertical-offset="6545">
-          <caret line="328" column="38" selection-start-line="328" selection-start-column="38" selection-end-line="328" selection-end-column="38" />
+        <state vertical-scroll-proportion="0.52117866" vertical-offset="261" max-vertical-offset="6545">
+          <caret line="335" column="19" selection-start-line="335" selection-start-column="19" selection-end-line="335" selection-end-column="19" />
           <folding>
             <element signature="e#240#4307#0" expanded="false" />
             <element signature="e#4424#5571#0" expanded="false" />
@@ -1466,16 +1481,6 @@
             <element signature="e#8222#8747#0" expanded="false" />
             <element signature="e#8783#9277#0" expanded="false" />
             <element signature="e#9313#9349#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/angular/controllers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.20994475" vertical-offset="5615" max-vertical-offset="8585">
-          <caret line="386" column="45" selection-start-line="386" selection-start-column="45" selection-end-line="386" selection-end-column="45" />
-          <folding>
-            <element signature="e#10377#11789#0" expanded="false" />
           </folding>
         </state>
       </provider>

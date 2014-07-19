@@ -13,6 +13,11 @@
     <script src="../js/angular-route.js" type="application/javascript"></script>
     <script src="../js/ui-bootstrap-tpls-0.11.0.js" type="application/javascript"></script>
 
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+    <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/ui-lightness/jquery-ui.css" rel="stylesheet"
+          type="text/css"/>
+    <script src="../angular/fileDownload.js" type="application/javascript"></script>
+    <script src="../angular/filesaver.js" type="application/javascript"></script>
     <script src="../angular/spinner.js" type="application/javascript"></script>
     <script src="../angular/appHelper.js" type="application/javascript"></script>
     <script src="../angular/app.js" type="application/javascript"></script>
@@ -157,7 +162,7 @@
             </div>
         </div>
         <div class="col-md-10" id="content" ng-show="$root.isUserLoggedIn">
-        <div ng-view></div>
+            <div ng-view></div>
         </div>
     </div>
     <div class="row" id="contentNoLogIn" ng-show="!$root.isUserLoggedIn">

@@ -255,13 +255,15 @@ ausgabenmanagerControllers.controller('favoriteCtrl', function ($scope, $modal, 
 ausgabenmanagerControllers.controller('fileCtrl', function ($scope, $modal, $http, $rootScope, $log, $timeout, fileService) {
 	$scope.Files = [];
 	$scope.loadFile = function (file) {
-
-		fileService.getFileByName(file).then(function (data) {
-			$log.info('file erfolgreich geladen');
-			alert(file.FileStreamData);
-		}, function (error) {
-			alert('FEHLER: file NICHT geladen: ' + error)
-		});
+		$.fileDownload($rootScope.rootDomain + '/Files/GetFileByName?fid=' + file.FileName + '&uid=' + $rootScope.userData.UserId,
+			{
+			}
+		)
+//		fileService.getFileByName(file).then(function (data) {
+//			$log.info('file erfolgreich geladen');
+//		}, function (error) {
+//			alert('FEHLER: file NICHT geladen: ' + error)
+//		});
 
 		return false;
 	}
@@ -407,7 +409,7 @@ ausgabenmanagerControllers.controller('ModalLogInController', function ($scope, 
 				});
 		} else {
 			userService.login($scope.item.name).then(function (loggedUser) {
-                alert(loggedUser);
+				alert(loggedUser);
 				$modalInstance.close(loggedUser);
 			}, function (error) {
 				app.common.utils.setButtonLoadingStateReset($event.currentTarget);

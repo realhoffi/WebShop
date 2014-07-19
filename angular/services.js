@@ -482,10 +482,12 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 				});
 			return  deferred.promise;
 		}
+
 		var getFileByName = function (file) {
 			var deferred = $q.defer();
 
 			$log.info("fileService HTTP Call!");
+
 			$http.get($rootScope.rootDomain + '/Files/GetFileByName?fid=' + file.FileName + '&uid=' + $rootScope.userData.UserId,
 				{cache: false})
 				.success(function (data) {
@@ -517,7 +519,8 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 
 		}
 	}])
-	.factory('favoriteService', ['$http', '$q', '$rootScope', '$log', function ($http, $q, $rootScope, $log) {
+	.
+	factory('favoriteService', ['$http', '$q', '$rootScope', '$log', function ($http, $q, $rootScope, $log) {
 		var favoriten;
 
 		var indexGetById = function (id) {

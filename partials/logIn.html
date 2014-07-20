@@ -1,64 +1,72 @@
 <div>
-    <!--<form class="form-horizontal" role="form" >-->
     <div class="modal-header">
-        <h2 class="modal-title text-center"><span> {{ selectedHeading() }} </span></h2>
+        <h2 class="modal-title text-center"><span class="text-info"> {{ selectedHeading() }} </span></h2>
     </div>
     <div class="modal-body">
-        <div ng-show="!isUserRegistered()">
-            <div>
-                <h4><b>
-                    <span>Please enter your E-Mail Address or your UserId</span></b></h4>
+        <div class="bs-info list-group-item ">
+            <h4>
+                <span>
+                        {{ getHeadingInfoTextByStatus() }}
+                </span>
+            </h4>
 
-                <p>
-                    If you don't have any Account, click <a ng-click="register()">Register </a> to create
-                    one.
-                </p>
-            </div>
-            <form class="form-horizontal" novalidate role="form" name="formLogin">
-                <div class="form-group required">
-                    <h4 class="col-md-3"><span class="label label-primary control-label">UserId:</span>
-                    </h4>
-
-                    <div class="col-md-9">
-                        <input class="form-control" required ng-model="item.name">
-                    </div>
-                </div>
-            </form>
+            <p ng-show="!isUserRegistered()">
+                If you don't have any Account, click <a ng-click="register()">Register </a> to create
+                one.
+            </p>
         </div>
-        <div ng-show="isUserRegistered()">
-            <div>
-                <h4>
-                    <b>
-                        <span>Please enter all of these Information to create a User-Account</span>
-                    </b>
-                </h4>
+        <div>
+            <div class="margin-top-10px">
+                <form class="form-horizontal" novalidate role="form" name="formLogin" ng-show="!isUserRegistered()">
+                    <div class="form-group required">
+                        <h4 class="col-md-3"><span class="label label-primary control-label">UserId:</span>
+                        </h4>
+
+                        <div class="col-md-9">
+                            <input class="form-control" required ng-model="item.name" ng-minlength="10"
+                                   ng-maxlength="30">
+                        </div>
+                    </div>
+                </form>
+                <form class="form-horizontal" novalidate role="form" name="formRegister" ng-show="isUserRegistered()">
+                    <div class="form-group required">
+                        <h4 class="col-md-3"><span class="label label-primary control-label">Email:</span>
+                        </h4>
+
+                        <div class="col-md-9">
+                            <input class="form-control" required ng-model="newUser.Email" type="email" ng-minlength="10"
+                                   ng-maxlength="30">
+                        </div>
+                    </div>
+                    <div class="form-group required">
+                        <h4 class="col-md-3"><span class="label label-primary control-label">First-Name:</span>
+                        </h4>
+
+                        <div class="col-md-9">
+                            <input class="form-control" required ng-model="newUser.Vorname" ng-minlength="5"
+                                   ng-maxlength="30">
+                        </div>
+                    </div>
+                    <div class="form-group required">
+                        <h4 class="col-md-3"><span class="label label-primary control-label">Last-Name:</span>
+                        </h4>
+
+                        <div class="col-md-9">
+                            <input class="form-control" required ng-model="newUser.Nachname" ng-minlength="5"
+                                   ng-maxlength="30">
+                        </div>
+                    </div>
+                </form>
             </div>
-            <form class="form-horizontal" novalidate role="form" name="formRegister">
-                <div class="form-group required">
-                    <h4 class="col-md-3"><span class="label label-primary control-label">Email:</span>
-                    </h4>
+        </div>
 
-                    <div class="col-md-9">
-                        <input class="form-control" required ng-model="newUser.Email" type="email">
-                    </div>
-                </div>
-                <div class="form-group required">
-                    <h4 class="col-md-3"><span class="label label-primary control-label">First-Name:</span>
-                    </h4>
 
-                    <div class="col-md-9">
-                        <input class="form-control" required ng-model="newUser.Vorname">
-                    </div>
-                </div>
-                <div class="form-group required">
-                    <h4 class="col-md-3"><span class="label label-primary control-label">Last-Name:</span>
-                    </h4>
-
-                    <div class="col-md-9">
-                        <input class="form-control" required ng-model="newUser.Nachname">
-                    </div>
-                </div>
-            </form>
+        <div class="bs-error" ng-show="errorHappend">
+            <h4>
+                <b>
+                    <pre class="has-error alert alert-danger">{{ errorMessasge }}</pre>
+                </b>
+            </h4>
         </div>
     </div>
     <div class="modal-footer">
@@ -67,9 +75,6 @@
                 <a ng-click="register()">{{ getHeadingByStatus(!userClickedRegistered) }}</a>
             </div>
             <div class="pull-right">
-                <!--<input class="btn btn-primary" type="submit"-->
-                <!--value="{{getHeadingByStatus(userClickedRegistered) }}"/>-->
-                <!--<input class="btn btn-warning" type="reset" ng-click="cancel()" value="Close"/>-->
                 <button class="btn btn-primary" ng-disabled="checkValidation()" ng-click="ok($event)">{{
                     getHeadingByStatus(userClickedRegistered) }}
                 </button>
@@ -77,5 +82,4 @@
             </div>
         </div>
     </div>
-    <!--</form>-->
 </div>

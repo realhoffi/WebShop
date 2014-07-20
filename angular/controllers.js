@@ -95,10 +95,13 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 				$log.info('--WATCH--userData-- ' + new Date());
 				$log.info("--WATCH--userData-- Discover new value userData: " + JSON.stringify(newValue));
 				$rootScope.userData ? $log.info($rootScope.userData.UserId) : $log.info('--WATCH ausgabenCtrl--userdata-- is NULL, exit function.');
-				if (!$rootScope.userData)return;
+				if (!$rootScope.userData) {
+					$scope.Ausgaben = [];
+					$scope.Ausgabenzeitraeume = [];
+					$scope.Prioritaeten = [];
+					return;
+				}
 				$timeout(function () {
-					//Check if UserId=null, if yes, redirect to current Page, maximum is maxFailcounter!
-
 					AusgabenService.getAusgaben()
 						.then(function (data) {
 							if (data != null) {
@@ -154,7 +157,6 @@ ausgabenmanagerControllers.controller('userCtrl', function ($scope, $modal, $htt
 		modalInstance.result.then(function (user) {
 			if (user != null) {
 				$log.info('Received Data LogIn Result: ' + user);
-				$rootScope.needLoginPage = false;
 			}
 		}, function () {
 			$log.info('Modal dismissed at: ' + new Date());
@@ -177,6 +179,8 @@ ausgabenmanagerControllers.controller('userCtrl', function ($scope, $modal, $htt
 		modalInstance.result.then(function (user) {
 			if (user != null) {
 				$log.info('Received Data LogIn Modal 2: ' + user);
+			} else {
+				alert('No User?!?!?!?');
 			}
 		}, function () {
 			$log.info('Modal dismissed at: ' + new Date());
@@ -236,7 +240,10 @@ ausgabenmanagerControllers.controller('favoriteCtrl', function ($scope, $modal, 
 				$log.info('--WATCH--userData-- ' + new Date());
 				$log.info("--WATCH--userData-- Discover userData: " + JSON.stringify(newValue));
 				$rootScope.userData ? $log.info($rootScope.userData.UserId) : $log.info('--WATCH favoriteCtrl--userdata-- is NULL, exit function');
-				if (!$rootScope.userData)return;
+				if (!$rootScope.userData) {
+					$scope.Favoriten = null;
+					return;
+				}
 				$timeout(function () {
 					favoriteService.getFavoriten()
 						.then(function (data) {
@@ -311,7 +318,10 @@ ausgabenmanagerControllers.controller('fileCtrl', function ($scope, $modal, $htt
 	}
 	$rootScope.$watch('userData', function (newValue, oldValue, scope) {
 		$rootScope.userData ? $log.info($rootScope.userData.UserId) : $log.info('--WATCH fileCtrl--userdata-- is NULL, exit function.');
-		if (!$rootScope.userData)return;
+		if (!$rootScope.userData) {
+			$scope.Files = null;
+			return;
+		}
 		$timeout(function () {
 			fileService.getFiles()
 				.then(function (data) {
@@ -378,16 +388,21 @@ ausgabenmanagerControllers.controller('ModalNeueAusgabeController', function ($s
 	};
 });
 ausgabenmanagerControllers.controller('ModalLogInController', function ($scope, $modalInstance, userService) {
+	$scope.errorHappend = false;
+	$scope.errorMessasge = "";
 	$scope.newUser = userService.getEmptyUser();
 	$scope.item = {name: ""};
 	$scope.userClickedRegistered = false;
+	$scope.Heading = {Register: 'Register', Login: 'Sign in', Logout: 'Sign Out', Registertext: "Please enter all of these Information to create a User-Account", Logintext: "Please enter your E-Mail Address or your UserId."};
 
-	$scope.Heading = {Register: 'Register', Login: 'Sign in', Logout: 'Sign Out'};
 	$scope.selectedHeading = function () {
 		return  $scope.getHeadingByStatus($scope.userClickedRegistered);
 	}
 	$scope.getHeadingByStatus = function (b) {
 		return b ? $scope.Heading.Register : $scope.Heading.Login;
+	}
+	$scope.getHeadingInfoTextByStatus = function () {
+		return $scope.userClickedRegistered ? $scope.Heading.Registertext : $scope.Heading.Logintext;
 	}
 	$scope.checkValidation = function () {
 		if ($scope.userClickedRegistered) {
@@ -410,9 +425,10 @@ ausgabenmanagerControllers.controller('ModalLogInController', function ($scope, 
 		} else {
 			userService.login($scope.item.name).then(function (loggedUser) {
 				$modalInstance.close(loggedUser);
-			}, function (error) {
+			}, function (error, status) {
 				app.common.utils.setButtonLoadingStateReset($event.currentTarget);
-				alert('Error: ' + JSON.stringify(error));
+				$scope.errorHappend = true;
+				$scope.errorMessasge = "Fehler: " + error + "\nStatus: " + status;
 			})
 		}
 	};

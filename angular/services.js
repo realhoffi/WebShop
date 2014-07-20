@@ -358,6 +358,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 						$log.info('logIn success! Response-type is OBJECT');
 						$rootScope.userData = data;
 						$rootScope.isUserLoggedIn = true;
+						$rootScope.needLoginPage = false;
 						$log.info('CreateUserCookie');
 						app.common.utils.createCookie("userid", $rootScope.userData.UserId, 20);
 						$log.info('logIn: resetFailCounter ');
@@ -372,6 +373,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 							logIn(uId);
 						} else {
 							deferred.reject("UserService --> REJECT because errormessage is inside");
+							$rootScope.needLoginPage = true;
 							return;
 						}
 						deferred.resolve(data);
@@ -379,10 +381,10 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 
 				})
 				.error(function (data, status, headers) {
-					$log.error("tryLoginByCookie error: " + data);
+					$log.error("logIn error: " + data + JSON.stringify(status) + JSON.stringify(headers));
 					$rootScope.isUserLoggedIn = false;
 					$rootScope.userData = null;
-					deferred.reject('Error: ' + JSON.stringify(status));
+					deferred.reject(data, status);
 				});
 			return  deferred.promise;
 		}
@@ -568,7 +570,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 				$http.get($rootScope.rootDomain + '/Favoriten/GetFavoriten?uid=' + $rootScope.userData.UserId,
 					{cache: false})
 					.success(function (data) {
-						$log.info("PrioritaetService HTTP success!");
+						$log.info("favoriteService HTTP success!");
 						favoriten = data;
 						deferred.resolve(favoriten);
 					})

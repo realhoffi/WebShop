@@ -2,20 +2,36 @@
     <div class="col-md-10">
         <div class="row">
             <div class="col-md-12">
-                <div class="row">
+                <div class="row" ng-show="Ausgaben.length < 1">
                     <div class="col-md-12">
                         <div class="col-md-offset-1 bs-info list-group-item">
-                            <div>
-                                <h4>
-                                    <b>
-                                        <a class="paddingRight10 noDecoration"
-                                           ng-click="neueAusgabeModal('','new',ausgabe)">
-                                            <span class="glyphicon glyphicon-plus"></span>
-                                            <span> Ausgabe</span>
-                                        </a>
-                                    </b>
-                                </h4>
-                            </div>
+                            <p>
+
+                            <h3>
+                                <span class="glyphicon glyphicon-thumbs-down"></span><span>  Sie haben noch keine Ausgaben angelegt.</span></br></br>
+                                Klicken Sie auf <a ng-click="neueAusgabeModal('','new',ausgabe)">Neue Ausgabe</a>,
+                                um eine neue
+                                Ausgabe
+                                anzulegen.</span>
+                            </h3>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row margin-top-10px">
+                    <div class="col-md-12">
+                        <div class="col-md-offset-1 bs-info list-group-item">
+
+                            <h4>
+                                <b>
+                                    <a class="paddingRight10 noDecoration"
+                                       ng-click="neueAusgabeModal('','new',ausgabe)">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                        <span> Ausgabe</span>
+                                    </a>
+                                </b>
+                            </h4>
+
                         </div>
                     </div>
                 </div>
@@ -23,7 +39,7 @@
                     <div class="col-md-12">
                         <div class="col-md-offset-1">
                             <div class="form-horizontal bs-callout bs-info" role="form">
-                            <div class="form-group">
+                                <div class="form-group">
                                     <h4 class="col-md-2">
                                         <b><span class="glyphicon glyphicon-search"></span> <span>Suche:</span></b>
                                     </h4>
@@ -137,22 +153,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12" ng-show="Ausgaben.length < 1">
-                        <div class="bs-callout bs-info">
-                            <p>
 
-                            <h3>
-                                <span class="glyphicon glyphicon-thumbs-down"></span><span>  Sie haben noch keine Ausgaben angelegt.</span></br></br>
-                            Klicken Sie auf <a ng-click="neueAusgabeModal('','new',ausgabe)">Neue Ausgabe</a>,
-                                um eine neue
-                                Ausgabe
-                                anzulegen.</span>
-                            </h3>
-                            </p>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 

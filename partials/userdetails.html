@@ -10,7 +10,7 @@
                 </h4>
 
                 <div class="col-md-9">
-                    <span class="form-control" required><b>{{ MyUser().UserId }}</b></span>
+                    <span class="form-control" required><b>{{ currentUser.UserId }}</b></span>
                 </div>
             </div>
             <div class="form-group required">
@@ -18,7 +18,7 @@
                 </h4>
 
                 <div class="col-md-9">
-                    <input class="form-control" required ng-model="MyUser().Email">
+                    <input class="form-control" required ng-model="currentUser.Email">
                 </div>
             </div>
             <div class="form-group required">
@@ -26,7 +26,7 @@
                 </h4>
 
                 <div class="col-md-9">
-                    <input class="form-control" required ng-model="MyUser().Vorname">
+                    <input class="form-control" required ng-model="currentUser.Vorname">
                 </div>
             </div>
             <div class="form-group required">
@@ -34,7 +34,7 @@
                 </h4>
 
                 <div class="col-md-9">
-                    <input class="form-control" required ng-model="MyUser().Nachname">
+                    <input class="form-control" required ng-model="currentUser.Nachname">
                 </div>
             </div>
 

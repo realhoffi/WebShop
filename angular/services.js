@@ -98,8 +98,11 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 				})
 				.success(function (data) {
 					if (data) {
-						var ausg = iGetById(data.ID);
-						deferred.resolve(ausg);
+						var indx = indexGetById(data.ID);
+						$log.info("Update Ausgabe with ID " + data.ID);
+						ausgaben[indx] = data;
+						$log.info("Update Ausgabe with ID " + data.ID + " done");
+						deferred.resolve(ausgaben[indx]);
 					} else {
 						deferred.reject('Error: Ausgabe intern nicht gefunden!');
 					}
@@ -642,8 +645,9 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 				})
 				.success(function (data) {
 					if (data) {
-						var fav = iGetById(data.ID);
-						deferred.resolve(fav);
+						var indx = indexGetById(data.ID);
+						favoriten[indx] = data;
+						deferred.resolve(favoriten[indx]);
 					} else {
 						deferred.reject('Error: favoriteService intern nicht gefunden!');
 					}

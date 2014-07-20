@@ -54,7 +54,7 @@
                 </h4>
 
                 <div class="col-sm-9">
-                    <input class="form-control" ng-model="ausgabe.Preis" required>
+                    <input class="form-control" ng-model="ausgabe.Preis" ng-pattern="/^\d{0,9}(\,\d{1,2})?$/" required>
                 </div>
             </div>
         </div>

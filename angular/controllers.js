@@ -29,11 +29,6 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 					});
 			}
 		}
-		$scope.editAusgabe = function (ausgabe) {
-			ausgabe.Beschreibung = "Test";
-			ausgabe.Name = "Done ID" + ausgabe.ID;
-			AusgabenService.updateAusgabe(ausgabe);
-		}
 		$scope.findAusgabezeitraumById = function (ausgabe) {
 			if ($scope.Ausgabenzeitraeume) {
 				for (var i = 0; i < $scope.Ausgabenzeitraeume.length; i++) {
@@ -79,9 +74,9 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 
 			modalInstance.result.then(function (selectedItem) {
 //MUST CALL THIS BECAUSE IF ARRAY IS NULL, IT DOES NOT GET UPDATED -.-
-				if ($scope.Ausgaben.length == 0) {
-					$scope.Ausgaben = AusgabenService.getAusgabenCached();
-				}
+				//	if ($scope.Ausgaben.length == 0) {
+				$scope.Ausgaben = AusgabenService.getAusgabenCached();
+				//}
 
 			}, function () {
 				$log.info('Modal dismissed at: ' + new Date());
@@ -289,7 +284,6 @@ ausgabenmanagerControllers.controller('fileCtrl', function ($scope, $modal, $htt
 				templateUrl: '../partials/manageFile.html',
 				controller: 'ModalFileController',
 				size: size,
-				scope: $scope,
 				resolve: {
 					type: function () {
 						return type;
@@ -336,7 +330,7 @@ ausgabenmanagerControllers.controller('fileCtrl', function ($scope, $modal, $htt
 	});
 });
 ausgabenmanagerControllers.controller('ModalNeueAusgabeController', function ($scope, $modalInstance, $rootScope, ausgabezeitraeume, priorities, AusgabenService, type, ausgabe) {
-
+	$scope.ausgabe = {};
 	var type = type;
 	$scope.Heading = function () {
 		if (type == "new") {
@@ -350,7 +344,7 @@ ausgabenmanagerControllers.controller('ModalNeueAusgabeController', function ($s
 	if (type == 'new') {
 		$scope.ausgabe = AusgabenService.getEmptyAusgabe();
 	} else if (type == 'edit') {
-		$scope.ausgabe = ausgabe;
+		$scope.ausgabe = angular.copy(ausgabe);
 	} else {
 		alert("Type not found");
 	}
@@ -444,7 +438,9 @@ ausgabenmanagerControllers.controller('ModalLogInController', function ($scope, 
 	}
 });
 ausgabenmanagerControllers.controller('ModalUserController', function ($scope, $modalInstance, userService) {
+	$scope.currentUser = angular.copy($scope.MyUser());
 	$scope.ok = function ($event) {
+		angular.copy($scope.currentUser, $scope.MyUser());
 		app.common.utils.setButtonLoadingState($event.currentTarget);
 		userService.updateUser($scope.MyUser()).then(
 			function (newuser) {
@@ -477,7 +473,7 @@ ausgabenmanagerControllers.controller('ModalFavoriteController', function ($scop
 	if (type == 'new') {
 		$scope.favorite = favoriteService.getEmptyFavorite();
 	} else if (type == 'edit') {
-		$scope.favorite = favorite;
+		$scope.favorite = angular.copy(favorite);
 	} else {
 		alert("Type not found");
 	}
@@ -535,7 +531,7 @@ ausgabenmanagerControllers.controller('ModalFileController', function ($scope, $
 
 	$scope.ok = function ($event) {
 		//not working with modal windows...
-		//mfile = $scope.myFile;
+		//see https://github.com/angular/angular.js/issues/5489
 		for (var cs = $scope.$$childHead; cs; cs = cs.$$nextSibling) {
 			if (!mfile) {
 				mfile = cs.myFile;

@@ -35,7 +35,7 @@
 
                         <div class="col-md-9">
                             <input class="form-control" required ng-model="newUser.Email" type="email" ng-minlength="10"
-                                   ng-maxlength="30">
+                                   ng-maxlength="30" ng-pattern="/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,4}$/i">
                         </div>
                     </div>
                     <div class="form-group required">

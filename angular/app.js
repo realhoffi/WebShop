@@ -30,6 +30,7 @@ ausgabenmanager.run(function ($rootScope, $log, userService) {
 		$rootScope.isAppLoading = false;
 	}
 
+	$rootScope.currency = " €";
 	$rootScope.isAppLoading = true;
 	$rootScope.needLoginPage = false;
 	$rootScope.isUserLoggedIn = false;
@@ -135,3 +136,10 @@ ausgabenmanager.directive('fileModel', ['$parse', function ($parse) {
 		}
 	};
 }]);
+ausgabenmanager.filter('groupby', function () {
+	return function (items, group) {
+		return items.filter(function (element, index, array) {
+			return element.Ausgabezeitraum == group;
+		});
+	}
+})

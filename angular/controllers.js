@@ -17,7 +17,7 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 					sum += $scope.Ausgaben[i].Preis;
 				}
 			}
-			return sum;
+			return sum + $rootScope.currency;
 		}
 		$scope.deleteAusgabe = function (ausgabe) {
 			if (confirm("Wirklich löschen?")) {
@@ -29,10 +29,19 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 					});
 			}
 		}
-		$scope.findAusgabezeitraumById = function (ausgabe) {
+		$scope.findAusgabezeitraumByAusgabe = function (ausgabe) {
 			if ($scope.Ausgabenzeitraeume) {
 				for (var i = 0; i < $scope.Ausgabenzeitraeume.length; i++) {
 					if ($scope.Ausgabenzeitraeume[i].ID == ausgabe.Ausgabezeitraum) {
+						return $scope.Ausgabenzeitraeume[i].Name;
+					}
+				}
+			}
+		}
+		$scope.findAusgabezeitraumById = function (id) {
+			if ($scope.Ausgabenzeitraeume) {
+				for (var i = 0; i < $scope.Ausgabenzeitraeume.length; i++) {
+					if ($scope.Ausgabenzeitraeume[i].ID == id) {
 						return $scope.Ausgabenzeitraeume[i].Name;
 					}
 				}
@@ -82,7 +91,25 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 				$log.info('Modal dismissed at: ' + new Date());
 			});
 		};
+		$scope.getGroups = function () {
+			var groupArray = [];
+			angular.forEach($scope.Ausgaben, function (item, idx) {
+				if (groupArray.indexOf(item.Ausgabezeitraum) == -1)
+					groupArray.push(item.Ausgabezeitraum)
+			});
+			return groupArray.sort();
+		}
+		$scope.getGroupSum = function (group) {
+			var ausgabenSumme = 0;
+			for (var i = 0; i < $scope.Ausgaben.length; i++) {
+				if ($scope.Ausgaben[i].Ausgabezeitraum == group) {
+					ausgabenSumme += $scope.Ausgaben[i].Preis;
+				}
+			}
 
+			return ausgabenSumme + $rootScope.currency;
+
+		}
 		//Startup Method which watches, if the userdata changes
 		//it changes when A) a new user sign in or B) when the user is logged in
 		//EDIT NEW! NO NEED TO CHECK USERDATA FOR CHANGE, SERVICES CACHE ITEMS!

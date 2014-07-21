@@ -13,6 +13,10 @@
     width: 100%;
 }
 
+.text-left {
+    text-align: left;
+}
+
 .bs-info {
     border-color: #F0AD4E;
     border-style: solid;
@@ -40,6 +44,10 @@
 
 .margin-top-10px {
     margin-top: 10px;
+}
+
+.padding-10px {
+    padding: 10px;
 }
 
 a {

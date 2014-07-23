@@ -13,6 +13,8 @@
 //	});
 //});
 //ausgabenmanager.directive("loadingIndicator", function () {
+// SO IN HTML EINFÜGEN
+//   <!--<div loading-indicator></div>-->
 //	return {
 //		restrict: "A",
 //		template: "<div class='alert alert-info'> LOADING </div>",

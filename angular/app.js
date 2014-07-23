@@ -136,6 +136,22 @@ ausgabenmanager.directive('fileModel', ['$parse', function ($parse) {
 		}
 	};
 }]);
+ausgabenmanager.directive("pageInitialize", function () {
+	return {
+		restrict: "A",
+		template: "<div class='row'><div class='col-md-12'><div class='row'><div class='loader'><div class='dot'></div><div class='dot'></div><div class='dot'></div><div class='dot'></div><div class='dot'></div><div class='dot'></div><div class='dot'></div><div class='dot'></div><div class='dot'></div><div class='dot'></div><div class='dot'></div></div></div></div></div>",
+		link: function (scope, element, attrs) {
+			scope.$watch('isAppLoading', function (newValue, oldValue, scope) {
+				scope.isAppLoading ? element.show() : element.hide();
+
+			});
+
+		}
+	};
+})
+;
+
+
 ausgabenmanager.filter('groupby', function () {
 	return function (items, group) {
 		return items.filter(function (element, index, array) {

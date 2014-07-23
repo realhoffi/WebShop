@@ -110,8 +110,13 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 			return ausgabenSumme + $rootScope.currency;
 
 		}
-		$scope.toDate = function (date) {
-			return date.toLocaleDateString();
+		$scope.toDate = function (wcfDate) {
+			try {
+				return new Date(parseInt(wcfDate.substr(6))).toLocaleString();
+			} catch (ex) {
+				alert(ex);
+			}
+			return  "";
 		}
 		//Startup Method which watches, if the userdata changes
 		//it changes when A) a new user sign in or B) when the user is logged in

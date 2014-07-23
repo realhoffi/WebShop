@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-6 col-md-offset-1 ">
-    <div class="row">
+        <div class="row">
             <div class="col-md-10">
                 <div class="table-responsive" ng-repeat='group in getGroups()'>
                     <table class="table table-striped table-hover table-bordered table-condensed">
@@ -12,8 +12,9 @@
                         <thead>
                         <tr>
                             <th class="col-md-1">#</th>
-                            <th class="col-md-6">Name</th>
-                            <th class="col-md-5">Preis</th>
+                            <th class="col-md-4">Name</th>
+                            <th class="col-md-3">Preis</th>
+                            <th class="col-md-4">Zuletzt bearbeitet</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -21,18 +22,20 @@
                             <td>{{$index+1}}</td>
                             <td> {{ausgabe.Name}}</td>
                             <td>{{ausgabe.Preis}}</td>
+                            <td>{{ toDate(ausgabe.LastModified) }}</td>
                         </tr>
                         </tbody>
                         <tfoot>
                         <tr>
                             <th>
-
                             </th>
                             <th>
                                 Gesamtausgaben
                             </th>
                             <th>
                                 <span ng-bind="getGroupSum(group)"></span>
+                            </th>
+                            <th>
                             </th>
                         </tr>
                         </tfoot>

@@ -110,6 +110,9 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 			return ausgabenSumme + $rootScope.currency;
 
 		}
+		$scope.toDate = function (date) {
+			return date.toLocaleDateString();
+		}
 		//Startup Method which watches, if the userdata changes
 		//it changes when A) a new user sign in or B) when the user is logged in
 		//EDIT NEW! NO NEED TO CHECK USERDATA FOR CHANGE, SERVICES CACHE ITEMS!

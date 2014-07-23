@@ -78,7 +78,7 @@ ausgabenmanager.run(function ($rootScope, $log, userService) {
 		}
 	});
 
-//EVENTS TO SHOW LOADING
+//EVENT-SHOUTS TO SHOW LOADING
 	$rootScope.$on("$routeChangeStart", function (e) {
 		//alert('1');
 		$rootScope.$broadcast("loading-started");

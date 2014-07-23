@@ -1,15 +1,13 @@
 <div class="row">
     <div class="col-md-12 col-md-offset-1 ">
         <div class="row">
-            <div class="col-md-10" ng-repeat='group in getGroups()'>
-                <div class="table-responsive">
+            <div class="col-md-10">
+                <div class="table-responsive" ng-repeat='group in getGroups()'>
                     <table class="table table-striped table-hover table-bordered">
                         <caption class="bs-info text-left padding-10px">
-                            <h4>
-                                <b>
-                                    <span class="">Ausgabentyp: {{ findAusgabezeitraumById(group) }}</span>
-                                </b>
-                            </h4>
+
+                            <span class="">Ausgabentyp: {{ findAusgabezeitraumById(group) }}</span>
+
                         </caption>
                         <thead>
                         <tr>
@@ -31,15 +29,12 @@
                                 <span class="glyphicon glyphicon-euro"></span>
                             </td>
                             <td>
-                            <span>
-                            <h4>
-                                <b>Gesamtausgaben</b>
-                            </h4>
-                            </span>
+
+                                Gesamtausgaben
                             </td>
                             <td>
 
-                                <span> <h4><b> {{ getGroupSum(group) }} </b></h4> </span>
+                                <span>  {{ getGroupSum(group) }}  </span>
 
                             </td>
                         </tr>

@@ -6,10 +6,16 @@
     /*#601187*/
 }
 
+.bg-nice {
+    color: #440f5f;
+    height: 60px;
+
+    font-weight: bold;
+}
+
 .img-header {
     max-height: 60px;
     max-width: 60px;
-    margin: 10px;
 }
 
 .middle {
@@ -26,7 +32,11 @@
 }
 
 .text-left {
-    text-align: left;
+    text-align: left !important;
+}
+
+.text-right {
+    text-align: right !important;
 }
 
 /*#601187*/
@@ -59,6 +69,10 @@
     margin-top: 10px;
 }
 
+.margin-top-0 {
+    margin-top: 0 !important;
+}
+
 .margin-top-20px {
     margin-top: 20px;
 }
@@ -69,6 +83,10 @@
 
 .padding-5px {
     padding: 5px;
+}
+
+.padding-left-20px {
+    padding-left: 20px;
 }
 
 a {

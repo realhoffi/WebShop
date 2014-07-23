@@ -5,15 +5,15 @@
                 <div class="table-responsive" ng-repeat='group in getGroups()'>
                     <table class="table table-striped table-hover table-bordered table-condensed">
                         <caption class="bs-info text-left padding-10px">
-
-                            <span class="">Ausgabentyp: {{ findAusgabezeitraumById(group) }}</span>
-
+                            <div class=""><h4><b>
+                                <span class="paddingRight10">Ausgabentyp: </span>
+                                <span class="">{{ findAusgabezeitraumById(group) }}</span></b></h4></div>
                         </caption>
                         <thead>
                         <tr>
-                            <th class="col-sm-1">#</th>
-                            <th class="col-sm-1">Name</th>
-                            <th class="col-sm-1">Preis</th>
+                            <th class="col-md-1">#</th>
+                            <th class="col-md-6">Name</th>
+                            <th class="col-md-5">Preis</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -26,15 +26,15 @@
                         <tfoot>
                         <tr>
                             <th>
-                            <span class="glyphicon glyphicon-euro"></span>
+
                             </th>
                             <th>
 
-                            Gesamtausgaben
+                                Gesamtausgaben
                             </th>
                             <th>
 
-                            <span>  {{ getGroupSum(group) }}  </span>
+                                <span>  {{ getGroupSum(group) }}  </span>
 
                             </th>
                         </tr>
@@ -44,12 +44,14 @@
             </div>
         </div>
         <div class="row">
-            <div class="bs-info bs-callout col-md-10">
-                <h4><b>
-                    <span class="glyphicon glyphicon-euro"></span><span>Gesamtausgaben: </span> <span>{{ gesamtAusgaben() }}</span>
-                </b></h4>
+            <div class="col-md-10">
+                <div class="bs-info bs-callout ">
+                    <h4><b>
+                        <span class="glyphicon glyphicon-euro paddingRight10"></span><span class="paddingRight10">Gesamtausgaben: </span>
+                        <span>{{ gesamtAusgaben() }}</span>
+                    </b></h4>
+                </div>
             </div>
         </div>
-
     </div>
 </div>

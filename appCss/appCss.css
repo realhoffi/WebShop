@@ -6,6 +6,12 @@
     /*#601187*/
 }
 
+.img-header {
+    max-height: 80px;
+    max-width: 80px;
+    margin: 10px;
+}
+
 .noDecoration {
     text-decoration: none !important;
 }
@@ -13,6 +19,7 @@
 .controlMaxSize {
     width: 100%;
 }
+
 .text-left {
     text-align: left;
 }

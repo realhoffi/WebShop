@@ -32,17 +32,17 @@
                 <div class="col-md-4">
                     <img class="img-header" src="../images/identityImage.png"/>
                 </div>
-                <div class="col-md-6">
-                    <h1 class="">
-                        <b><span class="glyphicon glyphicon-tasks"></span>
-                            <span>Ausgabenmanager</span></b>
-                    </h1>
+                <div class="col-md-6 ">
+                    <div class="row">
+                        <h1 class="">
+                            <b><span class="glyphicon glyphicon-tasks"></span>
+                                <span>Ausgabenmanager</span></b>
+                        </h1></div>
                 </div>
                 <div class="col-md-2" ng-controller="userCtrl">
                     <div class="row ">
-                        <div class="btn-block text-center margin-top-10px">
-
-                            <button class="btn btn-primary " ng-if="!isUserLoggedIn()" ng-click="loginModal()">
+                        <div class="btn-block margin-top-20px right text-center">
+                        <button class="btn btn-primary " ng-if="!isUserLoggedIn()" ng-click="loginModal()">
                                 <b> <span
                                         class="glyphicon glyphicon-user"></span> <span>Sign in</span></b>
                             </button>

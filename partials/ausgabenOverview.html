@@ -1,4 +1,4 @@
-<div class="row" ng-show="$root.isUserLoggedIn">
+<div class="row">
     <div class="col-md-10">
         <div class="row">
             <div class="col-md-12">
@@ -10,9 +10,8 @@
                             <h3>
                                 <span class="glyphicon glyphicon-thumbs-down"></span><span>  Sie haben noch keine Ausgaben angelegt.</span></br></br>
                                 Klicken Sie auf <a ng-click="neueAusgabeModal('','new',ausgabe)">Neue Ausgabe</a>,
-                                um eine neue
-                                Ausgabe
-                                anzulegen.</span>
+                                um eine neue Ausgabe anzulegen.
+                                </span>
                             </h3>
                             </p>
                         </div>
@@ -35,7 +34,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row" ng-show="Ausgaben.length > 0">
+                <div class="row" ng-if="Ausgaben.length > 0">
                     <div class="col-md-12">
                         <div class="col-md-offset-1">
                             <div class="form-horizontal bs-callout bs-info" role="form">

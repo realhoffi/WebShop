@@ -25,7 +25,7 @@
 <div class="container-fluid" id="mainForm">
     <!--<div loading-indicator></div>-->
 
-    <div class="row" ng-show="isAppLoading">
+    <div class="row" ng-if="isAppLoading">
         <div class="col-md-12">
             <div class="row">
                 <div class="loader">
@@ -58,14 +58,14 @@
                     <div class="row ">
                         <div class="btn-block text-center margin-top-10px">
 
-                            <button class="btn btn-primary " ng-show="!isUserLoggedIn()" ng-click="loginModal()">
+                            <button class="btn btn-primary " ng-if="!isUserLoggedIn()" ng-click="loginModal()">
                                 <b> <span
                                         class="glyphicon glyphicon-user"></span> <span>Sign in</span></b>
                             </button>
-                            <button class="btn btn-primary " ng-click="logout()" ng-show="isUserLoggedIn()">
+                            <button class="btn btn-primary " ng-click="logout()" ng-if="isUserLoggedIn()">
                                 <b><span class="glyphicon glyphicon-off"></span> <span>Logout</span></b>
                             </button>
-                            <button class="btn btn-primary " ng-click="editUser()" ng-show="isUserLoggedIn()">
+                            <button class="btn btn-primary " ng-click="editUser()" ng-if="isUserLoggedIn()">
                                 <b><span class="glyphicon glyphicon-cog"></span> <span>Settings</span></b>
                             </button>
                         </div>
@@ -74,7 +74,7 @@
             </div>
         </div>
     </div>
-    <div class="row" id="contentForm" ng-show="!isAppLoading && $root.isUserLoggedIn">
+    <div class="row" id="contentForm" ng-if="!isAppLoading && $root.isUserLoggedIn">
         <div class="col-md-2">
             <div class="row">
                 <div class="col-md-12">
@@ -120,11 +120,11 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-10" id="content" ng-show="$root.isUserLoggedIn">
+        <div class="col-md-10" id="content" ng-if="$root.isUserLoggedIn">
             <div ng-view></div>
         </div>
     </div>
-    <div class="row" id="contentNoLogIn" ng-show="!isAppLoading && !$root.isUserLoggedIn">
+    <div class="row" id="contentNoLogIn" ng-if="!isAppLoading && !$root.isUserLoggedIn">
         <div class="col-md-12">
             <div class="bs-callout bs-info">
                 <p>

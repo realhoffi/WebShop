@@ -10,7 +10,7 @@
                 </span>
             </h4>
 
-            <p ng-show="!isUserRegistered()">
+            <p ng-if="!isUserRegistered()">
                 If you don't have any Account, click <a ng-click="register()">Register </a> to create
                 one.
             </p>

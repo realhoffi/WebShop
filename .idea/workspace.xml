@@ -30,7 +30,7 @@
         <entry file="file://$PROJECT_DIR$/html/Ausgabenmanager.html">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.26978418" vertical-offset="761" max-vertical-offset="2193">
-              <caret line="58" column="38" selection-start-line="58" selection-start-column="38" selection-end-line="58" selection-end-column="38" />
+              <caret line="58" column="48" selection-start-line="58" selection-start-column="48" selection-end-line="58" selection-end-column="48" />
               <folding />
             </state>
           </provider>
@@ -1130,7 +1130,11 @@
       <created>1406309527395</created>
       <updated>1406309527395</updated>
     </task>
-    <option name="localTasksCounter" value="125" />
+    <task id="LOCAL-00125" summary="initialize">
+      <created>1406309621555</created>
+      <updated>1406309621555</updated>
+    </task>
+    <option name="localTasksCounter" value="126" />
     <servers />
   </component>
   <component name="TodoView" selected-index="2">
@@ -1620,7 +1624,7 @@
     <entry file="file://$PROJECT_DIR$/html/Ausgabenmanager.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.26978418" vertical-offset="761" max-vertical-offset="2193">
-          <caret line="58" column="38" selection-start-line="58" selection-start-column="38" selection-end-line="58" selection-end-column="38" />
+          <caret line="58" column="48" selection-start-line="58" selection-start-column="48" selection-end-line="58" selection-end-column="48" />
           <folding />
         </state>
       </provider>

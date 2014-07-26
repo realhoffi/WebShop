@@ -335,10 +335,11 @@ ausgabenmanagerControllers.controller('fileCtrl', function ($scope, $modal, $htt
 			modalInstance.result.then(function (newFile) {
 				//MUST CALL THIS BECAUSE IF ARRAY IS NULL, IT DOES NOT GET UPDATED -.-
 				if ($scope.Files.length == 0) {
-					$scope.Files = fileService.getFiles();
+					$scope.Files = [];
 				}
 
 				if (newFile != null) {
+					$scope.Files.push(newFile)
 					$log.info('Received Data fileCtrl: ' + newFile);
 				}
 			}, function () {

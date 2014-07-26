@@ -370,6 +370,9 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 				transformRequest: angular.identity,
 				headers: {'Content-Type': undefined}
 			}).success(function (data) {
+				if (files.length == 0) {
+					files = [];
+				}
 				files.push(data);
 				$log.info("fileService HTTP Call! uploadFile success" + JSON.stringify(data));
 				deferred.resolve(data);

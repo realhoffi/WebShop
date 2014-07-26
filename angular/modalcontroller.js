@@ -1,5 +1,5 @@
 'use strict'
-ausgabenmanagerControllers.controller('ModalNeueAusgabeController', function ($scope, $modalInstance, $rootScope, ausgabezeitraeume, priorities, AusgabenService, type, ausgabe) {
+ausgabenmanagerControllers.controller('ModalNeueAusgabeController', function ($scope, $modalInstance, $rootScope, ausgabezeitraeume, priorities, AusgabenService, type, ausgabe, userService) {
 	$scope.ausgabe = {};
 	var type = type;
 	$scope.Heading = function () {
@@ -24,7 +24,7 @@ ausgabenmanagerControllers.controller('ModalNeueAusgabeController', function ($s
 	$scope.ok = function ($event) {
 		app.common.utils.setButtonLoadingState($event.currentTarget);
 		if (type == 'new') {
-			$scope.ausgabe.UserId = $rootScope.userData.UserId;
+			$scope.ausgabe.UserId = userService.getCurrentUser().UserId;
 			AusgabenService.addNeueAusgabe($scope.ausgabe)
 				.then(function (data) {
 					app.common.utils.setButtonLoadingStateReset($event.currentTarget);
@@ -127,7 +127,7 @@ ausgabenmanagerControllers.controller('ModalUserController', function ($scope, $
 		$modalInstance.dismiss('cancel');
 	};
 });
-ausgabenmanagerControllers.controller('ModalFavoriteController', function ($scope, $modalInstance, $rootScope, favoriteService, type, favorite) {
+ausgabenmanagerControllers.controller('ModalFavoriteController', function ($scope, $modalInstance, $rootScope, favoriteService, type, favorite, userService) {
 
 	var type = type;
 	$scope.favorite = null;
@@ -151,7 +151,7 @@ ausgabenmanagerControllers.controller('ModalFavoriteController', function ($scop
 	$scope.ok = function ($event) {
 		app.common.utils.setButtonLoadingState($event.currentTarget);
 		if (type == 'new') {
-			$scope.favorite.UserId = $rootScope.userData.UserId;
+			$scope.favorite.UserId = userService.getCurrentUser().UserId;
 			favoriteService.addNewFavorite($scope.favorite)
 				.then(function (data) {
 					app.common.utils.setButtonLoadingStateReset($event.currentTarget);
@@ -178,7 +178,7 @@ ausgabenmanagerControllers.controller('ModalFavoriteController', function ($scop
 		$modalInstance.dismiss('cancel');
 	};
 });
-ausgabenmanagerControllers.controller('ModalFileController', function ($scope, $modalInstance, $rootScope, fileService, type, file) {
+ausgabenmanagerControllers.controller('ModalFileController', function ($scope, $modalInstance, $rootScope, fileService, type, file, userService) {
 	var mfile = $scope.myFile;
 	var type = type;
 	$scope.file = null;
@@ -210,7 +210,7 @@ ausgabenmanagerControllers.controller('ModalFileController', function ($scope, $
 		app.common.utils.setButtonLoadingState($event.currentTarget);
 		if (type == 'new') {
 			$scope.file.FileName = mfile.name;
-			$scope.file.UserId = $rootScope.userData.UserId;
+			$scope.file.UserId = userService.getCurrentUser().UserId;
 			fileService.uploadFile($scope.file, mfile)
 				.then(function (data) {
 					app.common.utils.setButtonLoadingStateReset($event.currentTarget);

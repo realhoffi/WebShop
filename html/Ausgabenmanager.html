@@ -28,16 +28,25 @@
 <div class="page-header margin-top-0">
     <div class="container-fluid">
         <div class="row">
-            <div class="text-center col-md-9 ">
-                <h1 class="">
-                    <img class="img-header"
-                         src="../images/identityImage.png"/>
-                    <span class="padding-left-20px bg-nice">My Desk</span>
-                </h1>
+            <div class="bg-nice col-md-3 col-sm-3 col-xs-3 margin-top-10px">
+                <img class="img-header"
+                     src="../images/identityImage.png"/>
             </div>
-            <div class="top col-md-3 text-center" ng-controller="userCtrl">
-                <div class="btn-block margin-top-20px  ">
+            <div class="bg-nice col-md-6 col-sm-9 col-xs-9 ">
+                <div class="text-center">
                     <h1>
+                        <b>
+                            <span class="">My Desk</span>
+                        </b>
+                    </h1>
+                </div>
+            </div>
+            <div class="bg-nice col-md-3 hidden-sm hidden-xs" ng-controller="userCtrl">
+                <div class="btn-block margin-top-20px">
+                    <h1>
+                        <button class="btn btn-primary " ng-click="editUser()" ng-if="isUserLoggedIn()">
+                            <b><span class="glyphicon glyphicon-cog"></span> <span>Settings</span></b>
+                        </button>
                         <button class="btn btn-primary " ng-if="!isUserLoggedIn()" ng-click="loginModal()">
                             <b> <span
                                     class="glyphicon glyphicon-user"></span> <span>Sign in</span></b>
@@ -45,65 +54,84 @@
                         <button class="btn btn-primary " ng-click="logout()" ng-if="isUserLoggedIn()">
                             <b><span class="glyphicon glyphicon-off"></span> <span>Logout</span></b>
                         </button>
-                        <button class="btn btn-primary " ng-click="editUser()" ng-if="isUserLoggedIn()">
-                            <b><span class="glyphicon glyphicon-cog"></span> <span>Settings</span></b>
-                        </button>
                     </h1>
                 </div>
             </div>
+        </div>
+        <div class="row hidden-lg hidden-md">
+            <div class="col-sm-12 col-xs-12 margin-top-10px" ng-controller="userCtrl">
+                <h1>
+                    <div ng-controller="menueController"
+                         class="header-row hidden-lg hidden-md pull-left top text-left">
+                        <a ng-click="renderMenue()">
+                            <b><span class="glyphicon glyphicon-list"></span></b>
+                        </a>
+                    </div>
+                    <div class="pull-right top text-right header-row">
+                        <button class="btn btn-primary " ng-click="editUser()" ng-if="isUserLoggedIn()">
+                            <b><span class="glyphicon glyphicon-cog"></span> <span>Settings</span></b>
+                        </button>
+                        <button class="btn btn-primary " ng-if="!isUserLoggedIn()" ng-click="loginModal()">
+                            <b> <span
+                                    class="glyphicon glyphicon-user"></span> <span>Sign in</span></b>
+                        </button>
+                        <button class="btn btn-primary " ng-click="logout()" ng-if="isUserLoggedIn()">
+                            <b><span class="glyphicon glyphicon-off"></span> <span>Logout</span></b>
+                        </button>
+                    </div>
+                </h1>
+            </div>
+
         </div>
     </div>
 </div>
 <div class="container-fluid" id="mainForm">
     <div page-Initialize></div>
     <div class="row" id="contentForm" ng-if="!isAppLoading && $root.isUserLoggedIn">
-        <!--<div class="col-md-3 hidden-sm hidden-xs">-->
-        <!--<div class="row">-->
-        <!--<div class="col-md-12">-->
-        <!--<div class="panel panel-success">-->
-        <!--<a class="list-group-item active">-->
-        <!--<b> <span class="glyphicon glyphicon-user"></span> <span>Ausgabenmanager</span></b>-->
-        <!--</a>-->
-        <!--<a href="#ausgabenOverview" class="list-group-item">-->
-        <!--<span class="glyphicon "></span> Ausgabenübersicht-->
-        <!--</a>-->
-        <!--<a href="#ausgabenBericht" class="list-group-item">-->
-        <!--<span class="glyphicon "></span> Kostenaufstellung-->
-        <!--</a>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--<div class="row">-->
-        <!--<div class="col-md-12">-->
-        <!--<div class="panel panel-success">-->
-        <!--<a class="list-group-item active">-->
-        <!--<b> <span class="glyphicon glyphicon-star"></span> <span> Favoriten</span></b>-->
-        <!--</a>-->
-        <!--<a href="#favoritenOverview" class="list-group-item">-->
-        <!--<span class="glyphicon "></span> Meine Favoriten-->
-        <!--</a>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--<div class="row">-->
-        <!--<div class="col-md-12">-->
-        <!--<div class="panel panel-success">-->
-        <!--<a class="list-group-item active">-->
-        <!--<b> <span class="glyphicon glyphicon-user"></span> <span> Dateien</span></b>-->
-        <!--</a>-->
-        <!--<a href="#fileOverview" class="list-group-item">-->
-        <!--<span class="glyphicon "></span> Meine Dateien-->
-        <!--</a>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--<div class="col-md-3 hidden-lg hidden-lg">-->
-        <div class="col-md-1" ng-controller="menueController"><a ng-click="renderMenue()">
-        <h3><b><span class="glyphicon glyphicon-list"></span></b></h3></a>
+        <div class="col-md-3 hidden-sm hidden-xs">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-success">
+                        <a class="list-group-item active">
+                            <b> <span class="glyphicon glyphicon-user"></span> <span>Ausgabenmanager</span></b>
+                        </a>
+                        <a href="#ausgabenOverview" class="list-group-item">
+                            <span class="glyphicon "></span> Ausgabenübersicht
+                        </a>
+                        <a href="#ausgabenBericht" class="list-group-item">
+                            <span class="glyphicon "></span> Kostenaufstellung
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-success">
+                        <a class="list-group-item active">
+                            <b> <span class="glyphicon glyphicon-star"></span> <span> Favoriten</span></b>
+                        </a>
+                        <a href="#favoritenOverview" class="list-group-item">
+                            <span class="glyphicon "></span> Meine Favoriten
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-success">
+                        <a class="list-group-item active">
+                            <b> <span class="glyphicon glyphicon-user"></span> <span> Dateien</span></b>
+                        </a>
+                        <a href="#fileOverview" class="list-group-item">
+                            <span class="glyphicon "></span> Meine Dateien
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-md-9 col-sm-9 col-xs-9" id="content" ng-if="$root.isUserLoggedIn">
-        <div ng-view></div>
+
+        <div class="col-md-9 col-sm-12 col-xs-12" id="content" ng-if="$root.isUserLoggedIn">
+            <div ng-view></div>
         </div>
     </div>
     <div class="row" id="contentNoLogIn" ng-if="!isAppLoading && !$root.isUserLoggedIn">

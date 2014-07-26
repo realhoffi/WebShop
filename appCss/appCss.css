@@ -8,8 +8,14 @@
 
 .bg-nice {
     color: #440f5f;
-    height: 60px;
+    max-height: 60px !important;
+    height: 60px !important;
+    font-weight: bold;
+}
 
+.header-row {
+    max-height: 50px !important;
+    height: 50px !important;
     font-weight: bold;
 }
 

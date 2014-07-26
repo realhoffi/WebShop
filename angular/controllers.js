@@ -4,7 +4,11 @@
 'use strict'
 
 var ausgabenmanagerControllers = angular.module('ausgabenmanagerControllers', []);
-
+ausgabenmanagerControllers.controller('menueController', function ($scope, $modal, $http, $rootScope, $log) {
+	$scope.renderMenue = function () {
+		alert();
+	}
+});
 ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, $http, $rootScope, $log, $timeout, userService, AusgabenService, AusgabenzeitraumService, PrioritaetService) {
 		$scope.Ausgaben = AusgabenService.getAusgabenCached();
 		$scope.Ausgabenzeitraeume = AusgabenzeitraumService.getAusgabenzeitraeumeCached();

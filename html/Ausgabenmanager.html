@@ -19,6 +19,7 @@
     <script src="../angular/spinner.js" type="application/javascript"></script>
     <script src="../angular/appHelper.js" type="application/javascript"></script>
     <script src="../angular/app.js" type="application/javascript"></script>
+    <script src="../angular/directives.js" type="application/javascript"></script>
     <script src="../angular/controllers.js" type="application/javascript"></script>
     <script src="../angular/services.js" type="application/javascript"></script>
 
@@ -59,8 +60,8 @@
         <div class="col-md-3 hidden-sm hidden-xs">
             <div class="row">
                 <div class="col-md-12">
-                <div class="panel panel-success">
-                        <a class="list-group-item active">
+                    <div class="panel panel-success">
+                    <a class="list-group-item active">
                             <b> <span class="glyphicon glyphicon-user"></span> <span>Ausgabenmanager</span></b>
                         </a>
                         <a href="#ausgabenOverview" class="list-group-item">
@@ -97,8 +98,12 @@
                 </div>
             </div>
         </div>
+        <!--<div class="col-md-3 hidden-lg hidden-lg">-->
+        <div class="col-md-1" ng-controller="menueController"><a href="#" ng-click="renderMenue()">
+            <h3><b><span class="glyphicon glyphicon-list"></span></b></h3></a>
+        </div>
         <div class="col-md-9" id="content" ng-if="$root.isUserLoggedIn">
-        <div ng-view></div>
+            <div ng-view></div>
         </div>
     </div>
     <div class="row" id="contentNoLogIn" ng-if="!isAppLoading && !$root.isUserLoggedIn">

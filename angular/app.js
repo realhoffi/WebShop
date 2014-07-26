@@ -11,11 +11,6 @@ if (typeof jQuery === 'undefined') {
 		var b = $(e.currentTarget).find('span.indicator');
 		var c = $(b).toggleClass('glyphicon-chevron-right glyphicon-chevron-down');
 	});
-//	$("form.input").click(function (e) {
-//		alert(':(');
-//		e.preventDefault();
-//	});
-
 }
 (jQuery)
 
@@ -28,9 +23,9 @@ ausgabenmanager.run(function ($rootScope, $log, userService) {
 		$rootScope.isUserLoggedIn = false;
 		$rootScope.userData = null;
 		$rootScope.isAppLoading = false;
+		$rootScope.hideSpinner();
 	}
 
-	$rootScope.currency = " €";
 	$rootScope.isAppLoading = true;
 	$rootScope.needLoginPage = false;
 	$rootScope.isUserLoggedIn = false;
@@ -38,8 +33,10 @@ ausgabenmanager.run(function ($rootScope, $log, userService) {
 	$rootScope.maxFailCounter = maxCountFailCount;
 	$rootScope.rootDomain = 'http://info.fhoffma.net/services';
 	$rootScope.spinner = null;
+	$rootScope.currency = " €";
 
 	$log.info("rootScope settings done");
+
 	$rootScope.showSpinner = function () {
 		if (!$rootScope.spinner) {
 			$rootScope.spinner = app.common.utils.getSpinnerInstance();
@@ -62,6 +59,7 @@ ausgabenmanager.run(function ($rootScope, $log, userService) {
 	}
 	//StartUp Method to try Login! If not possible, SignIn command windows opens
 	$rootScope.$watch('$viewContentLoaded', function () {
+		$rootScope.showSpinner();
 		$log.info('--WATCH--$viewContentLoaded-- ' + new Date());
 		$log.info('- call tryLogin -');
 		if (userService.getUserId()) {
@@ -119,37 +117,6 @@ ausgabenmanager.config(['$routeProvider',
 				redirectTo: '/angulartest.html'
 			});
 	}]);
-
-
-ausgabenmanager.directive('fileModel', ['$parse', function ($parse) {
-	return {
-		restrict: 'A',
-		link: function (scope, element, attrs) {
-			var model = $parse(attrs.fileModel);
-			var modelSetter = model.assign;
-
-			element.bind('change', function () {
-				scope.$apply(function () {
-					modelSetter(scope, element[0].files[0]);
-				});
-			});
-		}
-	};
-}]);
-ausgabenmanager.directive("pageInitialize", function () {
-	return {
-		restrict: "A",
-		template: "<div class='row'><div class='col-md-12'><div class='row'><div class='loader'><div class='dot'></div><div class='dot'></div><div class='dot'></div><div class='dot'></div><div class='dot'></div><div class='dot'></div><div class='dot'></div><div class='dot'></div><div class='dot'></div><div class='dot'></div><div class='dot'></div></div></div></div></div>",
-		link: function (scope, element, attrs) {
-			scope.$watch('isAppLoading', function (newValue, oldValue, scope) {
-				scope.isAppLoading ? element.show() : element.hide();
-
-			});
-
-		}
-	};
-})
-;
 
 
 ausgabenmanager.filter('groupby', function () {

@@ -1,11 +1,11 @@
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-5 col-md-offset-1 col-sm-12 col-xs-12">
         <div class="panel-group">
             <h4>
                 <b>
                     <div class="panel bs-info list-group-item">
                         <div>
-                            <a class="paddingRight10 nodecoration" ng-click="manageFile(null,null,'new')">
+                            <a class="paddingRight10 noDecoration" ng-click="manageFile(null,null,'new')">
                                 <span class="glyphicon glyphicon-plus"></span>
                                 <span> Datei</span>
                             </a>
@@ -13,7 +13,7 @@
                     </div>
                     <div ng-repeat="file in Files" class="panel panel-primary list-group-item">
                         <div class="pull-left ">
-                            <span class="showCursor active" ng-click="loadFile(file)">{{ file.FileName }}</span>
+                            <a class="showCursor noDecoration" ng-click="loadFile(file)">{{ file.FileName }}</a>
                         </div>
                         <div class="pull-right  ">
                             <a class="paddingRight10  ">

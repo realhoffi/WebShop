@@ -29,34 +29,35 @@
 <div class="page-header margin-top-0">
     <div class="container-fluid">
         <div class="row">
-            <div class="bg-nice col-md-3 col-sm-6 col-xs-6 margin-top-10px">
-            <img class="img-header"
+            <div class="bg-nice col-md-2 col-sm-2 col-xs-2">
+                <img class="img-header padding-top-5px"
                      src="../images/identityImage.png"/>
             </div>
-            <div class="bg-nice col-md-6 col-sm-6 col-xs-6 ">
-                <div class="text-left">
-                <h1>
-                        <b>
-                            <span class="">MyDesk</span>
-                        </b>
-                    </h1>
-                    <small> Your personal Desktop</small>
-                </div>
+            <div class="bg-nice col-md-7 col-sm-10 col-xs-10">
+                    <span class="" style="text-align: center; vertical-align: top">
+                        <h1 class="text-center" style="text-align: center; vertical-align: top">
+                            <b>MyDesk
+                                <small> Your personal
+                                    Desktop
+                                </small>
+                            </b>
+                        </h1>
+                       </span>
             </div>
             <div class="bg-nice col-md-3 hidden-sm hidden-xs" ng-controller="userCtrl">
-                <div class="btn-block margin-top-20px">
-                    <h1>
-                        <button class="btn btn-primary " ng-click="editUser()" ng-if="isUserLoggedIn()">
-                            <b><span class="glyphicon glyphicon-cog"></span> <span>Settings</span></b>
-                        </button>
-                        <button class="btn btn-primary " ng-if="!isUserLoggedIn()" ng-click="loginModal()">
-                            <b> <span
-                                    class="glyphicon glyphicon-user"></span> <span>Sign in</span></b>
-                        </button>
-                        <button class="btn btn-primary " ng-click="logout()" ng-if="isUserLoggedIn()">
-                            <b><span class="glyphicon glyphicon-off"></span> <span>Logout</span></b>
-                        </button>
-                    </h1>
+                <div class="text-right margin-top-10px">
+
+                    <button class="btn btn-primary " ng-click="editUser()" ng-if="isUserLoggedIn()">
+                        <b><span class="glyphicon glyphicon-cog"></span> <span>Settings</span></b>
+                    </button>
+                    <button class="btn btn-primary " ng-if="!isUserLoggedIn()" ng-click="loginModal()">
+                        <b> <span
+                                class="glyphicon glyphicon-user"></span> <span>Sign in</span></b>
+                    </button>
+                    <button class="btn btn-primary " ng-click="logout()" ng-if="isUserLoggedIn()">
+                        <b><span class="glyphicon glyphicon-off"></span> <span>Logout</span></b>
+                    </button>
+
                 </div>
             </div>
         </div>

@@ -5,14 +5,19 @@
 
 var ausgabenmanagerControllers = angular.module('ausgabenmanagerControllers', []);
 ausgabenmanagerControllers.controller('menueController', function ($scope, $modal, $http, $rootScope, $log, userService) {
-    $scope.toggle = false;
+    $scope.showMenue = false;
     $scope.renderMenue = function () {
-        $scope.toggle = !$scope.toggle;
-        $scope.toggle ? $("#navbarContent").removeClass("hidden-sm") : $("#navbarContent").addClass("hidden-sm");
-        $scope.toggle ? $("#navbarContent").removeClass("hidden-xs") : $("#navbarContent").addClass("hidden-xs");
-
+        $scope.showMenue = !$scope.showMenue;
+        $scope.showMenue ? $("#navbarContent").removeClass("hidden-sm") : $("#navbarContent").addClass("hidden-sm");
+        $scope.showMenue ? $("#navbarContent").removeClass("hidden-xs") : $("#navbarContent").addClass("hidden-xs");
         return false;
     }
+    $rootScope.$on("$routeChangeSuccess", function (e) {
+        //when route changes and menu is visible, then hide it
+        if ($scope.showMenue) {
+            $scope.renderMenue();
+        }
+    });
 });
 ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, $http, $rootScope, $log, $timeout, userService, AusgabenService, AusgabenzeitraumService, PrioritaetService) {
     $scope.Ausgaben = AusgabenService.getAusgabenCached();

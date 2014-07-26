@@ -28,7 +28,7 @@ ausgabenmanager.run(function ($rootScope, $log, userService) {
 	$rootScope.isAppLoading = true;
 	$rootScope.needLoginPage = false;
 	$rootScope.isUserLoggedIn = false;
-	$rootScope.userData = null;
+	$rootScope.userData = userService.getCurrentUser();
 	$rootScope.maxFailCounter = maxCountFailCount;
 	$rootScope.rootDomain = 'http://info.fhoffma.net/services';
 	$rootScope.spinner = null;
@@ -49,13 +49,16 @@ ausgabenmanager.run(function ($rootScope, $log, userService) {
 	$rootScope.resetFailCounter = function () {
 		$rootScope.maxFailCounter = maxCountFailCount;
 	}
-	$rootScope.checkUserData = function () {
-		$log.info('checkUserData is called. FALSE = GOOD, TRUE = BAD  :()');
-		var retVal = (!$rootScope.userData || $rootScope.userData.UserId == 'undefined' ||
-			$rootScope.userData.UserId == undefined || $rootScope.userData.UserId.length == 0);
-		$log.info('checkUserData result: ' + retVal);
-		return retVal;
-	}
+	$rootScope.$watch(function () {
+		return userService.getCurrentUser();
+	}, function (data, b, c) {
+		alert(JSON.stringify(data));
+		$rootScope.userData = data;
+		if (data != null) {
+			$rootScope.isUserLoggedIn = true;
+		}
+	}, true);
+
 	//StartUp Method to try Login! If not possible, SignIn command windows opens
 	$rootScope.$watch('$viewContentLoaded', function () {
 		$log.info('--WATCH--$viewContentLoaded-- ' + new Date());
@@ -65,6 +68,7 @@ ausgabenmanager.run(function ($rootScope, $log, userService) {
 			userService.tryLogin().then(function (data) {
 				$log.info('--WATCH--$viewContentLoaded--: User found in Cookie: ' + JSON.stringify(data));
 				$rootScope.isAppLoading = false;
+
 			}, function (errorMsg) {
 				$log.info("--WATCH--$viewContentLoaded--ERROR: " + JSON.stringify(errorMsg))
 				errorFunctionCleanUp();
@@ -73,21 +77,7 @@ ausgabenmanager.run(function ($rootScope, $log, userService) {
 			errorFunctionCleanUp();
 		}
 	});
-
-//EVENT-SHOUTS TO SHOW LOADING
-	$rootScope.$on("$routeChangeStart", function (e) {
-		//alert('1');
-		$rootScope.$broadcast("loading-started");
-	});
-	$rootScope.$on("$routeChangeSuccess", function (e) {
-		//alert('2');
-		$rootScope.$broadcast("loading-complete");
-	});
-	$rootScope.$on("$routeChangeError", function (e) {
-		//	alert('3');
-	});
 });
-
 ausgabenmanager.config(['$routeProvider',
 	function ($routeProvider) {
 		$routeProvider

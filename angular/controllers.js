@@ -4,7 +4,7 @@
 'use strict'
 
 var ausgabenmanagerControllers = angular.module('ausgabenmanagerControllers', []);
-ausgabenmanagerControllers.controller('menueController', function ($scope, $modal, $http, $rootScope, $log) {
+ausgabenmanagerControllers.controller('menueController', function ($scope, $modal, $http, $rootScope, $log, userService) {
 	$scope.renderMenue = function () {
 		alert();
 		return false;
@@ -126,16 +126,19 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 	//Startup Method which watches, if the userdata changes
 	//it changes when A) a new user sign in or B) when the user is logged in
 	//EDIT NEW! NO NEED TO CHECK USERDATA FOR CHANGE, SERVICES CACHE ITEMS!
-	$rootScope.$watch('userData', function (newValue, oldValue, scope) {
+	$scope.$watch(function () {
+			return userService.getCurrentUser();
+		}, function (newValue, oldValue, scope) {
 			$log.info('--WATCH--userData-- ' + new Date());
 			$log.info("--WATCH--userData-- Discover new value userData: " + JSON.stringify(newValue));
-			$rootScope.userData ? $log.info($rootScope.userData.UserId) : $log.info('--WATCH ausgabenCtrl--userdata-- is NULL, exit function.');
-			if (!$rootScope.userData) {
+
+			if (!newValue) {
 				$scope.Ausgaben = [];
 				$scope.Ausgabenzeitraeume = [];
 				$scope.Prioritaeten = [];
 				return;
 			}
+			$rootScope.userData ? $log.info($rootScope.userData.UserId) : $log.info('--WATCH ausgabenCtrl--userdata-- is NULL, exit function.');
 			$timeout(function () {
 				AusgabenService.getAusgaben()
 					.then(function (data) {
@@ -178,7 +181,8 @@ ausgabenmanagerControllers.controller('userCtrl', function ($scope, $modal, $htt
 	}
 	$scope.logout = function () {
 		$rootScope.isUserLoggedIn = false;
-		$rootScope.userData = null;
+		userService.logout();
+		$rootScope.$broadcast("logout");
 	}
 	$scope.loginModal = function (size) {
 		var modalInstance = $modal.open({
@@ -226,7 +230,7 @@ ausgabenmanagerControllers.controller('userCtrl', function ($scope, $modal, $htt
 		}
 	});
 });
-ausgabenmanagerControllers.controller('favoriteCtrl', function ($scope, $modal, $http, $rootScope, $log, $timeout, favoriteService) {
+ausgabenmanagerControllers.controller('favoriteCtrl', function ($scope, $modal, $http, $rootScope, $log, $timeout, favoriteService, userService) {
 	$scope.Favoriten = [];
 	$scope.manageFavorit = function (size, favorite, type) {
 		if (type == 'delete') {
@@ -270,7 +274,9 @@ ausgabenmanagerControllers.controller('favoriteCtrl', function ($scope, $modal, 
 			alert("Action not found");
 		}
 	}
-	$rootScope.$watch('userData', function (newValue, oldValue, scope) {
+	$scope.$watch(function () {
+			return userService.getCurrentUser();
+		}, function (newValue, oldValue, scope) {
 			$log.info('--WATCH--userData-- ' + new Date());
 			$log.info("--WATCH--userData-- Discover userData: " + JSON.stringify(newValue));
 			$rootScope.userData ? $log.info($rootScope.userData.UserId) : $log.info('--WATCH favoriteCtrl--userdata-- is NULL, exit function');
@@ -292,19 +298,13 @@ ausgabenmanagerControllers.controller('favoriteCtrl', function ($scope, $modal, 
 		}
 	);
 });
-ausgabenmanagerControllers.controller('fileCtrl', function ($scope, $modal, $http, $rootScope, $log, $timeout, fileService) {
+ausgabenmanagerControllers.controller('fileCtrl', function ($scope, $modal, $http, $rootScope, $log, $timeout, fileService, userService) {
 	$scope.Files = [];
 	$scope.loadFile = function (file) {
 		$.fileDownload($rootScope.rootDomain + '/Files/GetFileByName?fid=' + file.FileName + '&uid=' + $rootScope.userData.UserId,
 			{
 			}
 		)
-//		fileService.getFileByName(file).then(function (data) {
-//			$log.info('file erfolgreich geladen');
-//		}, function (error) {
-//			alert('FEHLER: file NICHT geladen: ' + error)
-//		});
-
 		return false;
 	}
 	$scope.manageFile = function (size, file, type) {
@@ -348,9 +348,10 @@ ausgabenmanagerControllers.controller('fileCtrl', function ($scope, $modal, $htt
 			alert("Action not found");
 		}
 	}
-	$rootScope.$watch('userData', function (newValue, oldValue, scope) {
-		$rootScope.userData ? $log.info($rootScope.userData.UserId) : $log.info('--WATCH fileCtrl--userdata-- is NULL, exit function.');
-		if (!$rootScope.userData) {
+	$scope.$watch(function () {
+		return userService.getCurrentUser();
+	}, function (data, b, c) {
+		if (!data) {
 			$scope.Files = null;
 			return;
 		}
@@ -365,5 +366,6 @@ ausgabenmanagerControllers.controller('fileCtrl', function ($scope, $modal, $htt
 					$log.info("Error at fileService() (" + new Date() + "): --> " + error);
 				});
 		}, 200);
-	});
+	}, true);
+
 });

@@ -2,6 +2,9 @@
 var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 	.factory('AusgabenService', ['$http', '$q', '$rootScope', '$log', function ($http, $q, $rootScope, $log) {
 		var ausgaben = null;
+		$rootScope.$on("logout", function () {
+			ausgaben = null;
+		});
 		var indexGetById = function (id) {
 			for (var i = 0; i < ausgaben.length; i++) {
 				if (ausgaben[i].ID == id) {
@@ -162,6 +165,9 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 	}])
 	.factory('AusgabenzeitraumService', ['$http', '$q', '$rootScope', '$log', function ($http, $q, $rootScope, $log) {
 		var ausgabenzeitraeume;
+		$rootScope.$on("logout", function () {
+			ausgabenzeitraeume = null;
+		});
 		var getAusgabenzeitraeume = function () {
 			var deferred = $q.defer();
 			if (ausgabenzeitraeume) {
@@ -197,6 +203,9 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 	}])
 	.factory('PrioritaetService', ['$http', '$q', '$rootScope', '$log', function ($http, $q, $rootScope, $log) {
 		var prioritaeten;
+		$rootScope.$on("logout", function () {
+			prioritaeten = null;
+		});
 		var iGetById = function (id) {
 			for (var i = 0; i < prioritaeten.length; i++) {
 				if (prioritaeten[i].ID == id) {
@@ -261,163 +270,11 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 			}
 		}
 	}])
-	.factory('userService', ['$http', '$q', '$rootScope', '$log', function ($http, $q, $rootScope, $log) {
-		var currentUserId = "";
-		var getUserId = function () {
-			var currentUser = getCurrentUser();
-			return currentUser ? getCurrentUser().UserId : app.common.utils.readCookie('userid');
-		}
-		var getEmptyUser = function () {
-			//REMOVE THIS BECAUSE OF SQL PARSING ERROR...:(
-			//"Created": null,
-			//"LastModified": null,
-			return{
-				"Email": "",
-				"ID": 0,
-				"Nachname": "",
-				"UserId": app.common.utils.guid.getEmptyGuid(),
-				"Vorname": ""
-			}
-		};
-		var register = function (user) {
-			var deferred = $q.defer();
-			$http.post($rootScope.rootDomain + "/users/Register",
-				user,
-				{
-					dataType: 'json',
-					contentType: "application/json; charset=utf-8"
-				})
-				.success(function (data) {
-					$rootScope.userData = data;
-					$rootScope.isUserLoggedIn = true;
-					deferred.resolve($rootScope.userData);
-				})
-				.error(function (data, status, headers) {
-					$rootScope.isUserLoggedIn = false;
-					deferred.reject('Error: ' + JSON.stringify(status));
-				});
-			return  deferred.promise;
-		}
-		var updateUser = function (user) {
-			var deferred = $q.defer();
-			$http.put($rootScope.rootDomain + "/users/UpdateUserDetails",
-				user,
-				{
-					dataType: 'json',
-					contentType: "application/json; charset=utf-8"
-				})
-				.success(function (data) {
-					$rootScope.userData = data;
-					deferred.resolve($rootScope.userData);
-				})
-				.error(function (data, status, headers) {
-					$rootScope.isUserLoggedIn = false;
-					deferred.reject('Error: ' + JSON.stringify(status));
-				});
-			return  deferred.promise;
-		}
-		var getCurrentUser = function () {
-			return $rootScope.userData;
-		}
-		var tryLoginByCookie = function () {
-			var deferred = $q.defer();
-			currentUserId = getUserId();
-			if (currentUserId != null && currentUserId.length > 0) {
-				logIn(currentUserId).then(function (user) {
-					$log.info('tryLoginByCookie success! UserData: ' + JSON.stringify(user));
-					deferred.resolve(true);
-				}, function (reason) {
-					$log.error("tryLoginByCookie error: " + reason);
-					deferred.reject('Error: ' + reason);
-				});
-			} else {
-				deferred.reject('No UserId in Cookie found');
-			}
-			return deferred.promise;
-		}
-		var logIn = function (uId) {
-			var deferred = $q.defer();
-
-			//REJECT IF NO UID!
-			if (!uId) {
-				deferred.reject("UserService --> REJECT because parameter uId is undefined! Data: " + uId);
-			}
-
-			$http.post($rootScope.rootDomain + "/users/SignIn",
-				{
-					UserId: uId
-				},
-				{
-					dataType: 'json',
-					contentType: "application/json; charset=utf-8"
-				})
-				.success(function (data) {
-					$log.info('logIn success! UserData: ' + JSON.stringify(data));
-					var response = jQuery.parseJSON(JSON.stringify(data));
-					if (typeof response == 'object') {
-						$log.info('logIn success! Response-type is OBJECT');
-						$rootScope.userData = data;
-						$rootScope.isUserLoggedIn = true;
-						$rootScope.needLoginPage = false;
-						$log.info('CreateUserCookie');
-						app.common.utils.createCookie("userid", $rootScope.userData.UserId, 20);
-						$log.info('logIn: resetFailCounter ');
-						$rootScope.resetFailCounter();
-						deferred.resolve($rootScope.userData);
-
-					} else {
-						$log.info('logIn success! But response-type is NOT OBJECT');
-						$log.info('Do login again!');
-						if ($rootScope.maxFailCounter >= 0) {
-							$rootScope.maxFailCounter--;
-							logIn(uId);
-						} else {
-							deferred.reject("UserService --> REJECT because errormessage is inside");
-							$rootScope.needLoginPage = true;
-							return;
-						}
-						deferred.resolve(data);
-					}
-
-				})
-				.error(function (data, status, headers) {
-					$log.error("logIn error: " + data + JSON.stringify(status) + JSON.stringify(headers));
-					$rootScope.isUserLoggedIn = false;
-					$rootScope.userData = null;
-					deferred.reject(data, status);
-				});
-			return  deferred.promise;
-		}
-
-		return {
-			login: function (uid) {
-				return logIn(uid);
-			},
-			isUserLoggedIn: function () {
-				return $rootScope.isUserLoggedIn;
-			},
-			tryLogin: function () {
-				return tryLoginByCookie();
-			},
-			getEmptyUser: function () {
-				return getEmptyUser();
-			},
-			register: function (user) {
-				return register(user);
-			},
-			getCurrentUser: function () {
-				return getCurrentUser();
-			},
-			updateUser: function (user) {
-				return updateUser(user);
-			},
-			getUserId: function () {
-				return getUserId();
-			}
-		};
-	}])
 	.factory('fileService', ['$http', '$q', '$rootScope', '$log', function ($http, $q, $rootScope, $log) {
 		var files;
+		$rootScope.$on("logout", function () {
+			files = null;
+		});
 		var indexGetById = function (id) {
 			for (var i = 0; i < files.length; i++) {
 				if (files[i].ID == id) {
@@ -543,7 +400,9 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 	}])
 	.factory('favoriteService', ['$http', '$q', '$rootScope', '$log', function ($http, $q, $rootScope, $log) {
 		var favoriten;
-
+		$rootScope.$on("logout", function () {
+			favoriten = null;
+		});
 		var indexGetById = function (id) {
 			for (var i = 0; i < favoriten.length; i++) {
 				if (favoriten[i].ID == id) {
@@ -704,4 +563,168 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 				return favoriten;
 			}
 		}
+	}])
+	.factory('userService', ['$http', '$q', '$rootScope', '$log', function ($http, $q, $rootScope, $log) {
+		var currentUserId = "";
+		var currentUser;
+		$rootScope.$on("logout", function () {
+			logout();
+		});
+		var logout = function () {
+			currentUser = null;
+			currentUserId = null;
+		}
+		var getUserId = function () {
+			var currentUser = getCurrentUser();
+			return currentUser ? getCurrentUser().UserId : app.common.utils.readCookie('userid');
+		}
+		var getEmptyUser = function () {
+			//REMOVE THIS BECAUSE OF SQL PARSING ERROR...:(
+			//"Created": null,
+			//"LastModified": null,
+			return{
+				"Email": "",
+				"ID": 0,
+				"Nachname": "",
+				"UserId": app.common.utils.guid.getEmptyGuid(),
+				"Vorname": ""
+			}
+		};
+		var register = function (user) {
+			var deferred = $q.defer();
+			$http.post($rootScope.rootDomain + "/users/Register",
+				user,
+				{
+					dataType: 'json',
+					contentType: "application/json; charset=utf-8"
+				})
+				.success(function (data) {
+					$log.info("Registered ok! Data recieved: " + JSON.stringify(data))
+					currentUser = data;
+					deferred.resolve(data);
+				})
+				.error(function (data, status, headers) {
+					$rootScope.isUserLoggedIn = false;
+					deferred.reject('Error: ' + JSON.stringify(status));
+				});
+			return  deferred.promise;
+		}
+		var updateUser = function (user) {
+			var deferred = $q.defer();
+			$http.put($rootScope.rootDomain + "/users/UpdateUserDetails",
+				user,
+				{
+					dataType: 'json',
+					contentType: "application/json; charset=utf-8"
+				})
+				.success(function (data) {
+					currentUser = data;
+					deferred.resolve(currentUser);
+				})
+				.error(function (data, status, headers) {
+					$rootScope.isUserLoggedIn = false;
+					deferred.reject('Error: ' + JSON.stringify(status));
+				});
+			return  deferred.promise;
+		}
+		var getCurrentUser = function () {
+			return currentUser;
+		}
+		var tryLoginByCookie = function () {
+			var deferred = $q.defer();
+			currentUserId = getUserId();
+			if (currentUserId != null && currentUserId.length > 0) {
+				logIn(currentUserId).then(function (user) {
+					$log.info('tryLoginByCookie success! UserData: ' + JSON.stringify(user));
+					deferred.resolve(true);
+				}, function (reason) {
+					$log.error("tryLoginByCookie error: " + reason);
+					deferred.reject('Error: ' + reason);
+				});
+			} else {
+				deferred.reject('No UserId in Cookie found');
+			}
+			return deferred.promise;
+		}
+		var logIn = function (uId) {
+			var deferred = $q.defer();
+
+			//REJECT IF NO UID!
+			if (!uId) {
+				deferred.reject("UserService --> REJECT because parameter uId is undefined! Data: " + uId);
+			}
+
+			$http.post($rootScope.rootDomain + "/users/SignIn",
+				{
+					UserId: uId
+				},
+				{
+					dataType: 'json',
+					contentType: "application/json; charset=utf-8"
+				})
+				.success(function (data) {
+					$log.info('logIn success! UserData: ' + JSON.stringify(data));
+					var response = jQuery.parseJSON(JSON.stringify(data));
+					if (typeof response == 'object') {
+						$log.info('logIn success! Response-type is OBJECT');
+						currentUser = data;
+						$log.info('CreateUserCookie');
+						app.common.utils.createCookie("userid", currentUser.UserId, 20);
+						$log.info('logIn: resetFailCounter ');
+						$rootScope.resetFailCounter();
+						deferred.resolve($rootScope.userData);
+
+					} else {
+						$log.info('logIn success! But response-type is NOT OBJECT');
+						$log.info('Do login again!');
+						if ($rootScope.maxFailCounter >= 0) {
+							$rootScope.maxFailCounter--;
+							logIn(uId);
+						} else {
+							deferred.reject("UserService --> REJECT because errormessage is inside");
+							$rootScope.needLoginPage = true;
+							return;
+						}
+						deferred.resolve(data);
+					}
+
+				})
+				.error(function (data, status, headers) {
+					$log.error("logIn error: " + data + JSON.stringify(status) + JSON.stringify(headers));
+					$rootScope.isUserLoggedIn = false;
+					currentUser = null;
+					deferred.reject(data, status);
+				});
+			return  deferred.promise;
+		}
+
+		return {
+			login: function (uid) {
+				return logIn(uid);
+			},
+			isUserLoggedIn: function () {
+				return currentUser != null;
+			},
+			tryLogin: function () {
+				return tryLoginByCookie();
+			},
+			getEmptyUser: function () {
+				return getEmptyUser();
+			},
+			register: function (user) {
+				return register(user);
+			},
+			getCurrentUser: function () {
+				return getCurrentUser();
+			},
+			updateUser: function (user) {
+				return updateUser(user);
+			},
+			getUserId: function () {
+				return getUserId();
+			},
+			logout: function () {
+				return logout();
+			}
+		};
 	}]);

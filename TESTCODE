@@ -32,3 +32,17 @@
 //		}
 //	};
 //});
+
+//EVENT-SHOUTS TO SHOW LOADING
+	$rootScope.$on("$routeChangeStart", function (e) {
+		//alert('1');
+		$rootScope.$broadcast("loading-started");
+	});
+	$rootScope.$on("$routeChangeSuccess", function (e) {
+		//alert('2');
+		$rootScope.$broadcast("loading-complete");
+	});
+	$rootScope.$on("$routeChangeError", function (e) {
+		//	alert('3');
+	});
+

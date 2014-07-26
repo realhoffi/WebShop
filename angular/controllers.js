@@ -7,6 +7,7 @@ var ausgabenmanagerControllers = angular.module('ausgabenmanagerControllers', []
 ausgabenmanagerControllers.controller('menueController', function ($scope, $modal, $http, $rootScope, $log) {
 	$scope.renderMenue = function () {
 		alert();
+		return false;
 	}
 });
 ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, $http, $rootScope, $log, $timeout, userService, AusgabenService, AusgabenzeitraumService, PrioritaetService) {

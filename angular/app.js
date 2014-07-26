@@ -23,7 +23,6 @@ ausgabenmanager.run(function ($rootScope, $log, userService) {
 		$rootScope.isUserLoggedIn = false;
 		$rootScope.userData = null;
 		$rootScope.isAppLoading = false;
-		$rootScope.hideSpinner();
 	}
 
 	$rootScope.isAppLoading = true;
@@ -59,7 +58,6 @@ ausgabenmanager.run(function ($rootScope, $log, userService) {
 	}
 	//StartUp Method to try Login! If not possible, SignIn command windows opens
 	$rootScope.$watch('$viewContentLoaded', function () {
-		$rootScope.showSpinner();
 		$log.info('--WATCH--$viewContentLoaded-- ' + new Date());
 		$log.info('- call tryLogin -');
 		if (userService.getUserId()) {

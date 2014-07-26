@@ -1,6 +1,6 @@
 'use strict'
 var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
-	.factory('AusgabenService', ['$http', '$q', '$rootScope', '$log', function ($http, $q, $rootScope, $log) {
+	.factory('AusgabenService', ['$http', '$q', '$rootScope', '$log', 'userService', function ($http, $q, $rootScope, $log, userService) {
 		var ausgaben = null;
 		$rootScope.$on("logout", function () {
 			ausgaben = null;
@@ -39,7 +39,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 				deferred.resolve(ausgaben);
 			} else {
 				$log.info("AusgabenService HTTP Call!");
-				$http.get($rootScope.rootDomain + '/ausgaben/getausgaben?uid=' + $rootScope.userData.UserId,
+				$http.get($rootScope.rootDomain + '/ausgaben/getausgaben?uid=' + userService.getCurrentUser().UserId,
 					{
 						cache: false
 					})
@@ -58,7 +58,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 		}
 		var addNewAusgabe = function (ausgabe) {
 			var deferred = $q.defer();
-			$http.post($rootScope.rootDomain + "/ausgaben/CreateAusgabe?uid=" + $rootScope.userData.UserId,
+			$http.post($rootScope.rootDomain + "/ausgaben/CreateAusgabe?uid=" + userService.getCurrentUser().UserId,
 				ausgabe,
 				{
 					dataType: 'json',
@@ -90,7 +90,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 		}
 		var updateAusgabe = function (ausgabe) {
 			var deferred = $q.defer();
-			$http.put($rootScope.rootDomain + "/ausgaben/UpdateAusgabenDetails?uid=" + $rootScope.userData.UserId,
+			$http.put($rootScope.rootDomain + "/ausgaben/UpdateAusgabenDetails?uid=" + userService.getCurrentUser().UserId,
 				ausgabe,
 				{
 					dataType: 'json',
@@ -114,7 +114,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 		}
 		var deleteAusgabe = function (ausgabe) {
 			var deferred = $q.defer();
-			$http.delete($rootScope.rootDomain + "/ausgaben/DeleteAusgabe?uid=" + $rootScope.userData.UserId,
+			$http.delete($rootScope.rootDomain + "/ausgaben/DeleteAusgabe?uid=" + userService.getCurrentUser().UserId,
 				{
 					data: ausgabe,
 					headers: {
@@ -163,7 +163,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 
 		};
 	}])
-	.factory('AusgabenzeitraumService', ['$http', '$q', '$rootScope', '$log', function ($http, $q, $rootScope, $log) {
+	.factory('AusgabenzeitraumService', ['$http', '$q', '$rootScope', '$log', 'userService', function ($http, $q, $rootScope, $log, userService) {
 		var ausgabenzeitraeume;
 		$rootScope.$on("logout", function () {
 			ausgabenzeitraeume = null;
@@ -175,7 +175,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 				deferred.resolve(ausgabenzeitraeume);
 			} else {
 				$log.info("AusgabenzeitraumService HTTP Call!");
-				$http.get($rootScope.rootDomain + '/Ausgabenzeitraum/GetAusgabenzeitraeume?uid=' + $rootScope.userData.UserId,
+				$http.get($rootScope.rootDomain + '/Ausgabenzeitraum/GetAusgabenzeitraeume?uid=' + userService.getCurrentUser().UserId,
 					{cache: false})
 					.success(function (data) {
 						$log.info("AusgabenzeitraumService HTTP success!");
@@ -201,7 +201,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 			}
 		}
 	}])
-	.factory('PrioritaetService', ['$http', '$q', '$rootScope', '$log', function ($http, $q, $rootScope, $log) {
+	.factory('PrioritaetService', ['$http', '$q', '$rootScope', '$log', 'userService', function ($http, $q, $rootScope, $log, userService) {
 		var prioritaeten;
 		$rootScope.$on("logout", function () {
 			prioritaeten = null;
@@ -221,7 +221,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 				deferred.resolve(prioritaeten);
 			} else {
 				$log.info("PrioritaetService HTTP Call!");
-				$http.get($rootScope.rootDomain + '/Prioritaeten/GetPrioritaeten?uid=' + $rootScope.userData.UserId,
+				$http.get($rootScope.rootDomain + '/Prioritaeten/GetPrioritaeten?uid=' + userService.getCurrentUser().UserId,
 					{cache: false})
 					.success(function (data) {
 						$log.info("PrioritaetService HTTP success!");
@@ -270,7 +270,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 			}
 		}
 	}])
-	.factory('fileService', ['$http', '$q', '$rootScope', '$log', function ($http, $q, $rootScope, $log) {
+	.factory('fileService', ['$http', '$q', '$rootScope', '$log', 'userService', function ($http, $q, $rootScope, $log, userService) {
 		var files;
 		$rootScope.$on("logout", function () {
 			files = null;
@@ -290,7 +290,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 				deferred.resolve(files);
 			} else {
 				$log.info("fileService HTTP Call!");
-				$http.get($rootScope.rootDomain + '/Files/GetFiles?uid=' + $rootScope.userData.UserId,
+				$http.get($rootScope.rootDomain + '/Files/GetFiles?uid=' + userService.getCurrentUser().UserId,
 					{cache: false})
 					.success(function (data) {
 						$log.info("fileService HTTP success!");
@@ -317,7 +317,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 		}
 		var deleteFile = function (file) {
 			var deferred = $q.defer();
-			$http.delete($rootScope.rootDomain + "/files/DeleteFile?uid=" + $rootScope.userData.UserId,
+			$http.delete($rootScope.rootDomain + "/files/DeleteFile?uid=" + userService.getCurrentUser().UserId,
 				{
 					data: file,
 					headers: {
@@ -346,7 +346,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 
 			$log.info("fileService HTTP Call!");
 
-			$http.get($rootScope.rootDomain + '/Files/GetFileByName?fid=' + file.FileName + '&uid=' + $rootScope.userData.UserId,
+			$http.get($rootScope.rootDomain + '/Files/GetFileByName?fid=' + file.FileName + '&uid=' + userService.getCurrentUser().UserId,
 				{cache: false})
 				.success(function (data) {
 					$log.info("fileService HTTP success getFileByName!");
@@ -366,7 +366,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 			var fd = new FormData();
 			fd.append('file', inputObj);
 			$log.info("fileService HTTP Call! uploadFile");
-			$http.post($rootScope.rootDomain + '/Files/UploadFile?fid=' + fileObj.FileName + '&uid=' + $rootScope.userData.UserId, fd, {
+			$http.post($rootScope.rootDomain + '/Files/UploadFile?fid=' + fileObj.FileName + '&uid=' + userService.getCurrentUser().UserId, fd, {
 				transformRequest: angular.identity,
 				headers: {'Content-Type': undefined}
 			}).success(function (data) {
@@ -398,7 +398,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 
 		}
 	}])
-	.factory('favoriteService', ['$http', '$q', '$rootScope', '$log', function ($http, $q, $rootScope, $log) {
+	.factory('favoriteService', ['$http', '$q', '$rootScope', '$log', 'userService', function ($http, $q, $rootScope, $log, userService) {
 		var favoriten;
 		$rootScope.$on("logout", function () {
 			favoriten = null;
@@ -426,7 +426,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 				deferred.resolve(favoriten);
 			} else {
 				$log.info("favoriteService HTTP Call!");
-				$http.get($rootScope.rootDomain + '/Favoriten/GetFavoriten?uid=' + $rootScope.userData.UserId,
+				$http.get($rootScope.rootDomain + '/Favoriten/GetFavoriten?uid=' + userService.getCurrentUser().UserId,
 					{cache: false})
 					.success(function (data) {
 						$log.info("favoriteService HTTP success!");
@@ -465,7 +465,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 		}
 		var addNewFavorite = function (favorite) {
 			var deferred = $q.defer();
-			$http.post($rootScope.rootDomain + "/Favoriten/CreateFavorite?uid=" + $rootScope.userData.UserId,
+			$http.post($rootScope.rootDomain + "/Favoriten/CreateFavorite?uid=" + userService.getCurrentUser().UserId,
 				favorite,
 				{
 					dataType: 'json',
@@ -493,7 +493,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 		}
 		var updateFavorite = function (favorite) {
 			var deferred = $q.defer();
-			$http.put($rootScope.rootDomain + "/Favoriten/UpdateFavoriteDetails?uid=" + $rootScope.userData.UserId,
+			$http.put($rootScope.rootDomain + "/Favoriten/UpdateFavoriteDetails?uid=" + userService.getCurrentUser().UserId,
 				favorite,
 				{
 					dataType: 'json',
@@ -515,7 +515,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 		}
 		var deleteFavorite = function (favorite) {
 			var deferred = $q.defer();
-			$http.delete($rootScope.rootDomain + "/Favoriten/DeleteFavorite?uid=" + $rootScope.userData.UserId,
+			$http.delete($rootScope.rootDomain + "/Favoriten/DeleteFavorite?uid=" + userService.getCurrentUser().UserId,
 				{
 					data: favorite,
 					headers: {
@@ -601,10 +601,10 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 				.success(function (data) {
 					$log.info("Registered ok! Data recieved: " + JSON.stringify(data))
 					currentUser = data;
+					app.common.utils.createCookie("userid", currentUser.UserId, 20);
 					deferred.resolve(data);
 				})
 				.error(function (data, status, headers) {
-					$rootScope.isUserLoggedIn = false;
 					deferred.reject('Error: ' + JSON.stringify(status));
 				});
 			return  deferred.promise;
@@ -619,10 +619,10 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 				})
 				.success(function (data) {
 					currentUser = data;
+					app.common.utils.createCookie("userid", currentUser.UserId, 20);
 					deferred.resolve(currentUser);
 				})
 				.error(function (data, status, headers) {
-					$rootScope.isUserLoggedIn = false;
 					deferred.reject('Error: ' + JSON.stringify(status));
 				});
 			return  deferred.promise;
@@ -671,7 +671,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 						$log.info('CreateUserCookie');
 						app.common.utils.createCookie("userid", currentUser.UserId, 20);
 						$log.info('logIn: resetFailCounter ');
-						$rootScope.resetFailCounter();
+
 						deferred.resolve($rootScope.userData);
 
 					} else {
@@ -691,7 +691,6 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 				})
 				.error(function (data, status, headers) {
 					$log.error("logIn error: " + data + JSON.stringify(status) + JSON.stringify(headers));
-					$rootScope.isUserLoggedIn = false;
 					currentUser = null;
 					deferred.reject(data, status);
 				});

@@ -29,7 +29,7 @@ ausgabenmanager.run(function ($rootScope, $log, userService) {
 	$rootScope.needLoginPage = false;
 	$rootScope.isUserLoggedIn = false;
 	$rootScope.userData = userService.getCurrentUser();
-	$rootScope.maxFailCounter = maxCountFailCount;
+	$rootScope.maxFailCounter = 3;
 	$rootScope.rootDomain = 'http://info.fhoffma.net/services';
 	$rootScope.spinner = null;
 	$rootScope.currency = " €";
@@ -49,13 +49,19 @@ ausgabenmanager.run(function ($rootScope, $log, userService) {
 	$rootScope.resetFailCounter = function () {
 		$rootScope.maxFailCounter = maxCountFailCount;
 	}
+
 	$rootScope.$watch(function () {
 		return userService.getCurrentUser();
 	}, function (data, b, c) {
-		alert(JSON.stringify(data));
 		$rootScope.userData = data;
-		if (data != null) {
-			$rootScope.isUserLoggedIn = true;
+		if (data != null && data != b) {
+			if (b != null && b.UserId == data.UserId) {
+				$log.info("Found Userdata old = userdate new");
+			} else {
+				$rootScope.isUserLoggedIn = true;
+				$rootScope.isAppLoading = false;
+				$rootScope.resetFailCounter();
+			}
 		}
 	}, true);
 
@@ -67,8 +73,6 @@ ausgabenmanager.run(function ($rootScope, $log, userService) {
 			$log.info('--WATCH--$viewContentLoaded-- ' + new Date());
 			userService.tryLogin().then(function (data) {
 				$log.info('--WATCH--$viewContentLoaded--: User found in Cookie: ' + JSON.stringify(data));
-				$rootScope.isAppLoading = false;
-
 			}, function (errorMsg) {
 				$log.info("--WATCH--$viewContentLoaded--ERROR: " + JSON.stringify(errorMsg))
 				errorFunctionCleanUp();

@@ -1,3 +1,4 @@
+'use strict'
 ausgabenmanager.directive('fileModel', ['$parse', function ($parse) {
 	return {
 		restrict: 'A',

@@ -1,6 +1,3 @@
-/**
- * Created by florian on 13.07.2014.
- */
 'use strict'
 var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 	.factory('AusgabenService', ['$http', '$q', '$rootScope', '$log', function ($http, $q, $rootScope, $log) {

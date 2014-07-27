@@ -7,7 +7,7 @@
 }
 
 .bg-nice {
-    color: #440f5f;
+    color: #440f5f !important;
     max-height: 60px !important;
     height: 60px !important;
     font-weight: bold;

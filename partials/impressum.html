@@ -1,0 +1,47 @@
+<!--<div class="row">-->
+<!--<div class="col-md-12 col-sm-12 col-xs-12">-->
+<!--<div class="row text-center" style="width: 100px; height: 100px; background-color: #292f33">-->
+<!--<a href="https://www.facebook.com/Florian.hoffmann1983" class=" middle text-center">-->
+<!--<img type="image/ico" src="https://g.twimg.com/Twitter_logo_white.png" width="50px" height="50px"-->
+<!--class="text-center"> </a>-->
+<!--</div>-->
+<!--<div class=" text-center middle" style="width: 100px; height:100px; background-color: #ccd6dd">-->
+<!--<a href="https://twitter.com/realhoffi" class=" middle text-center"><img-->
+<!--src="https://g.twimg.com/Twitter_logo_blue.png" width="50px" height="50px" class="text-center"></a>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<script type="application/javascript">
+    $(".social").hover(function () {
+        var value = $(this).attr("href");
+        value = value.replace("mailto:", "");
+        $(".social-links > h3").text(value).show();
+    }, function () {
+        $(".social-links > h3").text("").hide();
+    });
+</script>
+<div class="row">
+    <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12 " id="social">
+        <div class="social-links">
+            <a class="social" href="https://twitter.com/realhoffi">
+                <img src="http://alexpeattie.com/images/hero/twitter.png">
+            </a>
+            <a class="social" href="https://github.com/realhoffi">
+                <img src="http://alexpeattie.com/images/hero/github.png">
+            </a>
+            <a class="social" data-email="florian.hoffmann1983@googlemail.com"
+               href="mailto:florian.hoffmann1983@googlemail.com">
+                <img src="http://alexpeattie.com/images/hero/email.png">
+            </a>
+            <a class="social" href="https://www.facebook.com/Florian.hoffmann1983">
+                <span class="cirecled">f</span>
+            </a>
+            <!--<a-->
+            <!--class="social" href="http://stackoverflow.com/u/784858">-->
+            <!--<img src="http://alexpeattie.com/images/hero/stackexchange.png"></a>-->
+
+            <h3>
+            </h3>
+        </div>
+    </div>
+</div>

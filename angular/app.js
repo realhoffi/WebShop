@@ -107,8 +107,12 @@ ausgabenmanager.config(['$routeProvider',
 				templateUrl: '../partials/fileOverview.html',
 				controller: 'fileCtrl'
 			}).
+			when('/impressum', {
+				templateUrl: '../partials/impressum.html'
+
+			}).
 			otherwise({
-				redirectTo: '/angulartest.html'
+				redirectTo: '/'
 			});
 	}]);
 

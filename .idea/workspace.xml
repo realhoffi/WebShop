@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="33469c24-7a96-412e-9d56-a358b96f40de" name="Default" comment="initialize">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/html/Ausgabenmanager.html" afterPath="$PROJECT_DIR$/html/Ausgabenmanager.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/appCss/appCss.css" afterPath="$PROJECT_DIR$/appCss/appCss.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="WebShop.iws" />
@@ -52,11 +51,9 @@
       <file leaf-file-name="Ausgabenmanager.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/html/Ausgabenmanager.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.45083934" vertical-offset="304" max-vertical-offset="3026">
-              <caret line="40" column="31" selection-start-line="40" selection-start-column="31" selection-end-line="40" selection-end-column="31" />
-              <folding>
-                <element signature="n#style#0;n#span#0;n#a#0;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.38968825" vertical-offset="304" max-vertical-offset="3043">
+              <caret line="37" column="38" selection-start-line="37" selection-start-column="38" selection-end-line="37" selection-end-column="38" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -1200,7 +1197,11 @@
       <created>1406449251964</created>
       <updated>1406449251964</updated>
     </task>
-    <option name="localTasksCounter" value="139" />
+    <task id="LOCAL-00139" summary="initialize">
+      <created>1406449514437</created>
+      <updated>1406449514437</updated>
+    </task>
+    <option name="localTasksCounter" value="140" />
     <servers />
   </component>
   <component name="TodoView" selected-index="2">
@@ -1303,9 +1304,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1972" max-vertical-offset="2584">
           <caret line="119" column="22" selection-start-line="119" selection-start-column="22" selection-end-line="119" selection-end-column="22" />
-          <folding>
-            <element signature="n#style#0;n#span#0;n#a#0;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1669,11 +1668,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/html/Ausgabenmanager.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.45083934" vertical-offset="304" max-vertical-offset="3026">
-          <caret line="40" column="31" selection-start-line="40" selection-start-column="31" selection-end-line="40" selection-end-column="31" />
-          <folding>
-            <element signature="n#style#0;n#span#0;n#a#0;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.38968825" vertical-offset="304" max-vertical-offset="3043">
+          <caret line="37" column="38" selection-start-line="37" selection-start-column="38" selection-end-line="37" selection-end-column="38" />
+          <folding />
         </state>
       </provider>
     </entry>

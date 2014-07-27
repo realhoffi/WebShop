@@ -62,6 +62,8 @@ ausgabenmanager.run(function ($rootScope, $log, userService) {
 				$rootScope.isAppLoading = false;
 				$rootScope.resetFailCounter();
 			}
+		} else {
+			$rootScope.isUserLoggedIn = false;
 		}
 	}, true);
 

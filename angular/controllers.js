@@ -189,7 +189,7 @@ ausgabenmanagerControllers.controller('userCtrl', function ($scope, $modal, $htt
         return userService.isUserLoggedIn();
     }
     $scope.logout = function () {
-        $rootScope.isUserLoggedIn = false;
+//        $rootScope.isUserLoggedIn = false;
         userService.logout();
         $rootScope.$broadcast("logout");
     }

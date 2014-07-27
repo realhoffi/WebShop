@@ -276,6 +276,9 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 			files = null;
 		});
 		var indexGetById = function (id) {
+			if (files.length == 0) {
+				return null;
+			}
 			for (var i = 0; i < files.length; i++) {
 				if (files[i].ID == id) {
 					return i;

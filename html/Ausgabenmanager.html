@@ -29,25 +29,24 @@
 <div class="page-header margin-top-0">
     <div class="container-fluid" ng-controller="userCtrl">
         <div class="row">
-            <div class="bg-nice col-md-2 col-sm-2 col-xs-2">
-                <a href="#" class="menue-entry">
-                    <img class="img-header padding-top-5px"
+            <div class="bg-nice col-md-2 col-sm-4 col-xs-4">
+                <a href="#" class="">
+                <img class="img-header padding-top-5px"
                          src="../images/identityImage.png"/>
                 </a>
-                <a class="top noDecoration bg-nice menue-entry" href="#impressum"><span
-                        class="glyphicon glyphicon-phone-alt"></span> <span class="hidden-xs hidden-sm">Contact</span>
+                <a class="top noDecoration bg-nice " href="#impressum"><span
+                        class="glyphicon glyphicon-phone-alt"></span> <span class="hidden-sm hidden-xs">Contact</span>
                 </a>
             </div>
-            <div class="bg-nice col-md-7 col-sm-10 col-xs-10">
+            <div class="bg-nice col-md-7 col-sm-8 col-xs-8">
                 <h1 class="text-center">
                     <a class="noDecoration bg-nice menue-entry" href="#">
                     <span>
                             <strong>MyDesk
-                                <small> Your personal
+                                <small class="hidden-xs"> Your personal
                                     Desktop
                                 </small>
                             </strong>
-
                        </span>
                     </a>
                 </h1>
@@ -72,7 +71,7 @@
         <div class="row hidden-lg hidden-md">
             <div class="col-sm-12 col-xs-12 margin-top-10px">
                 <h1>
-                    <div ng-controller="menueController"
+                    <div ng-controller="menueController" ng-if="isUserLoggedIn()"
                          class="header-row hidden-lg hidden-md pull-left top text-left">
                         <a ng-click="renderMenue()">
                             <b><span class="glyphicon glyphicon-list"></span></b>

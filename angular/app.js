@@ -88,8 +88,8 @@ ausgabenmanager.config(['$routeProvider',
 	function ($routeProvider) {
 		$routeProvider
 			.when('/', {
-				templateUrl: '../partials/ausgabenOverview.html',
-				controller: 'ausgabenCtrl'
+				templateUrl: '../partials/root.html',
+				controller: ''
 			}).
 			when('/ausgabenOverview', {
 				templateUrl: '../partials/ausgabenOverview.html',

@@ -217,7 +217,7 @@ form input.ng-invalid.ng-dirty, form textarea.ng-invalid.ng-dirty, form select.n
     padding-bottom: 8px;
     font-weight: 900;
     font-size: 5em;
-    border: 2px solid #FFFFFF;
+    border: 10px solid #FFFFFF;
     border-radius: 10%;
     min-height: 1px;
 }

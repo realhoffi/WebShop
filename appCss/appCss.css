@@ -99,6 +99,10 @@
     padding-left: 20px;
 }
 
+.padding-left-10px {
+    padding-left: 10px;
+}
+
 a {
     cursor: pointer;
 }
@@ -113,6 +117,10 @@ a {
 
 .menue-entry {
     font-size: 1.25em;
+}
+
+.sub-menue-entry {
+    font-size: 1.1em;
 }
 
 .white {

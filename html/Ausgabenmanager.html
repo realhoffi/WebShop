@@ -99,84 +99,28 @@
     <div page-Initialize></div>
     <div class="row" id="contentForm" ng-if="!isAppLoading && $root.isUserLoggedIn">
         <div class="col-md-3 hidden-sm hidden-xs" id="navbarContent">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="panel panel-success">
-                        <a class="list-group-item active menue-entry" href="#">
-                            <b> <span class="glyphicon glyphicon-home"></span> <span class=""> Home</span></b>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="panel panel-success">
-                        <a class="list-group-item active menue-entry" href="#">
-                            <b> <span class="glyphicon glyphicon-calendar"></span> <span> My Calender</span></b>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="panel panel-success">
-                        <a class="list-group-item active menue-entry" href="#">
-                            <b> <span class="glyphicon glyphicon-pencil"></span> <span> My Nodes</span></b>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="panel panel-success">
-                        <a class="list-group-item active">
-                            <b> <span class="glyphicon glyphicon-user"></span> <span>Ausgabenmanager</span></b>
-                        </a>
-                        <a href="#ausgabenOverview" class="list-group-item">
-                            <span class="glyphicon "></span> Ausgabenübersicht
-                        </a>
-                        <a href="#ausgabenBericht" class="list-group-item">
-                            <span class="glyphicon "></span> Kostenaufstellung
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="panel panel-success">
-                        <a class="list-group-item active menue-entry">
-                            <b> <span class="glyphicon glyphicon-star"></span> <span> Favoriten</span></b>
-                        </a>
-                        <a href="#favoritenOverview" class="list-group-item">
-                            <span class="glyphicon "></span> Meine Favoriten
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="panel panel-success">
-                        <a class="list-group-item active menue-entry">
-                            <b> <span class="glyphicon glyphicon glyphicon-file"></span> <span> Dateien</span></b>
-                        </a>
-                        <a href="#fileOverview" class="list-group-item">
-                            <span class="glyphicon "></span> Meine Dateien
-                        </a>
-                    </div>
-                </div>
-            </div>
+            <generic-Link link="#" name="Home" iconClass="glyphicon glyphicon-home"></generic-Link>
+            <generic-Link link="#" name="My Calender" iconClass="glyphicon glyphicon-calendar"></generic-Link>
+            <generic-Link link="#" name="My Nodes" iconClass="glyphicon glyphicon-comment"></generic-Link>
+            <generic-Link link="#favoritenOverview" name="My Favorites"
+                          iconClass="glyphicon glyphicon-star-empty"></generic-Link>
+            <generic-Link link="#fileOverview" name="My Files" iconClass="glyphicon glyphicon-paperclip"></generic-Link>
+            <generic-Link link="" name="Ausgabenmanager" iconClass="glyphicon glyphicon-briefcase">
+                <generic-Link-Child name="Ausgabenübersicht" iconClass="glyphicon glyphicon-briefcase"
+                                    link="#ausgabenOverview"></generic-Link-Child>
+                <generic-Link-Child name="Kostenaufstellung" iconClass="glyphicon glyphicon-briefcase"
+                                    link="#ausgabenBericht"></generic-Link-Child>
+            </generic-Link>
         </div>
-
         <div class="col-md-9 col-sm-12 col-xs-12" id="content" ng-if="$root.isUserLoggedIn">
             <div ng-view></div>
         </div>
-    </div>
-    <div class="row" id="contentNoLogIn" ng-if="!isAppLoading && !$root.isUserLoggedIn">
-        <div class="col-md-6 col-md-offset-3 col-sm-12 col-xs-12">
-            <div ng-include="'../partials/root.html'">
+        <div class="row" id="contentNoLogIn" ng-if="!isAppLoading && !$root.isUserLoggedIn">
+            <div class="col-md-6 col-md-offset-3 col-sm-12 col-xs-12">
+                <div ng-include="'../partials/root.html'">
+                </div>
             </div>
         </div>
     </div>
-</div>
 </body>
 </html>

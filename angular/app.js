@@ -116,7 +116,11 @@ ausgabenmanager.config(['$routeProvider',
 
 			}).
 			when('/notes', {
-				templateUrl: '../partials/notes.html'
+				templateUrl: '../partials/notes.html',
+				controller: 'notesCtrl'
+			}).
+			when('/searchGoogle', {
+				templateUrl: '../partials/searchOnGoogle.html',
 
 			}).
 			otherwise({

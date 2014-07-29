@@ -78,3 +78,14 @@ ausgabenmanager.directive('genericLinkChild', function ($timeout) {
 		template: ' <a href="{{ link }}" class="list-group-item"><span class="{{ iconclass }} sub-menue-entry"></span ><strong><span class="padding-left-10px sub-menue-entry">{{ name }}</span></strong> </a>'
 	}
 });
+ausgabenmanager.directive('ngRightClick', function ($parse) {
+	return function (scope, element, attrs) {
+		var fn = $parse(attrs.ngRightClick);
+		element.bind('contextmenu', function (event) {
+			scope.$apply(function () {
+				event.preventDefault();
+				fn(scope, {$event: event});
+			});
+		});
+	};
+});

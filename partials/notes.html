@@ -1,5 +1,26 @@
-<div class="row">
-    <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12 ">
-        <h1 class="bg-info bg-nice">Soon :)</h1>
+<div class="row" id="mynotes">
+    <div class="col-md-12 col-sm-12 col-xs-12" ng-right-click="addNote()" style="border: 2px deepskyblue solid">
+        <div class="row padding-5px">
+            <div class="bs-info padding-left-10px">
+                <h3>
+                    <ul class="list-unstyled">
+                        <li>
+                            <span>To add a new Note, simply right click anywhere</span>
+                        </li>
+                        <li><span>To edit a note, double click a note</span></li>
+                    </ul>
+
+                </h3>
+            </div>
+        </div>
+        <div class="row" style="background-color: #e3e3e3 ">
+            <div class="col-md-5 col-sm-12 col-xs-12 bs-info margin-5px padding-10px" ng-dblclick="editNote(note)"
+                 style="overflow: auto;" ng-repeat="note in notes">
+                <span style="height: 200px" ng-if="!note.edit">{{ note.name }}</span>
+                <textarea cols="30" rows="3" type="text" maxlength="255" class="form-control" ng-if="note.edit"
+                          ng-model="note.name"></textarea>
+
+            </div>
+        </div>
     </div>
 </div>

@@ -123,6 +123,9 @@ ausgabenmanager.config(['$routeProvider',
 				templateUrl: '../partials/searchOnGoogle.html',
 
 			}).
+			when('/mapGoogle', {
+				templateUrl: '../partials/googlemaps.html'
+			}).
 			otherwise({
 				redirectTo: '/'
 			});

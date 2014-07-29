@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon"/>
-    <!--<link rel="icon" type="image/gif" href="../images/favicon4.gif" />-->
     <link href="../css/bootstrap.css" type="text/css" rel="stylesheet">
     <link href="../appCss/appCss.css" type="text/css" rel="stylesheet">
     <link href="../appCss/loadingAnimation.css" type="text/css" rel="stylesheet">
@@ -23,6 +22,7 @@
     <script src="../angular/controllers.js" type="application/javascript"></script>
     <script src="../angular/modalcontroller.js" type="application/javascript"></script>
     <script src="../angular/services.js" type="application/javascript"></script>
+    <script src='../calendarJs/lib/moment.min.js'></script>
 
 </head>
 <body>
@@ -106,6 +106,7 @@
                           iconClass="glyphicon glyphicon-star-empty"></generic-Link>
             <generic-Link link="#fileOverview" name="My Files" iconClass="glyphicon glyphicon-paperclip"></generic-Link>
             <generic-Link link="#searchGoogle" name="Ask Google" iconClass="glyphicon glyphicon-search"></generic-Link>
+            <generic-Link link="#mapGoogle" name="Google Maps" iconClass="glyphicon glyphicon-road"></generic-Link>
             <generic-Link link="" name="Ausgabenmanager" iconClass="glyphicon glyphicon-briefcase">
                 <generic-Link-Child name="Ausgabenübersicht" iconClass="glyphicon glyphicon-briefcase"
                                     link="#ausgabenOverview"></generic-Link-Child>

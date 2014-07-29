@@ -382,7 +382,7 @@ ausgabenmanagerControllers.controller('fileCtrl', function ($scope, $modal, $htt
 ausgabenmanagerControllers.controller('notesCtrl', function ($scope, $http, $rootScope, $log, $timeout, userService) {
 	$scope.notes = [
 		{
-			name: "test1 test1test1test1 test1test1 test1test1test1test1test1test1 test1test1test1test1test1test1test1 test1test1test1test1test1 test1 test1test1test1 test1test1 test1test1test1test1test1test1 test1test1test1test1test1test1test1 test1test1test1test1test1test1 test1test1test1 test1test1 test1test1test1test1test1test1 test1test1test1test1test1test1test1 test1test1test1test1test1test1 test1test1test1 test1test1 test1test1test1test1test1test1 test1test1test1test1test1test1test1 test1test1test1test1test1test1 test1test1test1 test1test1 test1test1test1test1test1test1 test1test1test1test1test1test1test1 test1test1test1test1test1test1 test1test1test1 test1test1 test1test1test1test1test1test1 test1test1test1test1test1test1test1 test1test1test1test1test1",
+			name: "test1 test1test1test1 test1test1 test1test1test1test1test1test1 test1test1test1test1test1test1test1 test1test1test1test1test1 test1 test1test1test1 test1test1 test1test1test1test1test1test1 test1test1test1test1test1test1test1 test1test1test1test1test1test1 test1test1test1 test1test1 test1test1test1test1test1test1 test1test1test1test1test1test1test1 test1test1test1test1test1test1 test1test1test1",
 			edit: false
 		},
 		{

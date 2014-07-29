@@ -2,8 +2,8 @@
     <div class="col-md-12 col-sm-12 col-xs-12" ng-right-click="addNote()">
         <div class="row ">
             <div class="bs-info padding-left-10px hidden-xs hidden-sm">
-            <h3>
-                    <ul class="list-unstyled">
+                <h3>
+                <ul class="list-unstyled">
                         <li>
                             <span>To add a new Note, simply right click anywhere</span>
                         </li>
@@ -25,10 +25,9 @@
                     </b>
                 </h4>
             </div>
-
         </div>
         <div class="row">
-        <div class="col-md-4 col-sm-12 col-xs-12 bs-info padding-10px  margin-top-10px"
+            <div class="col-md-4 col-sm-12 col-xs-12 bs-info padding-10px  margin-top-10px"
                  ng-dblclick="editNote(note)" ng-repeat="note in notes">
                 <div class="row">
                     <div class="col-md-12 col-xs-10 col-sm-10">
@@ -37,9 +36,9 @@
                                   ng-show="note.edit" style="width:100%;"
                                   focus-on-visibility ng-model="note.name"></textarea>
                     </div>
-                    <div class="hidden-sm hidden-lg col-xs-2 col-sm-2">
+                    <div class="hidden-md hidden-lg col-xs-2 col-sm-2">
 
-                        <a class=""><strong>
+                    <a class=""><strong>
                                 <span class="glyphicon glyphicon-pencil "
                                       ng-click="editNote(note)">
                                       </span></strong>

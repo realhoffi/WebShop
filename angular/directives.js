@@ -84,8 +84,22 @@ ausgabenmanager.directive('ngRightClick', function ($parse) {
 		element.bind('contextmenu', function (event) {
 			scope.$apply(function () {
 				event.preventDefault();
+				element.find("textarea").focus();
 				fn(scope, {$event: event});
 			});
+		});
+	};
+});
+ausgabenmanager.directive('focusOnVisibility', function () {
+	return function (scope, element, attrs) {
+		//Watch the showInput model
+		scope.$watch('note.edit', function () {
+			//If the model changes to true, focus on the element
+			if (scope.note.edit) {
+				//Assumes that the element has the focus method
+				//If not, then you can have your own logic to focus here
+				element.focus();
+			}
 		});
 	};
 });

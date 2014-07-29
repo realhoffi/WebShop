@@ -1,7 +1,7 @@
 <div class="row" id="mynotes">
-    <div class="col-md-12 col-sm-12 col-xs-12" ng-right-click="addNote()" style="border: 2px deepskyblue solid">
-        <div class="row padding-5px">
-            <div class="bs-info padding-left-10px">
+    <div class="col-md-12 col-sm-12 col-xs-12" ng-right-click="addNote()">
+        <div class="row ">
+        <div class="bs-info padding-left-10px">
                 <h3>
                     <ul class="list-unstyled">
                         <li>
@@ -13,13 +13,46 @@
                 </h3>
             </div>
         </div>
-        <div class="row" style="background-color: #e3e3e3 ">
-            <div class="col-md-5 col-sm-12 col-xs-12 bs-info margin-5px padding-10px" ng-dblclick="editNote(note)"
-                 style="overflow: auto;" ng-repeat="note in notes">
-                <span style="height: 200px" ng-if="!note.edit">{{ note.name }}</span>
-                <textarea cols="30" rows="3" type="text" maxlength="255" class="form-control" ng-if="note.edit"
-                          ng-model="note.name"></textarea>
+        <div class="row hidden-md hidden-lg">
+            <div class="bs-info padding-left-10px margin-top-10px">
+                <h4>
+                    <b>
+                        <a class="paddingRight10 noDecoration"
+                           ng-click="addNote()">
+                            <span class="glyphicon glyphicon-plus"></span>
+                            <span> Note</span>
+                        </a>
+                    </b>
+                </h4>
+            </div>
 
+        </div>
+        <div class="row" style="background-color: #e3e3e3 ">
+            <div class="col-md-4 col-sm-12 col-xs-12 bs-info padding-10px  margin-top-10px"
+                 ng-dblclick="editNote(note)" ng-repeat="note in notes">
+                <div class="row">
+                    <div class="col-md-12 col-xs-10 col-sm-10">
+                        <span ng-if="!note.edit">{{ note.name }}</span>
+                        <textarea cols="30" rows="5" type="text" maxlength="255" class="form-control"
+                                  ng-show="note.edit" style="width:100%;"
+                                  focus-on-visibility ng-model="note.name"></textarea>
+                    </div>
+                    <div class="hidden-sm hidden-lg col-xs-2 col-sm-2">
+
+                        <a class=""><strong>
+                                <span class="glyphicon glyphicon-pencil "
+                                      ng-click="editNote(note)">
+                                      </span></strong>
+                        </a>
+                        <a class="">
+                            <strong>
+                                <span class="glyphicon glyphicon-trash " ng-click="deleteNote(note)">
+                                      </span>
+                            </strong>
+                        </a>
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>

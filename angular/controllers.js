@@ -405,4 +405,7 @@ ausgabenmanagerControllers.controller('notesCtrl', function ($scope, $http, $roo
 			alert('save now');
 		}
 	}
+	$scope.deleteNote = function (note) {
+		alert("DELETE NOTE-Name: " + note.name);
+	}
 });

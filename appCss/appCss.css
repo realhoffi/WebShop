@@ -46,9 +46,9 @@
 }
 
 .bs-note-box {
-    border: 1px #601187 solid;
     padding: 10px;
     border-radius: 5px;
+    border: 4px solid rgba(0, 0, 0, 0.3);
 }
 
 /*#601187*/
@@ -63,7 +63,7 @@
 }
 
 .bs-note {
-    border-color: #601187;
+    border-color: #428BCA;
     border-style: solid;
     border-left-width: 15px;
     border-right-width: 1px;

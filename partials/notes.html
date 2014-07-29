@@ -1,20 +1,25 @@
-<div class="row" id="mynotes">
-    <div class="col-md-12 col-sm-12 col-xs-12" ng-right-click="addNote()">
-        <div class="row ">
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="row padding-10px">
             <div class="bs-info padding-left-10px hidden-xs hidden-sm">
                 <h4>
                     <ul class="list-unstyled">
                         <li>
-                            <span>To add a new Note, simply right click anywhere</span>
+                            <span>To add a new Note, simply right click anywhere in the <span
+                                    style="color:#601187"><strong> bordered box </strong></span></span>
                         </li>
-                        <li><span>To edit a note, double click a note</span></li>
-                        <li><span>To save a note, double click the selected note again</span></li>
+                        <li><span>To edit a note, double click one</span></li>
+                        <li><span>To save a note, double click the selected one again</span></li>
                     </ul>
 
                 </h4>
             </div>
         </div>
-        <div class="row hidden-md hidden-lg">
+    </div>
+</div>
+<div class="row" id="mynotes">
+    <div class="col-md-12 col-sm-12 col-xs-12 bs-note-box" ng-right-click="addNote()">
+        <div class="row hidden-md hidden-lg padding-10px">
             <div class="bs-info padding-left-10px margin-top-10px">
                 <h4>
                     <b>
@@ -27,8 +32,8 @@
                 </h4>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-4 col-sm-12 col-xs-12 bs-info padding-10px  margin-top-10px"
+        <div class="row padding-10px">
+            <div class="col-md-4 col-sm-12 col-xs-12 bs-note padding-10px"
                  ng-dblclick="editNote(note)" ng-repeat="note in notes">
                 <div class="row">
                     <div class="col-md-12 col-xs-9 col-sm-10">
@@ -38,7 +43,6 @@
                                   focus-on-visibility ng-model="note.name"></textarea>
                     </div>
                     <div class="hidden-md hidden-lg col-xs-3 col-sm-2">
-
                         <a class="padding-10px"><strong>
                                 <span class="glyphicon glyphicon-pencil "
                                       ng-click="editNote(note)">

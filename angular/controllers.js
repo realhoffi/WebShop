@@ -126,7 +126,9 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 	}
 	$scope.toDate = function (wcfDate) {
 		try {
-			return new Date(parseInt(wcfDate.substr(6))).toLocaleString();
+			//alert(moment(parseInt(wcfDate.substr(6))).format('DD.MM.YYYY HH:mm:ss'));
+			//	return new Date(parseInt(wcfDate.substr(6))).toLocaleString();
+			return moment(parseInt(wcfDate.substr(6))).format('DD.MM.YYYY HH:mm:ss');
 		} catch (ex) {
 			alert(ex);
 		}

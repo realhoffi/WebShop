@@ -45,9 +45,25 @@
     text-align: right !important;
 }
 
+.bs-note-box {
+    border: 1px #601187 solid;
+    padding: 10px;
+    border-radius: 5px;
+}
+
 /*#601187*/
 .bs-info {
     border-color: #F0AD4E;
+    border-style: solid;
+    border-left-width: 15px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-radius: 3px;
+}
+
+.bs-note {
+    border-color: #601187;
     border-style: solid;
     border-left-width: 15px;
     border-right-width: 1px;
@@ -233,7 +249,7 @@ form input.ng-invalid.ng-dirty, form textarea.ng-invalid.ng-dirty, form select.n
 .fullcalendar {
     max-width: 100%;
     margin: 0 auto;
-    border: 2px cadetblue solid;
+    border: 2px #428bca solid;
     border-radius: 10px;
     padding: 5px;
 }

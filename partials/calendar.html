@@ -6,14 +6,13 @@
 <script>
 
     $(document).ready(function () {
-
         $('#calendar').fullCalendar({
             header: {
-                left: 'prev,next today',
+                left: 'prev next today',
                 center: 'title',
                 right: 'month,agendaWeek,agendaDay'
             },
-            defaultDate: '2014-06-12',
+            defaultDate: moment().format("YYYY-MM-DD"),
             selectable: true,
             selectHelper: true,
             select: function (start, end) {
@@ -25,7 +24,7 @@
                         start: start,
                         end: end
                     };
-                    $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+                    $('#calendar').fullCalendar('renderEvent', eventData, true);
                 }
                 $('#calendar').fullCalendar('unselect');
             },
@@ -72,15 +71,10 @@
         });
 
     });
-
 </script>
-<div class="row">
-    <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12 ">
-        <h1 class="bg-info bg-nice">Soon :)</h1>
-    </div>
-</div>
+
 <div class="row">
     <div class="col-md-12">
-        <div id="calendar"></div>
+        <div class="fullcalendar" id="calendar"></div>
     </div>
 </div>

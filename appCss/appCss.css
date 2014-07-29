@@ -229,3 +229,12 @@ form input.ng-invalid.ng-dirty, form textarea.ng-invalid.ng-dirty, form select.n
     border-radius: 10%;
     min-height: 1px;
 }
+
+.fullcalendar {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+
+
+

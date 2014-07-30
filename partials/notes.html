@@ -36,14 +36,14 @@
             <div class="col-md-4 col-sm-12 col-xs-12 bs-note padding-10px"
                  ng-dblclick="editNote(note)" ng-repeat="note in notes">
                 <div class="row">
-                    <div class="col-md-12 col-xs-9 col-sm-10">
-                        <span ng-if="!note.edit">{{ note.name }}</span>
+                    <div class="col-md-10 col-xs-9 col-sm-10">
+                        <span ng-if="!note.edit">{{ note.Beschreibung }} {{ note.ID }}</span>
                         <textarea cols="30" rows="5" type="text" maxlength="255" class="form-control"
                                   ng-show="note.edit" style="width:100%;"
-                                  focus-on-visibility ng-model="note.name"></textarea>
+                                  focus-on-visibility ng-model="note.Beschreibung"></textarea>
                     </div>
-                    <div class="hidden-md hidden-lg col-xs-3 col-sm-2">
-                        <a class="padding-10px"><strong>
+                    <div class="col-md-2 col-xs-3 col-sm-2">
+                        <a class=""><strong>
                                 <span class="glyphicon glyphicon-pencil "
                                       ng-click="editNote(note)">
                                       </span></strong>

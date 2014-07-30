@@ -861,7 +861,8 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 				})
 				.success(function (data) {
 					if (data) {
-						var indx = indexGetById(notes.ID)
+						var indx = indexGetById(note.ID)
+						$log.info("deleteNote ID: " + data.ID + " Index:" + indx);
 						notes.splice(indx, 1);
 						deferred.resolve(data);
 					} else {

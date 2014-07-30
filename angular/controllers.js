@@ -385,12 +385,12 @@ ausgabenmanagerControllers.controller('notesCtrl', function ($scope, $http, $roo
 	$scope.notes = [];
 	$scope.addNote = function () {
 		var newNode = noteService.getEmptyNote();
-		noteService.addNote(newNode).then(function (data) {
+		newNode.UserId = userService.getCurrentUser().UserId;
+		noteService.addNewNote(newNode).then(function (data) {
 			$scope.notes = noteService.getNotesCached();
 		}, function (a, b, c) {
 			alert("Error!");
 		});
-		//$scope.notes.push({name: "test" + ($scope.notes.length + 1)});
 	}
 	$scope.editNote = function (note) {
 		note.edit = !note.edit;
@@ -403,8 +403,10 @@ ausgabenmanagerControllers.controller('notesCtrl', function ($scope, $http, $roo
 		}
 	}
 	$scope.deleteNote = function (note) {
+		$log.info("DELETE ID: " + note.ID);
 		noteService.deleteNote(note).then(function (data) {
 			$scope.notes = noteService.getNotesCached();
+			$log.info("DELETED ID: " + note.ID);
 		}, function (a, b, c) {
 			alert("Error!");
 		});

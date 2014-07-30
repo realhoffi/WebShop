@@ -450,7 +450,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 		var getFavoriteById = function (id) {
 			var deferred = $q.defer();
 
-			if (prioritaeten) {
+			if (favoriten) {
 				$log.info("favoriteService are cached");
 				var p = iGetById(id);
 				deferred.resolve(p);
@@ -732,4 +732,169 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 				return logout();
 			}
 		};
+	}])
+	.factory('noteService', ['$http', '$q', '$rootScope', '$log', 'userService', function ($http, $q, $rootScope, $log, userService) {
+		var notes;
+		$rootScope.$on("logout", function () {
+			notes = null;
+		});
+		var indexGetById = function (id) {
+			for (var i = 0; i < notes.length; i++) {
+				if (notes[i].ID == id) {
+					return i;
+				}
+			}
+			return null;
+		};
+		var iGetById = function (id) {
+			for (var i = 0; i < notes.length; i++) {
+				if (notes[i].ID == id) {
+					return notes[i];
+				}
+			}
+			return null;
+		};
+		var getNotes = function () {
+			var deferred = $q.defer();
+			if (notes) {
+				$log.info("noteService are cached");
+				deferred.resolve(notes);
+			} else {
+				$log.info("noteService HTTP Call!");
+				$http.get($rootScope.rootDomain + '/Notes/GetNotes?uid=' + userService.getCurrentUser().UserId,
+					{cache: false})
+					.success(function (data) {
+						$log.info("noteService HTTP success!");
+						notes = data;
+						deferred.resolve(notes);
+					})
+					.error(function (data, status, headers) {
+						$log.error("noteService fail! Error: " + JSON.stringify(data) + " --> " + JSON.stringify(status));
+						deferred.reject('Error: ' + JSON.stringify(data));
+						alert('noteService: Fehler beim Datenabruf der getNotes... :(');
+					});
+			}
+			return deferred.promise;
+		}
+		var getNoteById = function (id) {
+			var deferred = $q.defer();
+
+			if (notes) {
+				$log.info("noteService are cached");
+				var p = iGetById(id);
+				deferred.resolve(p);
+			} else {
+				$http.get($rootScope.rootDomain + '/Notes/GetNoteById?nid=' + id,
+					{cache: false})
+					.success(function (data) {
+						deferred.resolve(data);
+					})
+					.error(function (data, status, headers) {
+						deferred.reject('Error: ' + JSON.stringify(data));
+						alert('noteService: Fehler beim Datenabruf der getNoteById... :(');
+					});
+			}
+
+
+			return deferred.promise;
+		}
+		var addNewNote = function (note) {
+			var deferred = $q.defer();
+			$http.post($rootScope.rootDomain + "/Notes/CreateNote?uid=" + userService.getCurrentUser().UserId,
+				note,
+				{
+					dataType: 'json',
+					contentType: "application/json; charset=utf-8"
+				})
+				.success(function (data) {
+					if (notes.length == 0) {
+						notes = [];
+					}
+					notes.push(data);
+					deferred.resolve(data);
+				})
+				.error(function (data, status, headers) {
+					deferred.reject('Error: ' + JSON.stringify(status));
+				});
+			return  deferred.promise;
+		}
+		var getEmptyNote = function () {
+			return {
+				"ID": 0,
+				"Beschreibung": "",
+				"UserId": app.common.utils.guid.getEmptyGuid()
+			};
+		}
+		var updateNote = function (note) {
+			var deferred = $q.defer();
+			$http.put($rootScope.rootDomain + "/Notes/UpdateNoteDetails?uid=" + userService.getCurrentUser().UserId,
+				note,
+				{
+					dataType: 'json',
+					contentType: "application/json; charset=utf-8"
+				})
+				.success(function (data) {
+					if (data) {
+						var indx = indexGetById(data.ID);
+						notes[indx] = data;
+						deferred.resolve(notes[indx]);
+					} else {
+						deferred.reject('Error: noteService intern nicht gefunden!');
+					}
+				})
+				.error(function (data, status, headers) {
+					deferred.reject('Error: ' + JSON.stringify(status));
+				});
+			return  deferred.promise;
+		}
+		var deleteNote = function (note) {
+			var deferred = $q.defer();
+			$http.delete($rootScope.rootDomain + "/Notes/DeleteNote?uid=" + userService.getCurrentUser().UserId,
+				{
+					data: note,
+					headers: {
+						"Content-Type": "application/json"
+					},
+					method: 'DELETE',
+					dataType: 'json'
+
+				})
+				.success(function (data) {
+					if (data) {
+						var indx = indexGetById(notes.ID)
+						notes.splice(indx, 1);
+						deferred.resolve(data);
+					} else {
+						deferred.reject('Error: note nicht gelöscht!');
+					}
+				})
+				.error(function (data, status, headers) {
+					deferred.reject('Error: ' + JSON.stringify(status));
+				});
+			return  deferred.promise;
+		}
+
+		return{
+			getNotes: function () {
+				return getNotes();
+			},
+			getEmptyNote: function () {
+				return getEmptyNote();
+			},
+			addNewNote: function (note) {
+				return addNewNote(note);
+			},
+			updateNote: function (note) {
+				return updateNote(note);
+			},
+			getNoteById: function (id) {
+				return getNoteById(id);
+			},
+			deleteNote: function (note) {
+				return deleteNote(note)
+			},
+			getNotesCached: function () {
+				return notes;
+			}
+		}
 	}]);

@@ -381,33 +381,52 @@ ausgabenmanagerControllers.controller('fileCtrl', function ($scope, $modal, $htt
 	}, true);
 
 });
-ausgabenmanagerControllers.controller('notesCtrl', function ($scope, $http, $rootScope, $log, $timeout, userService) {
-	$scope.notes = [
-		{
-			name: "test1 test1test1test1 test1test1 test1test1test1test1test1test1 test1test1test1test1test1test1test1 test1test1test1test1test1 test1 test1test1test1 test1test1 test1test1test1test1test1test1 test1test1test1test1test1test1test1 test1test1test1test1test1test1 test1test1test1 test1test1 test1test1test1test1test1test1 test1test1test1test1test1test1test1 test1test1test1test1test1test1 test1test1test1",
-			edit: false
-		},
-		{
-			name: "test2",
-			edit: false
-		},
-		{
-			name: "test3", edit: false
-		},
-		{
-			name: "test4", edit: false
-		}
-	];
+ausgabenmanagerControllers.controller('notesCtrl', function ($scope, $http, $rootScope, $log, $timeout, userService, noteService) {
+	$scope.notes = [];
 	$scope.addNote = function () {
-		$scope.notes.push({name: "test" + ($scope.notes.length + 1)});
+		var newNode = noteService.getEmptyNote();
+		noteService.addNote(newNode).then(function (data) {
+			$scope.notes = noteService.getNotesCached();
+		}, function (a, b, c) {
+			alert("Error!");
+		});
+		//$scope.notes.push({name: "test" + ($scope.notes.length + 1)});
 	}
 	$scope.editNote = function (note) {
 		note.edit = !note.edit;
 		if (!note.edit) {
-			alert('save now');
+			noteService.updateNote(note).then(function (data) {
+				$scope.notes = noteService.getNotesCached();
+			}, function (a, b, c) {
+				alert("Error!");
+			});
 		}
 	}
 	$scope.deleteNote = function (note) {
-		alert("DELETE NOTE-Name: " + note.name);
+		noteService.deleteNote(note).then(function (data) {
+			$scope.notes = noteService.getNotesCached();
+		}, function (a, b, c) {
+			alert("Error!");
+		});
 	}
+
+	$scope.$watch(function () {
+		return userService.getCurrentUser();
+	}, function (data, b, c) {
+		if (!data) {
+			$scope.notes = null;
+			return;
+		}
+		$timeout(function () {
+			noteService.getNotes()
+				.then(function (data) {
+					if (data != null) {
+						$scope.notes = data;
+						$log.info('Received Data fileService: ' + JSON.stringify(data));
+					}
+				}, function (error) {
+					$log.info("Error at fileService() (" + new Date() + "): --> " + error);
+				});
+		}, 200);
+	}, true);
 });

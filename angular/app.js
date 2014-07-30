@@ -30,7 +30,7 @@ ausgabenmanager.run(function ($rootScope, $log, userService) {
 	$rootScope.isUserLoggedIn = false;
 	$rootScope.userData = userService.getCurrentUser();
 	$rootScope.maxFailCounter = 3;
-	$rootScope.rootDomain = "http://services.fhoffma.net/services";
+	$rootScope.rootDomain = "http://mydesk.fhoffma.net/services";//"http://services.fhoffma.net/services";
 	$rootScope.spinner = null;
 	$rootScope.currency = " €";
 

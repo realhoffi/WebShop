@@ -51,6 +51,11 @@
     border: 4px solid rgba(0, 0, 0, 0.3);
 }
 
+.font-icon-bold {
+    font-size: large;
+    font-weight: bolder;
+}
+
 /*#601187*/
 .bs-info {
     border-color: #F0AD4E;

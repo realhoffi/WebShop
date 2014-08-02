@@ -2,8 +2,8 @@
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-12">
-                <div class="row" ng-show="Ausgaben.length < 1">
-                    <div class="col-md-12">
+                <div class="row" ng-show="Ausgaben.length == 0">
+                <div class="col-md-12">
                         <div class="col-md-offset-1 bs-info list-group-item">
                             <p>
 
@@ -32,8 +32,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="row" ng-if="Ausgaben.length > 0">
-                    <div class="col-md-12">
+                <div class="row" ng-show="Ausgaben.length > 0">
+                <div class="col-md-12">
                         <div class="">
                             <div class="form-horizontal bs-callout bs-info" role="form">
                                 <div class="form-group">
@@ -62,8 +62,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12" id="main">
+                <div class="row" ng-show="Ausgaben.length > 0">
+                <div class="col-md-12" id="main">
                         <div class="panel-group " id="ausgabenAccordion"
                              ng-repeat="ausgabe in Ausgaben | filter:query | orderBy: orderProp">
                             <div class="panel panel-primary">

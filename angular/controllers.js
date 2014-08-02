@@ -20,7 +20,7 @@ ausgabenmanagerControllers.controller('menueController', function ($scope, $moda
 	});
 });
 ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, $http, $rootScope, $log, $timeout, userService, AusgabenService, AusgabenzeitraumService, PrioritaetService) {
-	$scope.Ausgaben = AusgabenService.getAusgabenCached();
+	$scope.Ausgaben = AusgabenService.getAusgabenCached() || [];
 	$scope.Ausgabenzeitraeume = AusgabenzeitraumService.getAusgabenzeitraeumeCached();
 	$scope.Prioritaeten = PrioritaetService.getPrioritaetenCached();
 	$scope.orderProp = "Name";

@@ -99,6 +99,7 @@ ausgabenmanagerControllers.controller('ausgabenCtrl', function ($scope, $modal, 
 //MUST CALL THIS BECAUSE IF ARRAY IS NULL, IT DOES NOT GET UPDATED -.-
 			//	if ($scope.Ausgaben.length == 0) {
 			$scope.Ausgaben = AusgabenService.getAusgabenCached();
+			$log.info("OK CLOSED");
 			//}
 
 		}, function () {

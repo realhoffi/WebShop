@@ -31,7 +31,7 @@ ausgabenmanagerControllers.controller('ModalNeueAusgabeController', function ($s
 					$modalInstance.close(data);
 				}, function (error) {
 					app.common.utils.setButtonLoadingStateReset($event.currentTarget);
-					alert('Error: ' + JSON.stringify(error));
+					alert('ModalNeueAusgabeController Error: ' + JSON.stringify(error));
 				}
 			);
 		} else if (type == 'edit') {
@@ -41,7 +41,7 @@ ausgabenmanagerControllers.controller('ModalNeueAusgabeController', function ($s
 					$modalInstance.close(data);
 				}, function (error) {
 					app.common.utils.setButtonLoadingStateReset($event.currentTarget);
-					alert('Error: ' + JSON.stringify(error));
+					alert('ModalNeueAusgabeController Error: ' + JSON.stringify(error));
 				}
 			);
 		}
@@ -51,7 +51,7 @@ ausgabenmanagerControllers.controller('ModalNeueAusgabeController', function ($s
 		$modalInstance.dismiss('cancel');
 	};
 });
-ausgabenmanagerControllers.controller('ModalLogInController', function ($scope, $modalInstance, userService) {
+ausgabenmanagerControllers.controller('ModalLogInController', function ($scope, $modalInstance, $timeout, userService) {
 	$scope.errorHappend = false;
 	$scope.errorMessasge = "";
 	$scope.newUser = userService.getEmptyUser();
@@ -104,6 +104,12 @@ ausgabenmanagerControllers.controller('ModalLogInController', function ($scope, 
 	}
 	$scope.register = function () {
 		$scope.userClickedRegistered = !$scope.userClickedRegistered;
+		$scope.userClickedRegistered ? $timeout(function () {
+			$("#newMail").focus();
+		}, 500) : $timeout(function () {
+			$("#oldMail").focus();
+		}, 500);
+
 		$scope.selectedHeading();
 	}
 });

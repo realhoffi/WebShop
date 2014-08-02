@@ -1,4 +1,4 @@
-<div>
+<div focus-on-enter=".btn-save">
     <form class="form-horizontal" role="form" name="form">
         <div class="modal-header">
             <h2 class="modal-title text-center"><span> Change your User-Details</span></h2>
@@ -18,7 +18,7 @@
                 </h4>
 
                 <div class="col-md-9">
-                    <input class="form-control" myfocus required ng-model="currentUser.Email">
+                    <input class="form-control" focus-on-load required ng-model="currentUser.Email">
                 </div>
             </div>
             <div class="form-group required">
@@ -44,7 +44,8 @@
                 <div class="pull-left">
                 </div>
                 <div class="pull-right">
-                    <button class="btn btn-primary" ng-disabled="form.$invalid" ng-click="ok($event)">Save</button>
+                    <button class="btn btn-primary btn-save" ng-disabled="form.$invalid" ng-click="ok($event)">Save
+                    </button>
                     <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
                 </div>
             </div>

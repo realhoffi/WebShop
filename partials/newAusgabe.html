@@ -1,4 +1,4 @@
-<div>
+<div focus-on-enter=".btn-save">
     <form class="form-horizontal css-form" novalidate role="form" name="form">
         <div class="modal-header">
             <h2 class="modal-title text-center"><span>{{ Heading() }}</span></h2>
@@ -10,7 +10,7 @@
                 </h4>
 
                 <div class="col-sm-9 required">
-                    <input type="text" ng-model="ausgabe.Name" required class="form-control">
+                    <input type="text" ng-model="ausgabe.Name" focus-on-load required class="form-control">
                 </div>
             </div>
             <div class="form-group required">
@@ -63,7 +63,8 @@
                 <div class="pull-left">
                 </div>
                 <div class="pull-right">
-                    <button class="btn btn-primary" ng-disabled="form.$invalid" ng-click="ok($event)">OK</button>
+                    <button class="btn btn-primary btn-save" ng-disabled="form.$invalid" ng-click="ok($event)">OK
+                    </button>
                     <button class="btn btn-warning" type="reset" ng-click="cancel()">Close</button>
                 </div>
             </div>

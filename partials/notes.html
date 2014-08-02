@@ -36,21 +36,21 @@
             <div class="col-md-4 col-sm-12 col-xs-12 bs-note padding-10px"
                  ng-dblclick="editNote(note)" ng-repeat="note in notes">
                 <div class="row">
-                    <div class="col-md-10 col-xs-9 col-sm-10">
+                    <div class="col-md-10 col-xs-10 col-sm-10">
                         <span ng-if="!note.edit">{{ note.Beschreibung }}</span>
                         <textarea cols="30" rows="5" type="text" maxlength="255" class="form-control"
                                   ng-show="note.edit" style="width:100%;"
-                                  focus-on-visibility ng-model="note.Beschreibung"></textarea>
+                                  ng-model="note.Beschreibung"></textarea>
                     </div>
-                    <div class="col-md-2 col-xs-3 col-sm-2">
+                    <div class="col-md-2 col-xs-2 col-sm-2">
                         <a class="font-icon-bold">
                                 <span class="glyphicon glyphicon-pencil "
                                       ng-click="editNote(note)">
                                       </span>
                         </a>
                         <a class="font-icon-bold">
-                        <strong>
-                                <span class="glyphicon glyphicon-trash " ng-click="deleteNote(note)">
+                            <strong>
+                                <span class="glyphicon glyphicon-trash" ng-click="deleteNote(note)">
                                       </span>
                             </strong>
                         </a>

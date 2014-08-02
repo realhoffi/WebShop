@@ -898,4 +898,174 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 				return notes;
 			}
 		}
+	}])
+	.factory('userEventService', ['$http', '$q', '$rootScope', '$log', 'userService', function ($http, $q, $rootScope, $log, userService) {
+		var userEvents;
+		$rootScope.$on("logout", function () {
+			userEvents = null;
+		});
+		var indexGetById = function (id) {
+			for (var i = 0; i < userEvents.length; i++) {
+				if (userEvents[i].ID == id) {
+					return i;
+				}
+			}
+			return null;
+		};
+		var iGetById = function (id) {
+			for (var i = 0; i < userEvents.length; i++) {
+				if (userEvents[i].ID == id) {
+					return userEvents[i];
+				}
+			}
+			return null;
+		};
+
+		var getUserEvents = function () {
+			var deferred = $q.defer();
+			if (userEvents) {
+				$log.info("userEventService are cached");
+				deferred.resolve(userEvents);
+			} else {
+				$log.info("userEventService HTTP Call!");
+				$http.get($rootScope.rootDomain + '/Userevents/GetUserevents?uid=' + userService.getCurrentUser().UserId,
+					{cache: false})
+					.success(function (data) {
+						$log.info("userEventService HTTP success!");
+						userEvents = data;
+						deferred.resolve(userEvents);
+					})
+					.error(function (data, status, headers) {
+						$log.error("userEventService fail! Error: " + JSON.stringify(data) + " --> " + JSON.stringify(status));
+						deferred.reject('Error: ' + JSON.stringify(data));
+						alert('userEventService: Fehler beim Datenabruf der getUserEvents... :(');
+					});
+			}
+			return deferred.promise;
+		}
+		var getUserEventById = function (id) {
+			var deferred = $q.defer();
+
+			if (userEvents) {
+				$log.info("userEventService are cached");
+				var p = iGetById(id);
+				deferred.resolve(p);
+			} else {
+				$http.get($rootScope.rootDomain + '/Userevents/GetUsereventById?ueid=' + id,
+					{cache: false})
+					.success(function (data) {
+						deferred.resolve(data);
+					})
+					.error(function (data, status, headers) {
+						deferred.reject('Error: ' + JSON.stringify(data));
+						alert('userEventService: Fehler beim Datenabruf der getUserEventById... :(');
+					});
+			}
+
+
+			return deferred.promise;
+		}
+		var addNewUserEvent = function (userEvent) {
+			var deferred = $q.defer();
+			$http.post($rootScope.rootDomain + "/Userevents/CreateUserevent?uid=" + userService.getCurrentUser().UserId,
+				userEvent,
+				{
+					dataType: 'json',
+					contentType: "application/json; charset=utf-8"
+				})
+				.success(function (data) {
+					if (userEvents.length == 0) {
+						userEvents = [];
+					}
+					userEvents.push(data);
+					deferred.resolve(data);
+				})
+				.error(function (data, status, headers) {
+					deferred.reject('Error: ' + JSON.stringify(status));
+				});
+			return  deferred.promise;
+		}
+		var getEmptyUserEvent = function () {
+			return {
+				"ID": 0,
+				"Beschreibung": "Bitte angeben...",
+				"Titel": "Bitte angeben...",
+				"Start": moment(),
+				"Ende": moment(),
+				"UserId": app.common.utils.guid.getEmptyGuid()
+			};
+		}
+		var updateUserEvent = function (userEvent) {
+			var deferred = $q.defer();
+			$http.put($rootScope.rootDomain + "/Userevents/UpdateUsereventDetails?uid=" + userService.getCurrentUser().UserId,
+				userEvent,
+				{
+					dataType: 'json',
+					contentType: "application/json; charset=utf-8"
+				})
+				.success(function (data) {
+					if (data) {
+						var indx = indexGetById(data.ID);
+						userEvents[indx] = data;
+						deferred.resolve(userEvents[indx]);
+					} else {
+						deferred.reject('Error: userEventService intern nicht gefunden!');
+					}
+				})
+				.error(function (data, status, headers) {
+					deferred.reject('Error: ' + JSON.stringify(status));
+				});
+			return  deferred.promise;
+		}
+		var deleteUserEvent = function (userEvent) {
+			var deferred = $q.defer();
+			$http.delete($rootScope.rootDomain + "/Userevents/DeleteUserevent?uid=" + userService.getCurrentUser().UserId,
+				{
+					data: userEvent,
+					headers: {
+						"Content-Type": "application/json"
+					},
+					method: 'DELETE',
+					dataType: 'json'
+
+				})
+				.success(function (data) {
+					if (data) {
+						var indx = indexGetById(userEvent.ID)
+						$log.info("deleteNote ID: " + data.ID + " Index:" + indx);
+						userEvents.splice(indx, 1);
+						deferred.resolve(data);
+					} else {
+						deferred.reject('Error: note nicht gelöscht!');
+					}
+				})
+				.error(function (data, status, headers) {
+					deferred.reject('Error: ' + JSON.stringify(status));
+				});
+			return  deferred.promise;
+		}
+
+		return{
+			getUserEvents: function () {
+				return getUserEvents();
+			},
+			getEmptyUserEvent: function () {
+				return getEmptyUserEvent();
+			},
+			addNewUserEvent: function (userEvent) {
+				return addNewUserEvent(userEvent);
+			},
+			updateUserEvent: function (userEvent) {
+				return updateUserEvent(userEvent);
+			},
+			getUserEventById: function (id) {
+				return getUserEventById(id);
+			},
+			deleteUserEvent: function (userEvent) {
+				return deleteUserEvent(userEvent)
+			},
+			getUserEventsCached: function () {
+				return userEvents;
+			}
+		}
 	}]);

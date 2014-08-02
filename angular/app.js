@@ -112,16 +112,15 @@ ausgabenmanager.config(['$routeProvider',
 
 			}).
 			when('/calendar', {
-				templateUrl: '../partials/calendar.html'
-
+				templateUrl: '../partials/calendar.html',
+				controller: 'userEventCtrl'
 			}).
 			when('/notes', {
 				templateUrl: '../partials/notes.html',
 				controller: 'notesCtrl'
 			}).
 			when('/searchGoogle', {
-				templateUrl: '../partials/searchOnGoogle.html',
-
+				templateUrl: '../partials/searchOnGoogle.html'
 			}).
 			when('/mapGoogle', {
 				templateUrl: '../partials/googlemaps.html'

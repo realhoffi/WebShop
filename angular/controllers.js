@@ -433,3 +433,54 @@ ausgabenmanagerControllers.controller('notesCtrl', function ($scope, $http, $roo
 		}, 200);
 	}, true);
 });
+ausgabenmanagerControllers.controller('userEventCtrl', function ($scope, $http, $rootScope, $log, $timeout, userService, userEventService) {
+	$scope.userEvents = [];
+	$scope.addNote = function () {
+		var newNode = userEventService.getEmptyNote();
+		newNode.UserId = userService.getCurrentUser().UserId;
+		userEventService.addNewUserEvent(newNode).then(function (data) {
+			$scope.userEvents = noteService.getNotesCached();
+		}, function (a, b, c) {
+			alert("Error!");
+		});
+	}
+//	$scope.editNote = function (note) {
+//		note.edit = !note.edit;
+//		if (!note.edit) {
+//			noteService.updateNote(note).then(function (data) {
+//				$scope.userEvents = noteService.getNotesCached();
+//			}, function (a, b, c) {
+//				alert("Error!");
+//			});
+//		}
+//	}
+//	$scope.deleteNote = function (note) {
+//		$log.info("DELETE ID: " + note.ID);
+//		noteService.deleteNote(note).then(function (data) {
+//			$scope.userEvents = noteService.getNotesCached();
+//			$log.info("DELETED ID: " + note.ID);
+//		}, function (a, b, c) {
+//			alert("Error!");
+//		});
+//	}
+
+	$scope.$watch(function () {
+		return userService.getCurrentUser();
+	}, function (data, b, c) {
+		if (!data) {
+			$scope.userEvents = null;
+			return;
+		}
+		$timeout(function () {
+			userEventService.getUserEvents()
+				.then(function (data) {
+					if (data != null) {
+						$scope.userEvents = data;
+						$log.info('Received Data userEventService: ' + JSON.stringify(data));
+					}
+				}, function (error) {
+					$log.info("Error at userEventService (" + new Date() + "): --> " + error);
+				});
+		}, 200);
+	}, true);
+});

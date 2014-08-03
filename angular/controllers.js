@@ -438,7 +438,9 @@ ausgabenmanagerControllers.controller('userEventCtrl', function ($scope, $http, 
 	var calendarEvents = [];
 	$scope.manageEvent = function (size, eventStatus, event) {
 		if (eventStatus == "delete") {
-			userEventService.deleteUserEvent(event)
+			if (confirm("Delete?")) {
+				userEventService.deleteUserEvent(event);
+			}
 		} else if (eventStatus == "new") {
 			var newEvent = userEventService.getEmptyUserEvent();
 			newEvent.Start = app.common.utils.toJsonDate(newEvent.Start);
@@ -448,6 +450,7 @@ ausgabenmanagerControllers.controller('userEventCtrl', function ($scope, $http, 
 				$log.info("UserEvent angelegt: " + JSON.stringify(data));
 				$scope.userEvents = userEventService.getUserEventsCached();
 				$scope.renderCalendar();
+
 			}, function (a, b, c) {
 				alert("Error!");
 			});
@@ -495,8 +498,10 @@ ausgabenmanagerControllers.controller('userEventCtrl', function ($scope, $http, 
 			var formattedEvent = $scope.reformatEventForCalendar($scope.userEvents[i]);
 			calendarEvents.push(formattedEvent);
 		}
-		$('#calendar').fullCalendar('destroy');
-		app.common.utils.calendar.renderCalender(calendarEvents, "#calendar");
+		if ($('#calendar').length > 0) {
+			$('#calendar').fullCalendar('destroy');
+			app.common.utils.calendar.renderCalender(calendarEvents, "#calendar");
+		}
 	}
 	$scope.$watch(function () {
 		return userService.getCurrentUser();

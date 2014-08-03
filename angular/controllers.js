@@ -435,14 +435,31 @@ ausgabenmanagerControllers.controller('notesCtrl', function ($scope, $http, $roo
 });
 ausgabenmanagerControllers.controller('userEventCtrl', function ($scope, $http, $rootScope, $log, $timeout, userService, userEventService) {
 	$scope.userEvents = [];
-	$scope.addNote = function () {
-		var newNode = userEventService.getEmptyNote();
-		newNode.UserId = userService.getCurrentUser().UserId;
-		userEventService.addNewUserEvent(newNode).then(function (data) {
-			$scope.userEvents = noteService.getNotesCached();
+	var calendarEvents = [];
+	$scope.addEvent = function () {
+		var newEvent = userEventService.getEmptyUserEvent();
+		newEvent.Start = app.common.utils.toJsonDate(newEvent.Start);
+		newEvent.Ende = app.common.utils.toJsonDate(newEvent.Ende);
+		newEvent.UserId = userService.getCurrentUser().UserId;
+		userEventService.addNewUserEvent(newEvent).then(function (data) {
+			$log.info("UserEvent angelegt: " + JSON.stringify(data));
+			$scope.userEvents = userEventService.getUserEventsCached();
+			$scope.renderCalendar();
+
 		}, function (a, b, c) {
 			alert("Error!");
 		});
+	}
+	$scope.manageEvent = function (size, eventStatus, event) {
+		if (eventStatus == "delete") {
+			userEventService.deleteUserEvent(event)
+		} else if (eventStatus == "new") {
+		}
+		else if (eventStatus == "edit") {
+		} else {
+			alert('Strange Status -.-');
+		}
+
 	}
 //	$scope.editNote = function (note) {
 //		note.edit = !note.edit;
@@ -454,16 +471,37 @@ ausgabenmanagerControllers.controller('userEventCtrl', function ($scope, $http, 
 //			});
 //		}
 //	}
-//	$scope.deleteNote = function (note) {
-//		$log.info("DELETE ID: " + note.ID);
-//		noteService.deleteNote(note).then(function (data) {
-//			$scope.userEvents = noteService.getNotesCached();
-//			$log.info("DELETED ID: " + note.ID);
-//		}, function (a, b, c) {
-//			alert("Error!");
-//		});
-//	}
-
+	$scope.deleteNote = function (note) {
+		$log.info("DELETE ID: " + note.ID);
+		noteService.deleteNote(note).then(function (data) {
+			$scope.userEvents = noteService.getNotesCached();
+			$log.info("DELETED ID: " + note.ID);
+		}, function (a, b, c) {
+			alert("Error!");
+		});
+	}
+	$scope.formatNormalizeDate = function (date, format) {
+		return (format) ? moment(date).format(format) : moment(date).format();
+	}
+	$scope.reformatEventForCalendar = function (event) {
+		var newEvent = {title: event.Titel,
+			start: $scope.formatNormalizeDate(event.Start),
+			end: $scope.formatNormalizeDate(event.Ende),
+			//	color: 'yellow',   // an option!
+			//	textColor: 'black',
+			editable: false
+		};
+		return newEvent
+	}
+	$scope.renderCalendar = function () {
+		calendarEvents = [];
+		for (var i = 0; i < $scope.userEvents.length; i++) {
+			var formattedEvent = $scope.reformatEventForCalendar($scope.userEvents[i]);
+			calendarEvents.push(formattedEvent);
+		}
+		$('#calendar').fullCalendar('destroy');
+		app.common.utils.calendar.renderCalender(calendarEvents, "#calendar");
+	}
 	$scope.$watch(function () {
 		return userService.getCurrentUser();
 	}, function (data, b, c) {
@@ -474,9 +512,11 @@ ausgabenmanagerControllers.controller('userEventCtrl', function ($scope, $http, 
 		$timeout(function () {
 			userEventService.getUserEvents()
 				.then(function (data) {
+					$log.info('Received Data userEventService: ' + JSON.stringify(data));
 					if (data != null) {
 						$scope.userEvents = data;
-						$log.info('Received Data userEventService: ' + JSON.stringify(data));
+						$scope.renderCalendar();
+
 					}
 				}, function (error) {
 					$log.info("Error at userEventService (" + new Date() + "): --> " + error);

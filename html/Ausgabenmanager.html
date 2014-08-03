@@ -101,7 +101,13 @@
     <div class="row" id="contentForm" ng-if="!isAppLoading && $root.isUserLoggedIn">
         <div class="col-md-3 hidden-sm hidden-xs" id="navbarContent">
             <generic-Link link="#" name="Home" iconClass="glyphicon glyphicon-home"></generic-Link>
-            <generic-Link link="#calendar" name="My Calender" iconClass="glyphicon glyphicon-calendar"></generic-Link>
+            <generic-Link link="#calendarView" name="My Calender" iconClass="glyphicon glyphicon-calendar">
+                <generic-Link-Child name="Calender View" iconClass="glyphicon glyphicon-calendar"
+                                    link="#calendarView"></generic-Link-Child>
+                <generic-Link-Child name="Event View" iconClass="glyphicon glyphicon-flag"
+                                    link="#eventView"></generic-Link-Child>
+
+            </generic-Link>
             <generic-Link link="#notes" name="My Notes" iconClass="glyphicon glyphicon-comment"></generic-Link>
             <generic-Link link="#favoritenOverview" name="My Favorites"
                           iconClass="glyphicon glyphicon-star-empty"></generic-Link>

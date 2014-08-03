@@ -112,9 +112,11 @@ ausgabenmanager.directive('focusOnEnter', function ($log, $timeout) {
 				var thisButton = $(attrs["focusOnEnter"]);
 				var isDisabled = thisButton.is(':disabled');
 				if (!isDisabled) {
+					$log.info("Click to Element timeout");
 					$timeout(function () {
 						$(".btn-save").click();
 					}, 500);
+
 
 				} else {
 					$log.info("Element is disabled!");

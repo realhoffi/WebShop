@@ -920,7 +920,6 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 			}
 			return null;
 		};
-
 		var getUserEvents = function () {
 			var deferred = $q.defer();
 			if (userEvents) {
@@ -1044,7 +1043,9 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 				});
 			return  deferred.promise;
 		}
+		var formatDateInEvent = function (date) {
 
+		}
 		return{
 			getUserEvents: function () {
 				return getUserEvents();

@@ -111,8 +111,12 @@ ausgabenmanager.config(['$routeProvider',
 				templateUrl: '../partials/impressum.html'
 
 			}).
-			when('/calendar', {
+			when('/calendarView', {
 				templateUrl: '../partials/calendar.html',
+				controller: 'userEventCtrl'
+			}).
+			when('/eventView', {
+				templateUrl: '../partials/eventOverview.html',
 				controller: 'userEventCtrl'
 			}).
 			when('/notes', {

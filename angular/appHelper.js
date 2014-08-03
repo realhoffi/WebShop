@@ -65,6 +65,33 @@ app.common.utils = {
 		};
 
 		return new Spinner(opts);
+	},
+	toJsonDate: function (datetime) {
+
+		var d = new Date(datetime);
+		if (isNaN(d)) return null;
+		return '\/Date(' + d.getTime() + '-0000)\/';
+
+	},
+	WcfDateToJavascriptDate: function (wcfDate) {
+		try {
+			//alert(moment(parseInt(wcfDate.substr(6))).format('DD.MM.YYYY HH:mm:ss'));
+			//	return new Date(parseInt(wcfDate.substr(6))).toLocaleString();
+			return moment(parseInt(wcfDate.substr(6))).format('DD.MM.YYYY HH:mm:ss');
+		} catch (ex) {
+			alert(ex);
+		}
+		return  "";
+	},
+	WcfDateToJavascriptDateEnglish: function (wcfDate) {
+		try {
+			//alert(moment(parseInt(wcfDate.substr(6))).format('DD.MM.YYYY HH:mm:ss'));
+			//	return new Date(parseInt(wcfDate.substr(6))).toLocaleString();
+			return moment(parseInt(wcfDate.substr(6))).format();
+		} catch (ex) {
+			alert(ex);
+		}
+		return  "";
 	}
 }
 
@@ -74,3 +101,38 @@ app.common.utils.guid = {
 	}
 
 };
+
+app.common.utils.calendar = {
+	renderCalender: function (newEvents, elementId) {
+		$(elementId).fullCalendar({
+				header: {
+					left: 'prev next today',
+					center: 'title',
+					right: 'month,agendaWeek,agendaDay'
+				},
+				lang: 'de',
+				defaultDate: moment().format("YYYY-MM-DD"),
+				selectable: true,
+				selectHelper: true,
+				select: function (start, end) {
+					var title = prompt('Event Title:');
+					var eventData;
+					if (title) {
+						eventData = {
+							title: title,
+							start: start,
+							end: end
+						};
+						$(elementId).fullCalendar('renderEvent', eventData, true);
+					}
+					$(elementId).fullCalendar('unselect')
+				},
+				editable: true,
+				events: newEvents,
+				eventColor: '#378006'
+			}
+		)
+		;
+	}
+
+}

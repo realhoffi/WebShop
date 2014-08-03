@@ -133,6 +133,10 @@ ausgabenmanager.directive('focusOnVisibility', function () {
 			if (scope.note.edit) {
 				//Assumes that the element has the focus method
 				//If not, then you can have your own logic to focus here
+
+				if (element.val() == "Please enter your note text :)") {
+					element.val("");
+				}
 				element.focus();
 			}
 		});

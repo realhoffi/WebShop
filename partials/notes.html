@@ -39,6 +39,7 @@
                     <div class="col-md-10 col-xs-10 col-sm-10">
                         <span ng-if="!note.edit">{{ note.Beschreibung }}</span>
                         <textarea cols="30" rows="5" type="text" maxlength="255" class="form-control"
+                                  focus-on-visibility
                                   ng-show="note.edit" style="width:100%;"
                                   ng-model="note.Beschreibung"></textarea>
                     </div>

@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="33469c24-7a96-412e-9d56-a358b96f40de" name="Default" comment="initialize">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/appCss/appCss.css" afterPath="$PROJECT_DIR$/appCss/appCss.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/partials/calendar.html" afterPath="$PROJECT_DIR$/partials/calendar.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/angular/controllers.js" afterPath="$PROJECT_DIR$/angular/controllers.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/angular/directives.js" afterPath="$PROJECT_DIR$/angular/directives.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/partials/notes.html" afterPath="$PROJECT_DIR$/partials/notes.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/angular/services.js" afterPath="$PROJECT_DIR$/angular/services.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="WebShop.iws" />
@@ -33,8 +36,8 @@
       <file leaf-file-name="Ausgabenmanager.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/html/Ausgabenmanager.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-58.96154" vertical-offset="218" max-vertical-offset="2380">
-              <caret line="103" column="45" selection-start-line="103" selection-start-column="45" selection-end-line="103" selection-end-column="45" />
+            <state vertical-scroll-proportion="-15.807693" vertical-offset="218" max-vertical-offset="2380">
+              <caret line="37" column="39" selection-start-line="37" selection-start-column="39" selection-end-line="37" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -43,8 +46,8 @@
       <file leaf-file-name="services.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/angular/services.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="5" max-vertical-offset="901">
-              <caret line="1046" column="0" selection-start-line="1046" selection-start-column="0" selection-end-line="1046" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="1483" max-vertical-offset="3706">
+              <caret line="823" column="63" selection-start-line="823" selection-start-column="33" selection-end-line="823" selection-end-column="63" />
               <folding>
                 <element signature="e#223#4554#0" expanded="false" />
                 <element signature="e#4699#5932#0" expanded="false" />
@@ -52,16 +55,15 @@
                 <element signature="e#8218#12134#0" expanded="false" />
                 <element signature="e#12271#16835#0" expanded="false" />
                 <element signature="e#16940#21424#0" expanded="false" />
-                <element signature="e#21557#25890#0" expanded="false" />
-                <element signature="e#26087#26114#0" expanded="false" />
-                <element signature="e#26152#26282#0" expanded="false" />
-                <element signature="e#26315#26457#0" expanded="false" />
-                <element signature="e#26493#27307#0" expanded="false" />
-                <element signature="e#27347#27917#0" expanded="false" />
-                <element signature="e#27963#28514#0" expanded="false" />
-                <element signature="e#28553#28758#0" expanded="false" />
-                <element signature="e#28804#29463#0" expanded="false" />
-                <element signature="e#29509#30248#0" expanded="false" />
+                <element signature="e#26117#26144#0" expanded="false" />
+                <element signature="e#26182#26312#0" expanded="false" />
+                <element signature="e#26345#26487#0" expanded="false" />
+                <element signature="e#26523#27337#0" expanded="false" />
+                <element signature="e#27377#27947#0" expanded="false" />
+                <element signature="e#27993#28544#0" expanded="false" />
+                <element signature="e#28583#28788#0" expanded="false" />
+                <element signature="e#28834#29493#0" expanded="false" />
+                <element signature="e#29539#30278#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -80,40 +82,22 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="controllers.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="controllers.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/angular/controllers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="3014" max-vertical-offset="4488">
-              <caret line="446" column="36" selection-start-line="446" selection-start-column="36" selection-end-line="446" selection-end-column="36" />
+            <state vertical-scroll-proportion="0.822093" vertical-offset="126" max-vertical-offset="1190">
+              <caret line="421" column="9" selection-start-line="421" selection-start-column="9" selection-end-line="421" selection-end-column="9" />
               <folding>
                 <element signature="e#263#781#0" expanded="false" />
+                <element signature="e#973#6094#0" expanded="false" />
+                <element signature="e#1252#1432#0" expanded="false" />
                 <element signature="e#6211#7580#0" expanded="false" />
                 <element signature="e#7728#9746#0" expanded="false" />
                 <element signature="e#9886#11679#0" expanded="false" />
-                <element signature="e#11812#13143#0" expanded="false" />
-                <element signature="e#15172#15492#0" expanded="false" />
-                <element signature="e#15520#15563#0" expanded="false" />
+                <element signature="e#13285#16018#0" expanded="false" />
+                <element signature="e#15145#15465#0" expanded="false" />
+                <element signature="e#15493#15536#0" expanded="false" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="calendar.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/partials/calendar.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.5" vertical-offset="0" max-vertical-offset="459">
-              <caret line="13" column="14" selection-start-line="13" selection-start-column="14" selection-end-line="13" selection-end-column="14" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="appCss.css" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/appCss/appCss.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7232558" vertical-offset="3730" max-vertical-offset="4590">
-              <caret line="256" column="32" selection-start-line="256" selection-start-column="3" selection-end-line="256" selection-end-column="32" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -179,7 +163,6 @@
         <option value="$PROJECT_DIR$/partials/searchOnGoogle.html" />
         <option value="$PROJECT_DIR$/partials/start.html" />
         <option value="$PROJECT_DIR$/partials/googlemaps.html" />
-        <option value="$PROJECT_DIR$/partials/notes.html" />
         <option value="$PROJECT_DIR$/partials/logIn.html" />
         <option value="$PROJECT_DIR$/partials/manageFavorite.html" />
         <option value="$PROJECT_DIR$/partials/newAusgabe.html" />
@@ -190,12 +173,13 @@
         <option value="$PROJECT_DIR$/html/Ausgabenmanager.html" />
         <option value="$PROJECT_DIR$/angular/app.js" />
         <option value="$PROJECT_DIR$/partials/ausgabenOverview.html" />
-        <option value="$PROJECT_DIR$/angular/directives.js" />
-        <option value="$PROJECT_DIR$/angular/services.js" />
         <option value="$PROJECT_DIR$/partials/eventOverview.html" />
-        <option value="$PROJECT_DIR$/angular/controllers.js" />
-        <option value="$PROJECT_DIR$/partials/calendar.html" />
         <option value="$PROJECT_DIR$/appCss/appCss.css" />
+        <option value="$PROJECT_DIR$/partials/calendar.html" />
+        <option value="$PROJECT_DIR$/angular/controllers.js" />
+        <option value="$PROJECT_DIR$/angular/services.js" />
+        <option value="$PROJECT_DIR$/partials/notes.html" />
+        <option value="$PROJECT_DIR$/angular/directives.js" />
       </list>
     </option>
   </component>
@@ -303,20 +287,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="html" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WebShop" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WebShop" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="appCss" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1353,7 +1323,11 @@
       <created>1407049272066</created>
       <updated>1407049272066</updated>
     </task>
-    <option name="localTasksCounter" value="167" />
+    <task id="LOCAL-00167" summary="initialize">
+      <created>1407049359449</created>
+      <updated>1407049359449</updated>
+    </task>
+    <option name="localTasksCounter" value="168" />
     <servers />
   </component>
   <component name="TodoView" selected-index="2">
@@ -1378,7 +1352,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-4" y="-4" width="1688" height="1030" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32844242" sideWeight="0.4996986" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31715575" sideWeight="0.49849308" order="7" side_tool="false" content_ui="tabs" />
@@ -1622,13 +1596,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/calendarJs/lib/moment.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3026">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/partials/googlemaps.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.020383693" vertical-offset="0" max-vertical-offset="834">
@@ -1640,14 +1607,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.08292683" vertical-offset="0" max-vertical-offset="820">
           <caret line="4" column="10" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/partials/notes.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38995215" vertical-offset="337" max-vertical-offset="1173">
-          <caret line="39" column="47" selection-start-line="39" selection-start-column="47" selection-end-line="39" selection-end-column="47" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1743,14 +1702,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/angular/directives.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1671" max-vertical-offset="2533">
-          <caret line="107" column="24" selection-start-line="107" selection-start-column="24" selection-end-line="107" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/partials/ausgabenOverview.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.32535884" vertical-offset="0" max-vertical-offset="836">
@@ -1763,36 +1714,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/html/Ausgabenmanager.html">
+    <entry file="file://$PROJECT_DIR$/appCss/appCss.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-58.96154" vertical-offset="218" max-vertical-offset="2380">
-          <caret line="103" column="45" selection-start-line="103" selection-start-column="45" selection-end-line="103" selection-end-column="45" />
+        <state vertical-scroll-proportion="0.2883721" vertical-offset="3730" max-vertical-offset="4590">
+          <caret line="234" column="24" selection-start-line="234" selection-start-column="24" selection-end-line="234" selection-end-column="24" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/angular/services.js">
+    <entry file="file://$PROJECT_DIR$/calendarJs/lib/moment.min.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="5" max-vertical-offset="901">
-          <caret line="1046" column="0" selection-start-line="1046" selection-start-column="0" selection-end-line="1046" selection-end-column="0" />
-          <folding>
-            <element signature="e#223#4554#0" expanded="false" />
-            <element signature="e#4699#5932#0" expanded="false" />
-            <element signature="e#6071#8085#0" expanded="false" />
-            <element signature="e#8218#12134#0" expanded="false" />
-            <element signature="e#12271#16835#0" expanded="false" />
-            <element signature="e#16940#21424#0" expanded="false" />
-            <element signature="e#21557#25890#0" expanded="false" />
-            <element signature="e#26087#26114#0" expanded="false" />
-            <element signature="e#26152#26282#0" expanded="false" />
-            <element signature="e#26315#26457#0" expanded="false" />
-            <element signature="e#26493#27307#0" expanded="false" />
-            <element signature="e#27347#27917#0" expanded="false" />
-            <element signature="e#27963#28514#0" expanded="false" />
-            <element signature="e#28553#28758#0" expanded="false" />
-            <element signature="e#28804#29463#0" expanded="false" />
-            <element signature="e#29509#30248#0" expanded="false" />
-          </folding>
+        <state vertical-scroll-proportion="0.33293414" vertical-offset="7287" max-vertical-offset="16218">
+          <caret line="439" column="84" selection-start-line="439" selection-start-column="79" selection-end-line="439" selection-end-column="84" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1807,35 +1741,77 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/angular/controllers.js">
+    <entry file="file://$PROJECT_DIR$/partials/calendar.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="3014" max-vertical-offset="4488">
-          <caret line="446" column="36" selection-start-line="446" selection-start-column="36" selection-end-line="446" selection-end-column="36" />
+        <state vertical-scroll-proportion="-5.230769" vertical-offset="0" max-vertical-offset="459">
+          <caret line="8" column="90" selection-start-line="8" selection-start-column="90" selection-end-line="8" selection-end-column="90" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/html/Ausgabenmanager.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-15.807693" vertical-offset="218" max-vertical-offset="2380">
+          <caret line="37" column="39" selection-start-line="37" selection-start-column="39" selection-end-line="37" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/angular/services.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1483" max-vertical-offset="3706">
+          <caret line="823" column="63" selection-start-line="823" selection-start-column="33" selection-end-line="823" selection-end-column="63" />
           <folding>
-            <element signature="e#263#781#0" expanded="false" />
-            <element signature="e#6211#7580#0" expanded="false" />
-            <element signature="e#7728#9746#0" expanded="false" />
-            <element signature="e#9886#11679#0" expanded="false" />
-            <element signature="e#11812#13143#0" expanded="false" />
-            <element signature="e#15172#15492#0" expanded="false" />
-            <element signature="e#15520#15563#0" expanded="false" />
+            <element signature="e#223#4554#0" expanded="false" />
+            <element signature="e#4699#5932#0" expanded="false" />
+            <element signature="e#6071#8085#0" expanded="false" />
+            <element signature="e#8218#12134#0" expanded="false" />
+            <element signature="e#12271#16835#0" expanded="false" />
+            <element signature="e#16940#21424#0" expanded="false" />
+            <element signature="e#26117#26144#0" expanded="false" />
+            <element signature="e#26182#26312#0" expanded="false" />
+            <element signature="e#26345#26487#0" expanded="false" />
+            <element signature="e#26523#27337#0" expanded="false" />
+            <element signature="e#27377#27947#0" expanded="false" />
+            <element signature="e#27993#28544#0" expanded="false" />
+            <element signature="e#28583#28788#0" expanded="false" />
+            <element signature="e#28834#29493#0" expanded="false" />
+            <element signature="e#29539#30278#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/partials/calendar.html">
+    <entry file="file://$PROJECT_DIR$/angular/directives.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.5" vertical-offset="0" max-vertical-offset="459">
-          <caret line="13" column="14" selection-start-line="13" selection-start-column="14" selection-end-line="13" selection-end-column="14" />
+        <state vertical-scroll-proportion="0.644186" vertical-offset="1673" max-vertical-offset="2601">
+          <caret line="127" column="60" selection-start-line="127" selection-start-column="60" selection-end-line="127" selection-end-column="60" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/appCss/appCss.css">
+    <entry file="file://$PROJECT_DIR$/partials/notes.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7232558" vertical-offset="3730" max-vertical-offset="4590">
-          <caret line="256" column="32" selection-start-line="256" selection-start-column="3" selection-end-line="256" selection-end-column="32" />
+        <state vertical-scroll-proportion="0.2645241" vertical-offset="364" max-vertical-offset="1173">
+          <caret line="34" column="38" selection-start-line="34" selection-start-column="38" selection-end-line="34" selection-end-column="38" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/angular/controllers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.822093" vertical-offset="126" max-vertical-offset="1190">
+          <caret line="421" column="9" selection-start-line="421" selection-start-column="9" selection-end-line="421" selection-end-column="9" />
+          <folding>
+            <element signature="e#263#781#0" expanded="false" />
+            <element signature="e#973#6094#0" expanded="false" />
+            <element signature="e#1252#1432#0" expanded="false" />
+            <element signature="e#6211#7580#0" expanded="false" />
+            <element signature="e#7728#9746#0" expanded="false" />
+            <element signature="e#9886#11679#0" expanded="false" />
+            <element signature="e#13285#16018#0" expanded="false" />
+            <element signature="e#15145#15465#0" expanded="false" />
+            <element signature="e#15493#15536#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

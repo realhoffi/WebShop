@@ -436,30 +436,26 @@ ausgabenmanagerControllers.controller('notesCtrl', function ($scope, $http, $roo
 ausgabenmanagerControllers.controller('userEventCtrl', function ($scope, $http, $rootScope, $log, $timeout, userService, userEventService) {
 	$scope.userEvents = [];
 	var calendarEvents = [];
-	$scope.addEvent = function () {
-		var newEvent = userEventService.getEmptyUserEvent();
-		newEvent.Start = app.common.utils.toJsonDate(newEvent.Start);
-		newEvent.Ende = app.common.utils.toJsonDate(newEvent.Ende);
-		newEvent.UserId = userService.getCurrentUser().UserId;
-		userEventService.addNewUserEvent(newEvent).then(function (data) {
-			$log.info("UserEvent angelegt: " + JSON.stringify(data));
-			$scope.userEvents = userEventService.getUserEventsCached();
-			$scope.renderCalendar();
-
-		}, function (a, b, c) {
-			alert("Error!");
-		});
-	}
 	$scope.manageEvent = function (size, eventStatus, event) {
 		if (eventStatus == "delete") {
 			userEventService.deleteUserEvent(event)
 		} else if (eventStatus == "new") {
+			var newEvent = userEventService.getEmptyUserEvent();
+			newEvent.Start = app.common.utils.toJsonDate(newEvent.Start);
+			newEvent.Ende = app.common.utils.toJsonDate(newEvent.Ende);
+			newEvent.UserId = userService.getCurrentUser().UserId;
+			userEventService.addNewUserEvent(newEvent).then(function (data) {
+				$log.info("UserEvent angelegt: " + JSON.stringify(data));
+				$scope.userEvents = userEventService.getUserEventsCached();
+				$scope.renderCalendar();
+			}, function (a, b, c) {
+				alert("Error!");
+			});
 		}
 		else if (eventStatus == "edit") {
 		} else {
 			alert('Strange Status -.-');
 		}
-
 	}
 //	$scope.editNote = function (note) {
 //		note.edit = !note.edit;

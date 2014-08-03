@@ -821,7 +821,7 @@ var ausgabenmanagerServices = angular.module('ausgabenmanagerServices', [])
 		var getEmptyNote = function () {
 			return {
 				"ID": 0,
-				"Beschreibung": "",
+				"Beschreibung": "Please enter your note text :)",
 				"UserId": app.common.utils.guid.getEmptyGuid()
 			};
 		}
